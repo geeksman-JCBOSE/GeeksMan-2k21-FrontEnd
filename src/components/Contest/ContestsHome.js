@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 class ContestsHome extends Component {
   componentDidMount() {
-    console.log(this.props.data);  
+  
   }
   livecards=[]
   previouscards=[]
@@ -48,36 +48,36 @@ class ContestsHome extends Component {
       <div className="Contests">
         <ContestHeader content="Contests" />
         <div className="row">
-          <div className="col-lg-8">
+          <div className="col-lg-8 contest_sections">
             <div className="contests-section-heading">Live Contests</div>
             <div className="row no-gutters">
             {this.livecards.length===0&&(
-              <h2>There are no live Contests.</h2>
+              <h3 style={{"marginTop":"2rem"}}>There are no live Contests.</h3>
               )}
               {this.livecards.length!==0&&(
                 this.livecards
               )}
             </div>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-8 contest_sections">
             <div className="contests-section-heading">Upcoming Contests</div>
             <div className="row no-gutters">
               {this.upcomingcards.length!==0&&(
                 this.upcomingcards
               )}
               {this.upcomingcards.length===0&&(
-                <h2>There are no upcoming contests.</h2>
+                <h3 style={{"marginTop":"2rem"}}>There are no upcoming contests.</h3>
               )}
             </div>
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-8 contest_sections">
             <div className="contests-section-heading">Previous Contests</div>
             <div className="row no-gutters">
               {this.previouscards.length!==0&&(
                 this.previouscards
               )}
               {this.previouscards.length===0&&(
-                <h2>There are no previous contests.</h2>
+                <h3 style={{"marginTop":"2rem"}}>There are no previous contests.</h3>
               )}
             </div>
           </div>

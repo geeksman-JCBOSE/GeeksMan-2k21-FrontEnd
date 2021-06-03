@@ -761,11 +761,19 @@ nav {
   
   margin-bottom: 24px;
 }
-
+.contest_sections{
+  margin-top: 1rem;
+}
 .contests-section-heading {
   display: inline-block;
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 600;
+  color: #224056;
+  transition: all .2s;
+}
+.contests-section-heading:hover{
+  color: var(--secondary);
+  transform: scale(1.02);
 }
 
 .contests-top-performers-container {
@@ -800,13 +808,15 @@ nav {
   transition: 0.3s;
 }
 
-.contest-card-heading a {
+.contest-card-heading {
   color: var(--primary);
   font-size: 22px;
   font-weight: 600;
 }
-
-.contest-card-heading a {
+.contest-card-heading:hover{
+  cursor:pointer;
+}
+.contest-card-heading {
   text-decoration: none;
 }
 
@@ -816,18 +826,19 @@ nav {
 }
 
 .contest-card-timer-prefix {
-  font-size: 10px;
+  font-size: 13px;
   color: #777;
   text-transform: uppercase;
   margin-right: 6px;
 }
 
 .contest-card-timer {
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .contest-card .contes-card-time {
   color: var(--secondary);
+  font-size: 13px;
 }
 
 .contest-card-register-button {

@@ -25,9 +25,6 @@ const initialState = {
   loading: false,
   registeruserdata:null,
   contesttoken:null,
-  ongoingcontests:[],
-  previouscontests:[],
-  upcomingcontests:[],
 };
 
 const getContestSuccess = (state, action) => {

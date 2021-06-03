@@ -7,3 +7,5 @@ export { getContest, postContest,registerContest,getContestToken } from "./conte
 export { getUser, postUser, getUserContest, patchUser } from "./users";
 
 export {getMember} from './about'
+
+export {setloading,resetloading} from './loading'

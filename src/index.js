@@ -11,6 +11,7 @@ import questionReducer from './store/reducers/questionpage'
 import contestReducer from './store/reducers/contest'
 import userReducer from './store/reducers/users'
 import aboutReducer from './store/reducers/about'
+import loadingReducer from './store/reducers/loading'
 //Redux Store
 const composeEnhancers =
   process.env.NODE_ENV === 'development'
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   question:questionReducer,
   contest:contestReducer,
   user:userReducer,
-  about:aboutReducer
+  about:aboutReducer,
+  loading:loadingReducer
 });
 
 const store = createStore(

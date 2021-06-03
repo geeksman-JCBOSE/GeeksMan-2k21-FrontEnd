@@ -1,6 +1,6 @@
 import * as actionTypes from './actionsTypes';
 import axios from 'axios';
-
+import * as actions from './index'
 
 
 /*=============== get contests =========================*/
@@ -32,7 +32,7 @@ export const getContestFail = (error) => {
 
 export const getContest = () => {
   return (dispatch) => {   
-    dispatch(RequestStart())
+    dispatch(actions.setloading())
     let axiosConfig = {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
@@ -44,8 +44,7 @@ export const getContest = () => {
         axiosConfig
       )
       .then((res) => {
-        console.log('success...............')
-        dispatch(RequestEnd())
+        dispatch(actions.resetloading())
         dispatch(getContestSuccess(res.data.contests));
       })
       .catch((err) => {
@@ -127,7 +126,7 @@ export const registerContestFail = (error) => {
 
 export const registerContest = (uid,cid) => {
   return (dispatch) => {
-    
+    // dispatch(actions.setloading())
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_PUBLIC}/registerforcontest`,
@@ -137,7 +136,8 @@ export const registerContest = (uid,cid) => {
       }
     })
       .then((res) => {
-        
+        // dispatch(actions.resetloading())
+        console.log('registering')
         dispatch(
           registerContestSuccess(res.data)
         );
