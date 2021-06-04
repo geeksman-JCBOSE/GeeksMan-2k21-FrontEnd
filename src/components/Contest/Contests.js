@@ -6,7 +6,6 @@ import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 
 class Contests extends Component {
-
    componentDidMount(){
    this.props.getContest()
    this.props.getregisteredcontest(this.props.uid)
@@ -18,7 +17,6 @@ class Contests extends Component {
             <Loader/>
           )}
          <div className="contests-container">
-          
           <div className="contests">
               <Navbar />
                {!this.props.loading&&(

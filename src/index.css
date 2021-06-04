@@ -860,6 +860,15 @@ nav {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
+.contest-card-registered-tag h2{
+  font-size: 20px;
+  margin-top: .7rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+
+
 /*----------  ContestHome  ----------*/
 #contest-home .contest-name {
   font-size: 28px;

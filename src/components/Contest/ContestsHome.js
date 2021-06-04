@@ -23,6 +23,7 @@ class ContestsHome extends Component {
          endtime={contest.endtime}
          id={index}
          cid={contest.id}
+         rcontest={this.props.registeredcontests}
        />
        </div>
        if(contest.contesttype==="ongoing"){
@@ -38,13 +39,11 @@ class ContestsHome extends Component {
       cards:
         "col-md-6"
   }
-
   livecards=[];
   upcomingcards=[];
   previouscards=[];
   render() {
     this.makecard()
-    console.log(this.props.registeredcontests)
     return (
       <div className="Contests">
         <ContestHeader content="Contests" />
