@@ -44,6 +44,7 @@ class ContestsHome extends Component {
   previouscards=[];
   render() {
     this.makecard()
+    console.log(this.props.registeredcontests)
     return (
       <div className="Contests">
         <ContestHeader content="Contests" />
@@ -104,7 +105,8 @@ const mapStateToProps = (state) => {
     data: state.contest.contestdata,
     ongoingcontest:state.contest.ongoingcontests,
     previouscontest:state.contest.previouscontests,
-    upcomingcontest:state.contest.previouscontests
+    upcomingcontest:state.contest.previouscontests,
+    registeredcontests:state.contest.registeredContest
   };
 };
 

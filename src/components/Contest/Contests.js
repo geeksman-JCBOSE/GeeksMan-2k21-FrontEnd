@@ -9,6 +9,7 @@ class Contests extends Component {
 
    componentDidMount(){
    this.props.getContest()
+   this.props.getregisteredcontest(this.props.uid)
   }
   render(){
     return (
@@ -30,18 +31,22 @@ class Contests extends Component {
     );
 }
 }
+
 const mapDispatchToProps = (dispatch) => {
     return {
       getContest:()=>{
         dispatch(actions.getContest());
+      },
+      getregisteredcontest:(uid)=>{
+        dispatch(actions.getregisteredContest(uid))
       }
-
     };
   };
   const mapStateToProps = (state) => {
     return {
       data: state.contest.contestdata,
-      loading:state.loading.loading
+      loading:state.loading.loading,
+      uid:localStorage.getItem('userid')
     };
   };
 

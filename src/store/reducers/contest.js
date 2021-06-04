@@ -23,6 +23,8 @@ const initialState = {
     },
   ],
   loading: false,
+  error:null,
+  registeredContest:[],
   registeruserdata:null,
   contesttoken:null,
 };
@@ -69,6 +71,18 @@ const postContestFail = (state, action) => {
     loading: false,
   });
 };
+
+const registeredcontestsuccess=(state,action)=>{
+return updateObject(state,{
+  registeredContest:action.data
+})
+}
+
+const registeredContestFail=(state,action)=>{
+  return updateObject(state,{
+    error:action.error
+  })
+}
 
 const registerContestSuccess = (state, action) => {
   return updateObject(state, {
@@ -118,6 +132,10 @@ const reducer = (state = initialState, action) => {
       return beginloading(state,action);
     case actionTypes.END_REQUEST_LOADING:
       return endloading(state,action)
+    case actionTypes.GET_REGISTERED_CONTEST_SUCCESS:
+      return registeredcontestsuccess(state,action)
+    case actionTypes.GET_REGISTERED_CONTEST_FAIL:
+      return registeredContestFail(state,action);  
     case actionTypes.GET_CONTEST_TOKEN_SUCCESS:
       return getContestTokenSuccess(state, action);
     case actionTypes.GET_CONTEST_TOKEN_FAIL:

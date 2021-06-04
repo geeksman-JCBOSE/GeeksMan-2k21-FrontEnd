@@ -54,6 +54,47 @@ export const getContest = () => {
   };
 };
 
+/*=====================Get Registered Contests==============*/
+
+
+export const getregisterecontestsSuccess=(data)=>{
+return {
+  type:actionTypes.GET_REGISTERED_CONTEST_SUCCESS,
+  registeredcontest:data
+}
+}
+
+export const getregisteredContestfail=(err)=>{
+  return {
+    type:actionTypes.GET_REGISTERED_CONTEST_FAIL,
+    err
+  }
+}
+
+
+export const getregisteredContest=(uid)=>{
+  return (dispatch)=>{
+    dispatch(actions.setloading())
+    let axiosConfig={
+      headers:{
+        'Content-Type':'application/json;charset=UTF-8'
+      },
+    };
+    axios.get(
+      process.env.REACT_APP_PUBLIC+`/getusercontests/${uid}`,
+      axiosConfig
+      ).then((res)=>{
+        console.log(res)
+        dispatch(actions.resetloading())
+        dispatch(getregisterecontestsSuccess(res.data))
+      }).catch(err=>{
+        dispatch(actions.resetloading())
+        dispatch(getregisteredContestfail(err.message))
+      })
+  }
+}
+
+
 
 /*============Redux Signup===========*/
 
