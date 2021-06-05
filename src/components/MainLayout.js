@@ -12,6 +12,7 @@ import ContestHome from './Contest/ContestHome'
 import * as actions from "../store/actions/index";
 import Loader from './Loader/Loader'
 import ContestProblem from './questionpage/Questiondrawer'
+import ContestRegister from './Contest/ContestRegister'
 class MainLayout extends Component {
 
   componentDidMount(){
@@ -34,6 +35,7 @@ class MainLayout extends Component {
             <Route path="/contact" component={Contact} />
             <Route path="/loader" component={Loader} />
             <Route path="/contests/:cname" component={ContestHome}/>
+            <Route exact path="/contest/:cname/:cid" component={ContestRegister}/>
             <Route path="/contests/:cname/questions" component={ContestProblem}/>
             <Route path="*" component={NotFound} />
           </Switch>

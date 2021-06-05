@@ -438,7 +438,9 @@ a:hover {
   font-weight: 500;
   letter-spacing: 1px;
 }
-
+.contest-timer h5{
+  color: var(--secondary);
+}
 .register-button {
   font-size: 18px;
   border: none;
@@ -796,7 +798,7 @@ nav {
 
 /*----------  ContestCard  ----------*/
 .contest-card {
-  padding: 24px;
+  padding: 17px;
   background-color: #f1f1f1;
   margin: 24px;
   border: 1px solid #dadada;
@@ -1714,3 +1716,7 @@ nav {
   display: none;
 }
 
+/*============Error Modal========*/
+.MuiDialog-paperWidthSm{
+  width: -webkit-fill-available!important;
+}

@@ -8,11 +8,11 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import * as actions from "../../../store/actions/index";
 import { connect } from "react-redux";
-
+import {useHistory} from 'react-router-dom'
 function Modal(props) {
   const [open, setOpen] = React.useState(true);
   const [email,setEmail] = React.useState("");
-
+  const history=useHistory()
   const handleClose = (e) => {
     e.preventDefault();
     if(props.field!==""){
@@ -20,8 +20,6 @@ function Modal(props) {
     }
     setOpen(false);
   };
-
-
   return (
     <div>
       <Dialog
@@ -45,7 +43,6 @@ function Modal(props) {
             onChange={e=>setEmail(e.target.value)}
             fullWidth
           />:<></>}
-          
         </DialogContent>
         <DialogActions>
           {props.confirm === "false" ? (
@@ -57,7 +54,11 @@ function Modal(props) {
               <Button onClick={handleClose} color="primary">
                 Disagree
               </Button>
-              <Button onClick={props.redirect} color="primary" autoFocus>
+              <Button onClick={()=>{
+                if(props.page==="login")
+                history.push("/login")
+                else if(props.page==="/userpanel")
+                history.push("/userpanel")}} color="primary" autoFocus>
                 Agree
               </Button>
             </>
@@ -67,7 +68,6 @@ function Modal(props) {
     </div>
   );
 }
-
 const mapDispatchToProps = (dispatch) => {
   return {
     changePassword: (email) => {

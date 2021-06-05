@@ -5,8 +5,8 @@ import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import Modal from "../utils/modals/modal";
 import Loader from "../Loader/Loader";
-import { isNullishCoalesce } from "typescript";
-
+import Timer from './timer'
+import { withRouter } from 'react-router-dom';
 class ContestCard extends Component {
   // state = {
   //   open: false,
@@ -14,38 +14,25 @@ class ContestCard extends Component {
   //   yesbutton: false,
   //   redirect: false,
   //   redirectto: false,
-  //   show: false,
+    // show: false,
   //   redirecttouser: false,
   //   page: "not",
   // };
   state={
-    isregistered:true,
-    days:null,
-    hours:null,
-    minutes:null,
-    sec:null
+    isregistered:null,
+    show:false,
+    message:null,
+    page:null
   }
   componentDidMount(){
-  let ms=new Date(this.props.starttime)-(Date.now())
-   let days = Math.floor(ms / (24*60*60*1000));
-   let daysms=ms % (24*60*60*1000);
-   let hours = Math.floor((daysms)/(60*60*1000));
-   let hoursms=ms % (60*60*1000);
-   let  minutes = Math.floor((hoursms)/(60*1000));
-   let minutesms=ms % (60*1000);
-   let sec = Math.floor((minutesms)/(1000));
     this.setState({
       isregistered:this.props.rcontest.find(contest=>contest.id===this.props.cid),
-      days:days,
-      hours:hours,
-      minutes:minutes,
-      sec:sec
     })
   }
   handleActiveContest = (e, userid, id, index) => {
     e.preventDefault();
-    if (this.props.isAuthenticated) {
-      if (
+    if (this.props.isAuthenticated){
+      if(
         this.props.userdata.college === null ||
         this.props.userdata.phoneno === null ||
         this.props.userdata.year === null ||
@@ -55,14 +42,16 @@ class ContestCard extends Component {
           show: true,
           message:
             "You have to complete your details before registering for any contest",
+          page:"userpanel"
         });
       } else {
-        this.props.registerContest(userid, id);
-        this.setState({ redirectto: true });
-
-        if (this.props.userdata) {
-          localStorage.setItem("activecontest", index);
-        }
+        this.props.history.push("/")
+        // this.props.registerContest(userid, id);
+        // this.setState({ redirectto: true });
+        // if (this.props.userdata) {
+        //   localStorage.setItem("activecontest", index);
+        // }
+        this.props.history.push(`/contest/${this.props.contestname}/${id}`)
       }
     } else {
       this.setState({
@@ -134,7 +123,8 @@ class ContestCard extends Component {
             this.props.endtime.split('T')[0]
             }&nbsp;&nbsp;&nbsp;{this.props.endtime.split('T')[1].split(':')[0]}:{this.props.endtime.split('T')[1].split(':')[1]}</span>
           </div>
-          {this.state.isregistered&&(
+          <Timer starttime={this.props.starttime}/>
+          {!this.state.isregistered&&(
            <div className="contest-card-register-button"
            onClick={(e) =>
              this.handleActiveContest(
@@ -148,21 +138,20 @@ class ContestCard extends Component {
            Register Now
          </div>
           )}          
-          {!this.state.isregistered&&(
+          {this.state.isregistered&&(
             <div className="contest-card-registered-tag">
             <h2>Registered</h2>
-            {this.state.days +'days '+this.state.hours+'hours '+this.state.minutes+'minutes '+this.state.sec+'sec'}
             </div>
           )}
-
-          {/* <Modal
+          <Modal
             show={this.state.show}
             heading="Error Correction"
             message={this.state.message}
             field=""
+            page={this.state.page}
             confirm="true"
-            redirect={(e) => this.handleRedirectToUserPanel(e)}
-          /> */}
+            // redirect={(e) => this.handleRedirectToUserPanel(e)}
+          />
         </div>
       </>
     );
@@ -185,4 +174,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContestCard);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ContestCard));
