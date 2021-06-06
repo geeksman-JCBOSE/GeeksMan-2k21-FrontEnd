@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import Modal from "../utils/modals/modal";
 import Loader from "../Loader/Loader";
 import Timer from './timer'
-import { withRouter } from 'react-router-dom';
 class ContestCard extends Component {
   // state = {
   //   open: false,
@@ -44,14 +43,14 @@ class ContestCard extends Component {
             "You have to complete your details before registering for any contest",
           page:"userpanel"
         });
-      } else {
-        this.props.history.push("/")
-        // this.props.registerContest(userid, id);
+      }else{
+        console.log(userid,id);
+        this.props.registerContest(userid,id);
         // this.setState({ redirectto: true });
         // if (this.props.userdata) {
         //   localStorage.setItem("activecontest", index);
         // }
-        this.props.history.push(`/contest/${this.props.contestname}/${id}`)
+        // this.props.history.push(`/contest/${this.props.contestname}/${id}`)
       }
     } else {
       this.setState({
@@ -174,4 +173,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ContestCard));
+export default connect(mapStateToProps, mapDispatchToProps)(ContestCard);

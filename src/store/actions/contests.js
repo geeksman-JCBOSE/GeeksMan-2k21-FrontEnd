@@ -167,7 +167,7 @@ export const registerContestFail = (error) => {
 
 export const registerContest = (uid,cid) => {
   return (dispatch) => {
-    // dispatch(actions.setloading())
+    dispatch(actions.setloading())
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_PUBLIC}/registerforcontest`,
@@ -177,8 +177,8 @@ export const registerContest = (uid,cid) => {
       }
     })
       .then((res) => {
-        // dispatch(actions.resetloading())
-        console.log('registering')
+        dispatch(actions.resetloading())
+        console.log('registrered')
         dispatch(
           registerContestSuccess(res.data)
         );
