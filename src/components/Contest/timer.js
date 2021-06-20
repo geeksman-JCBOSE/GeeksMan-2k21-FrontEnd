@@ -15,7 +15,7 @@ class Timer extends React.Component{
         this.setState({intervalid})
         }
     computetime(){
-        let ms=new Date(this.props.starttime)-(Date.now())
+        let ms=new Date(this.props.starttimems)-(Date.now())
         if(ms<=0){
             this.setState({islive:true})
             clearInterval(this.state.intervalid)
@@ -34,17 +34,14 @@ class Timer extends React.Component{
             seconds:sec
           })
     }
-    componentDidUpdate(){
-
-    }
     render(){
         return (
             <div className="contest-timer">
              {this.state.islive&&(
-                 <h5>Contest is Live&nbsp;!</h5>
+                 <h5>Register time over&nbsp;!</h5>
              )}
              
-            {!this.state.islive&&('Starts in:- '+this.state.days+'days '+this.state.hours+'hours '+this.state.minutes+'minutes '+this.state.seconds+'seconds')}
+            {!this.state.islive&&(this.state.days+'d '+this.state.hours+'h '+this.state.minutes+'m '+this.state.seconds+'s ')}
             </div>
         )
     }

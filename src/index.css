@@ -835,6 +835,8 @@ nav {
 }
 
 .conteststatus{
+  display: flex;
+    align-items: center;
   position: absolute;
     font-size: 1rem;
     color: #121212;

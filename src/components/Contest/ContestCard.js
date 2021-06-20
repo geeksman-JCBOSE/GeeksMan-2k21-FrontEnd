@@ -157,16 +157,16 @@ class ContestCard extends Component {
               <div className="contestcard-gradient"></div>
             <img src={this.props.image} className="contestcard-img"/>
              <div className="conteststatus">
-               Registration <b>ends</b> after:&nbsp;12days 15hrs 1min 23sec
+               Registration&nbsp;<b>ends</b>&nbsp;after:&nbsp;<Timer starttimems={this.props.registertime}/>
              </div>
             </div>
-
             <div className="contestmiddlebody">
              <p className="contest__name">{this.props.contestname}</p>
              <div className="contestdetails">
                 <div className="contestinfoitem">
                     <p className="eventlabel">Starts On</p>
-                    <p className="eventvalue">date</p>
+                    <p className="eventvalue">{
+                  (new Date(this.props.starttime)).toLocaleString() }</p>
                 </div>
               
 
@@ -179,7 +179,7 @@ class ContestCard extends Component {
              <div className="contestdetails">
                 <div className="contestinfoitem">
                     <p className="eventlabel">Venue</p>
-                    <p className="eventvalue">Online</p>
+                    <p className="eventvalue">{this.props.venue}</p>
                 </div>
              </div>
              </div>
@@ -188,10 +188,9 @@ class ContestCard extends Component {
                 {this.props.smalldescription}
              </div>
             </div>
-
             <div className="contestbottom">
                 <div className="registercount">
-                  540 registered
+                  {this.props.seatsfilled} registered
                   </div>
                   <div className="contest-card-register-button">
                        Register

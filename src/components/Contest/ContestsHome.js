@@ -18,7 +18,11 @@ class ContestsHome extends Component {
          contestname={contest.contestname}
          starttime={contest.starttime}
          smalldescription={contest.contestdetail}
+         registertime={contest.registration_endtime}
+         conteststarttime={contest.starttime}
          startdate={contest.startdate}
+         venue={contest.venue}
+         seatsfilled={contest.seats_filled}
          enddate={contest.enddate}
          endtime={contest.endtime}
          id={index}
