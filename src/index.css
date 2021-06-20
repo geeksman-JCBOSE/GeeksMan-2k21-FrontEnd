@@ -798,17 +798,114 @@ nav {
 
 /*----------  ContestCard  ----------*/
 .contest-card {
-  padding: 17px;
+  /* padding: 17px;
   background-color: #f1f1f1;
   margin: 24px;
   border: 1px solid #dadada;
-  border-radius: 8px;
+  border-radius: 8px; */
+  background: #fff;
+    border-radius: 5px;
+    width: 95%;
+    margin-right: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 1px 19px 0 rgb(0 0 0 / 7%);
+    cursor: pointer;
+    font-weight: 400;
+    transition: all .3s
+}
+.contestcard-img{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.contestimagecontainer{
+  height: 14rem;
+  position: relative;
+}
+.contestcard-gradient{
+  background-image: linear-gradient(
+-180deg
+,rgba(3,3,3,0),#010101);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: .2;
 }
 
+.conteststatus{
+  position: absolute;
+    font-size: 1rem;
+    color: #121212;
+    background: #fff;
+    padding: 7px 13px;
+    border-radius: 2px;
+    bottom: 7px;
+    right: 7px;
+    box-shadow: 0 1px 11px 0 rgb(0 0 0 / 11%);
+}
+.contest__name{
+  margin: 0 0 9px;
+    font-size: 18px;
+    letter-spacing: .2px;
+    font-weight: 700;
+    min-height: 50px;
+}
+.contestmiddlebody{
+  padding: 20px 16px;
+}
 .contest-card:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
+
+.contestdetails{
+  justify-content: space-between;
+  display: flex;
+    border-bottom: 1px solid #f3f3f3;
+    padding-bottom: 10px;
+}
+.contestinfoitem{
+  display: flex;
+  flex-direction: column;
+  margin-right: 16px;
+}
+.eventlabel{
+  font-size:.9rem;
+  color: rgba(28,28,28,.6);
+  margin: 0;
+}
+
+.eventvalue{
+  color:var(--primary);
+  font-weight: 600;
+  font-size:.8rem;
+}
+.shortdescription{
+  margin-top: 12px;
+  height: 57px;
+  font-size:1.1rem;
+  line-height: 19px;
+  color: #616161;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.contestbottom{
+  padding: 9px 0 9px 19px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid hsla(0,0%,59.2%,.1);
+    min-height: 30px;
+    align-items:center;
+}
+
+
+
 
 .contest-card-heading {
   color: var(--primary);
@@ -842,12 +939,16 @@ nav {
   color: var(--secondary);
   font-size: 13px;
 }
-
+.registercount{
+  color: var(--primary);
+  font-weight: 600;
+}
 .contest-card-register-button {
   display: inline-block;
-  padding: 8px 16px;
+  padding: 8px 25px;
   margin-top: 16px;
   cursor: pointer;
+  margin-right: 1rem;
   font-size: 12px;
   font-weight: 600;
   background: var(--bg-primary);

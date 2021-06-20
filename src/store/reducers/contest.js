@@ -72,9 +72,9 @@ const postContestFail = (state, action) => {
   });
 };
 
-const registeredcontestsuccess=(state,action)=>{
+const registeredcontestssuccess=(state,action)=>{
 return updateObject(state,{
-  registeredContest:action.data
+  registeredContest:action.registeredcontest
 })
 }
 
@@ -133,7 +133,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.END_REQUEST_LOADING:
       return endloading(state,action)
     case actionTypes.GET_REGISTERED_CONTEST_SUCCESS:
-      return registeredcontestsuccess(state,action)
+      return registeredcontestssuccess(state,action)
     case actionTypes.GET_REGISTERED_CONTEST_FAIL:
       return registeredContestFail(state,action);  
     case actionTypes.GET_CONTEST_TOKEN_SUCCESS:

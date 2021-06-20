@@ -4,11 +4,10 @@ import Navbar from '../Navbar';
 import Loader from '../Loader/Loader'
 import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
-
 class Contests extends Component {
-   componentDidMount(){
-   this.props.getContest()
+  componentDidMount(){
    this.props.getregisteredcontest(this.props.uid)
+   this.props.getContest()
   }
   render(){
     return (
@@ -18,14 +17,13 @@ class Contests extends Component {
           )}
          <div className="contests-container">
           <div className="contests">
-              <Navbar />
+              <Navbar/>
                {!this.props.loading&&(
                <ContestsHome/>
                )}
           </div>
           </div>
           </div>
-       
     );
 }
 }
@@ -47,7 +45,4 @@ const mapDispatchToProps = (dispatch) => {
       uid:localStorage.getItem('userid')
     };
   };
-
-
-
   export default connect(mapStateToProps, mapDispatchToProps)(Contests);

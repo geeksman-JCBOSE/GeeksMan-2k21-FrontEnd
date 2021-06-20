@@ -13,7 +13,7 @@ class ContestCard extends Component {
   //   yesbutton: false,
   //   redirect: false,
   //   redirectto: false,
-    // show: false,
+  // show: false,
   //   redirecttouser: false,
   //   page: "not",
   // };
@@ -24,10 +24,12 @@ class ContestCard extends Component {
     page:null
   }
   componentDidMount(){
-    this.setState({
-      isregistered:this.props.rcontest.find(contest=>contest.id===this.props.cid),
-    })
+    // console.log(this.props.rcontest)
+    // this.setState({
+    //   isregistered:this.props.rcontest.find(contest=>contest.contestid==this.props.cid),
+    // })
   }
+  
   handleActiveContest = (e, userid, id, index) => {
     e.preventDefault();
     if (this.props.isAuthenticated){
@@ -44,7 +46,6 @@ class ContestCard extends Component {
           page:"userpanel"
         });
       }else{
-        console.log(userid,id);
         this.props.registerContest(userid,id);
         // this.setState({ redirectto: true });
         // if (this.props.userdata) {
@@ -67,10 +68,9 @@ class ContestCard extends Component {
     e.preventDefault();
     this.setState({ redirecttouser: true });
   };
-
+   
   render() {
-
-    
+   
     // let authRedirect = null;
     // if (this.state.redirect) {
     //   authRedirect = <Redirect to={"/contests/" + this.props.contestname} />;
@@ -94,7 +94,7 @@ class ContestCard extends Component {
         <div className="contest-card">
           {/* {authRedirect}
           {authRedirect2} */}
-          <div
+          {/* <div
             className="contest-card-heading"
             onClick={(e) =>
               this.handleActiveContest(
@@ -123,7 +123,7 @@ class ContestCard extends Component {
             }&nbsp;&nbsp;&nbsp;{this.props.endtime.split('T')[1].split(':')[0]}:{this.props.endtime.split('T')[1].split(':')[1]}</span>
           </div>
           <Timer starttime={this.props.starttime}/>
-          {!this.state.isregistered&&(
+          {this.props.isregistered==-1&&(
            <div className="contest-card-register-button"
            onClick={(e) =>
              this.handleActiveContest(
@@ -137,12 +137,12 @@ class ContestCard extends Component {
            Register Now
          </div>
           )}          
-          {this.state.isregistered&&(
+          {this.props.isregistered!=-1&&(
             <div className="contest-card-registered-tag">
             <h2>Registered</h2>
             </div>
-          )}
-          <Modal
+          )} */}
+          {/* <Modal
             show={this.state.show}
             heading="Error Correction"
             message={this.state.message}
@@ -150,7 +150,54 @@ class ContestCard extends Component {
             page={this.state.page}
             confirm="true"
             // redirect={(e) => this.handleRedirectToUserPanel(e)}
-          />
+          /> */}
+
+          <div className="contestcardcontainer">
+            <div className="contestimagecontainer">
+              <div className="contestcard-gradient"></div>
+            <img src={this.props.image} className="contestcard-img"/>
+             <div className="conteststatus">
+               Registration <b>ends</b> after:&nbsp;12days 15hrs 1min 23sec
+             </div>
+            </div>
+
+            <div className="contestmiddlebody">
+             <p className="contest__name">{this.props.contestname}</p>
+             <div className="contestdetails">
+                <div className="contestinfoitem">
+                    <p className="eventlabel">Starts On</p>
+                    <p className="eventvalue">date</p>
+                </div>
+              
+
+             <div className="contestdetails">
+                <div className="contestinfoitem">
+                    <p className="eventlabel">Entry Fee</p>
+                    <p className="eventvalue">Free</p>
+                </div>
+             </div>
+             <div className="contestdetails">
+                <div className="contestinfoitem">
+                    <p className="eventlabel">Venue</p>
+                    <p className="eventvalue">Online</p>
+                </div>
+             </div>
+             </div>
+
+             <div className="shortdescription">
+                {this.props.smalldescription}
+             </div>
+            </div>
+
+            <div className="contestbottom">
+                <div className="registercount">
+                  540 registered
+                  </div>
+                  <div className="contest-card-register-button">
+                       Register
+                  </div>
+            </div>
+          </div>
         </div>
       </>
     );

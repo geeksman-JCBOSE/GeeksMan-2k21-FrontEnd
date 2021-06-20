@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 class ContestsHome extends Component {
   componentDidMount() {
-  
+   
   }
   livecards=[]
   previouscards=[]
@@ -17,13 +17,14 @@ class ContestsHome extends Component {
        <ContestCard
          contestname={contest.contestname}
          starttime={contest.starttime}
-         smalldescription={contest.contestdetails}
+         smalldescription={contest.contestdetail}
          startdate={contest.startdate}
          enddate={contest.enddate}
          endtime={contest.endtime}
          id={index}
+         image={contest.image}
          cid={contest.id}
-         rcontest={this.props.registeredcontests}
+         isregistered={this.props.registeredcontests.findIndex(c=>c.contestid==contest.id)}
        />
        </div>
        if(contest.contesttype==="ongoing"){

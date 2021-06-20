@@ -6,7 +6,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import Modal from "../utils/modals/modal";
 import { Redirect } from "react-router-dom";
 import geeksman from "../images/png/geeksman.png";
-import Loader from '../Loader/Loader'
+import Loader from "../Loader/Loader";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -26,9 +26,8 @@ class LoginPage extends Component {
     modalmessage: "",
     modalheader: "",
     field: "",
-    loader:false
+    loader: false,
   };
-
 
   signInShow = (e) => {
     e.preventDefault();
@@ -54,7 +53,7 @@ class LoginPage extends Component {
       });
     } else {
       this.props.reduxLogin(this.state.email, this.state.password);
-      this.setState({loader:true})
+      this.setState({ loader: true });
     }
   };
 
@@ -72,13 +71,14 @@ class LoginPage extends Component {
     });
   };
 
-  errorHandle = () =>{
-    this.setState({success:true,alert:"Wrong id/Password"})
-  }
+  errorHandle = () => {
+    this.setState({ success: true, alert: "Wrong id/Password" });
+  };
 
   setSignup = (e) => {
     e.preventDefault();
-    var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    var mailformat =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     var passwordformat = /^(?=(.*[a-zA-Z]){1,})(?=(.*[0-9]){2,}).{8,}$/;
 
     if (this.state.name === "") {
@@ -94,7 +94,6 @@ class LoginPage extends Component {
         success: true,
       });
     } else if (this.state.validatenewpassword === this.state.newpassword) {
-
       this.props.postUser(
         this.state.name,
         this.state.newemail,
@@ -121,20 +120,22 @@ class LoginPage extends Component {
     if (this.props.forgetstatus === "OK") {
       authRedirect2 = <Redirect to="/contests" />;
     }
-    
-
 
     return (
       <>
-      {(this.props.loading)?<Loader/>:<></>}
+        {this.props.loading ? <Loader /> : <></>}
 
-      {this.props.posterror!==""?<Modal
-          show={true}
-          message="You are already registered or you have not verified your mail"
-          confirm="false"
-          heading="Error"
-        />:<></>}
-      
+        {this.props.posterror !== "" ? (
+          <Modal
+            show={true}
+            message="You are already registered or you have not verified your mail"
+            confirm="false"
+            heading="Error"
+          />
+        ) : (
+          <></>
+        )}
+
         <div className="section">
           <div class={this.state.activeClass}>
             <div class="user signinBx">
@@ -269,8 +270,6 @@ class LoginPage extends Component {
           heading={this.state.modalheader}
           field={this.state.field}
         />
-        
-       
       </>
     );
   }
@@ -290,12 +289,12 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
-    isAuthenticated: state.auth.token!==null,
+    isAuthenticated: state.auth.token !== null,
     forgetstatus: state.auth.forgetstatus,
-    error:state.auth.autherror,
-    errorauth:state.auth.autherror!==null,
-    loading:state.auth.loading,
-    posterror:state.user.posterror
+    error: state.auth.autherror,
+    errorauth: state.auth.autherror !== null,
+    loading: state.auth.loading,
+    posterror: state.user.posterror,
   };
 };
 

@@ -44,6 +44,7 @@ export const getContest = () => {
         axiosConfig
       )
       .then((res) => {
+        console.log(res)
         dispatch(actions.resetloading())
         dispatch(getContestSuccess(res.data.contests));
       })
@@ -57,14 +58,14 @@ export const getContest = () => {
 /*=====================Get Registered Contests==============*/
 
 
-export const getregisterecontestsSuccess=(data)=>{
+export const getregisteredcontestsSuccess=(data)=>{
 return {
   type:actionTypes.GET_REGISTERED_CONTEST_SUCCESS,
   registeredcontest:data
 }
 }
 
-export const getregisteredContestfail=(err)=>{
+export const getregisteredcontestsFail=(err)=>{
   return {
     type:actionTypes.GET_REGISTERED_CONTEST_FAIL,
     err
@@ -84,12 +85,12 @@ export const getregisteredContest=(uid)=>{
       process.env.REACT_APP_PUBLIC+`/getusercontests/${uid}`,
       axiosConfig
       ).then((res)=>{
-        console.log(res)
+        console.log(res.data.data)
         dispatch(actions.resetloading())
-        dispatch(getregisterecontestsSuccess(res.data))
+        dispatch(getregisteredcontestsSuccess(res.data.data))
       }).catch(err=>{
         dispatch(actions.resetloading())
-        dispatch(getregisteredContestfail(err.message))
+        dispatch(getregisteredcontestsFail(err.message))
       })
   }
 }
@@ -184,6 +185,7 @@ export const registerContest = (uid,cid) => {
         );
       })
       .catch((err) => {
+        dispatch(actions.resetloading())
         dispatch(registerContestFail(err));
       });
   };
