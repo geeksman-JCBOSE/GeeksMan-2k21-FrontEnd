@@ -38,7 +38,7 @@ class ContestCard extends Component {
         this.props.userdata.phoneno === null ||
         this.props.userdata.year === null ||
         this.props.userdata.Branch === null
-      ) {
+      ){
         this.setState({
           show: true,
           message:
@@ -142,16 +142,6 @@ class ContestCard extends Component {
             <h2>Registered</h2>
             </div>
           )} */}
-          {/* <Modal
-            show={this.state.show}
-            heading="Error Correction"
-            message={this.state.message}
-            field=""
-            page={this.state.page}
-            confirm="true"
-            // redirect={(e) => this.handleRedirectToUserPanel(e)}
-          /> */}
-
           <div className="contestcardcontainer">
             <div className="contestimagecontainer">
               <div className="contestcard-gradient"></div>
@@ -183,7 +173,6 @@ class ContestCard extends Component {
                 </div>
              </div>
              </div>
-
              <div className="shortdescription">
                 {this.props.smalldescription}
              </div>
@@ -192,11 +181,27 @@ class ContestCard extends Component {
                 <div className="registercount">
                   {this.props.seatsfilled} registered
                   </div>
-                  <div className="contest-card-register-button">
+                  <div className="contest-card-register-button"   onClick={(e) =>
+             this.handleActiveContest(
+               e,
+               this.props.userdata.id,
+               this.props.cid,
+               this.props.id,
+             )
+           }>
                        Register
                   </div>
             </div>
           </div>
+           <Modal
+            show={this.state.show}
+            heading="Error Correction"
+            message={this.state.message}
+            field=""
+            page={this.state.page}
+            confirm="true"
+            // redirect={(e) => this.handleRedirectToUserPanel(e)}
+          />
         </div>
       </>
     );
@@ -213,6 +218,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
+    token: state.auth.token,
     userdata: state.user.userdata,
     registeruserdata: state.contest.registeruserdata,
     isAuthenticated: state.auth.token !== null,

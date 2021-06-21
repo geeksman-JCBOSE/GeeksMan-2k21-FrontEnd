@@ -1,7 +1,7 @@
 import React, { Component, useState } from "react";
 import mainpng from "../images/png/main.png"
 import { Link } from "react-router-dom";
-
+import { connect } from "react-redux";
 
 class LoginSlide extends Component {
   state = {
@@ -21,14 +21,17 @@ class LoginSlide extends Component {
             Practice coding, prepare for contests, and win challenges.
           </div>
           <div className="login-buttons">
-            {this.props.authenticated?<Link className="login-button" to="/contests">
+            {this.props.authenticated&&(<Link className="login-button" to="/contests">
               Contests
-            </Link> :<> <Link className="login-button" to="/login">
+            </Link>
+    )}
+            {!this.props.authenticated&&(<> <Link className="login-button" to="/login">
               Login
             </Link>
             <Link className="login-button" to="/login">
               SignUp
-            </Link></>}
+            </Link></>
+            )}
            
           </div>
         </div>
@@ -36,5 +39,10 @@ class LoginSlide extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    authenticated :state.auth.token!==null,
+  };
+};
 
-export default LoginSlide;
+export default connect(mapStateToProps)(LoginSlide);

@@ -105,7 +105,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    token: state.auth.token,
+    token:localStorage.getItem('userdata')?JSON.parse(localStorage.getItem('userdata')).token:null,
     data: state.contest.contestdata,
     ongoingcontest:state.contest.ongoingcontests,
     previouscontest:state.contest.previouscontests,

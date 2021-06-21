@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 class Contests extends Component {
   componentDidMount(){
    this.props.getregisteredcontest(this.props.uid)
-   this.props.getContest()
+   this.props.getContest(this.props.token)
   }
   render(){
     return (
@@ -30,8 +30,8 @@ class Contests extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      getContest:()=>{
-        dispatch(actions.getContest());
+      getContest:(token)=>{
+        dispatch(actions.getContest(token));
       },
       getregisteredcontest:(uid)=>{
         dispatch(actions.getregisteredContest(uid))
@@ -40,6 +40,7 @@ const mapDispatchToProps = (dispatch) => {
   };
   const mapStateToProps = (state) => {
     return {
+      token:localStorage.getItem('userdata')?JSON.parse(localStorage.getItem('userdata')).token:null,
       data: state.contest.contestdata,
       loading:state.loading.loading,
       uid:localStorage.getItem('userid')

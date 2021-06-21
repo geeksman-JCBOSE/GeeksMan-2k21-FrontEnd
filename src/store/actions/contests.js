@@ -30,12 +30,15 @@ export const getContestFail = (error) => {
   };
 };
 
-export const getContest = () => {
+export const getContest = (token) => {
+  console.log(token)
   return (dispatch) => {   
     dispatch(actions.setloading())
     let axiosConfig = {
       headers: {
+        'Authorization':`Bearer ${token}`,
         'Content-Type': 'application/json;charset=UTF-8',
+       
       },
     };
     axios

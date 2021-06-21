@@ -24,7 +24,6 @@ export const authFail = (error) => {
 };
 
 
-
 export const reduxLogin = (email, password) => {
   return (dispatch) => {
     dispatch(authStart());
@@ -46,9 +45,11 @@ export const reduxLogin = (email, password) => {
         axiosConfig
       )
       .then((res) => {
-        
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('userid', res.data.userid);
+         
+        localStorage.setItem('userdata',JSON.stringify({
+          token:res.data.token,
+          userid:res.data.userid
+        }));
         dispatch(
           authSuccess(res.data.token,res.data.userid)
         );
@@ -62,12 +63,11 @@ export const reduxLogin = (email, password) => {
 
 export const authCheckStatus = () => {
   return (dispatch) => {
-    const token = localStorage.getItem('token');
-    const userid = localStorage.getItem('userid');
-    if (!token) {
+    const userdata = JSON.parse(localStorage.getItem('userdata'))
+    if (!userdata||!userdata.token) {
       dispatch(authFail("Error"));
     } else {
-      dispatch(authSuccess(token, userid));
+      dispatch(authSuccess(userdata.token,userdata.userid));
     }
   };
 };
@@ -88,6 +88,7 @@ export const changePasswordFail = (err) => {
 };
 
 export const authlogout=()=>{
+  localStorage.removeItem('userdata')
   return {
     type:actionTypes.AUTH_LOGOUT
   }

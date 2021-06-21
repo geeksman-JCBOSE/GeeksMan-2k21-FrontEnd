@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token!==null,
-    userid: state.auth.userid
+    userid:state.auth.userid
   };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(MainLayout);
