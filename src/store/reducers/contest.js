@@ -27,6 +27,7 @@ const initialState = {
   registeredContest:[],
   registeruserdata:null,
   contesttoken:null,
+  activecontest:null
 };
 
 const getContestSuccess = (state, action) => {
@@ -114,6 +115,12 @@ const getContestTokenFail = (state, action) => {
   });
 };
 
+
+const getcontestbyidsuccess=(state,action)=>{
+  return updateObject(state,{
+    activecontest:action.data
+  })
+}
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_CONTESTS_SUCCESS:
@@ -132,6 +139,8 @@ const reducer = (state = initialState, action) => {
       return beginloading(state,action);
     case actionTypes.END_REQUEST_LOADING:
       return endloading(state,action)
+    case actionTypes.GET_CONTEST_BY_ID_SUCCESS:
+      return getcontestbyidsuccess(state,action)
     case actionTypes.GET_REGISTERED_CONTEST_SUCCESS:
       return registeredcontestssuccess(state,action)
     case actionTypes.GET_REGISTERED_CONTEST_FAIL:

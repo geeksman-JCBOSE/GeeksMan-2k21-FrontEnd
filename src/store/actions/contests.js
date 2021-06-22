@@ -31,7 +31,7 @@ export const getContestFail = (error) => {
 };
 
 export const getContest = (token) => {
-  console.log(token)
+  
   return (dispatch) => {   
     dispatch(actions.setloading())
     let axiosConfig = {
@@ -47,7 +47,6 @@ export const getContest = (token) => {
         axiosConfig
       )
       .then((res) => {
-        console.log(res)
         dispatch(actions.resetloading())
         dispatch(getContestSuccess(res.data.contests));
       })
@@ -57,6 +56,41 @@ export const getContest = (token) => {
       });
   };
 };
+
+/*====================Get registered Contest by id===============*/
+
+
+export const getcontestbyidsuccess=(data)=>{
+  return {
+    type:actionTypes.GET_CONTEST_BY_ID_SUCCESS,
+    data,
+  }
+}
+
+export const getcontestbyidfail=()=>{
+  return {
+    type:actionTypes.GET_CONTEST_BY_ID_FAIL
+  }
+}
+
+export const getcontestbyid=(token,cid)=>{
+  return (dispatch)=>{
+    let axiosConfig={
+      headers:{
+        'Content-Type':'application/json;charset=UTF-8',
+        'Authorization':`Bearer ${token}`,
+      },
+    };
+    axios.get(
+      process.env.REACT_APP_PUBLIC+`/contest/${cid}`,
+      axiosConfig
+      ).then((res)=>{
+        dispatch(getcontestbyidsuccess(res.data.contest))
+      }).catch(err=>{
+        console.log(err)
+      })
+  }
+}
 
 /*=====================Get Registered Contests==============*/
 
@@ -237,3 +271,28 @@ export const getContestToken = (uid,cid) => {
       });
   };
 };
+
+
+
+
+/*==========================Get test token=======================*/
+export const gettesttoken=(token,cid)=>{
+  return (dispatch)=>{
+    axios({
+      method: 'post',
+      url: `${process.env.REACT_APP_PUBLIC}/gettesttoken`,
+      data:{
+        token,
+        cid
+      }
+    })
+      .then((res) => {
+        localStorage.setItem('Testtoken',JSON.stringify({
+          token:res.data
+        }))
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  }
+}

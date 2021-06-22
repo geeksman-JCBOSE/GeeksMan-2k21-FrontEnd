@@ -15,6 +15,7 @@ class ContestsHome extends Component {
     this.props.data.forEach((contest, index) => {
       let protocard= <div class={this.classes.cards}>
        <ContestCard
+         key={contest.id}
          contestname={contest.contestname}
          starttime={contest.starttime}
          smalldescription={contest.contestdetail}
@@ -24,11 +25,12 @@ class ContestsHome extends Component {
          venue={contest.venue}
          seatsfilled={contest.seats_filled}
          enddate={contest.enddate}
+         seatsleft={contest.seats_left}
+         isregistered={contest.isregistered}
          endtime={contest.endtime}
          id={index}
          image={contest.image}
          cid={contest.id}
-         isregistered={this.props.registeredcontests.findIndex(c=>c.contestid==contest.id)}
        />
        </div>
        if(contest.contesttype==="ongoing"){

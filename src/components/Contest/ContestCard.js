@@ -5,6 +5,7 @@ import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import Modal from "../utils/modals/modal";
 import Loader from "../Loader/Loader";
+import { withRouter } from 'react-router-dom'
 import Timer from './timer'
 class ContestCard extends Component {
   // state = {
@@ -21,7 +22,8 @@ class ContestCard extends Component {
     isregistered:null,
     show:false,
     message:null,
-    page:null
+    page:null,
+    conteststarted:false
   }
   componentDidMount(){
     // console.log(this.props.rcontest)
@@ -29,7 +31,11 @@ class ContestCard extends Component {
     //   isregistered:this.props.rcontest.find(contest=>contest.contestid==this.props.cid),
     // })
   }
-  
+  changecontestactivestate=()=>{
+    this.setState({
+      conteststarted:true
+    })
+  }
   handleActiveContest = (e, userid, id, index) => {
     e.preventDefault();
     if (this.props.isAuthenticated){
@@ -69,6 +75,12 @@ class ContestCard extends Component {
     this.setState({ redirecttouser: true });
   };
    
+  handlestartclick=()=>{
+    this.props.history.push({
+      pathname:`/contests/${this.props.contestname}`,
+      search:`?id=${this.props.cid}`,
+    })
+  }
   render() {
    
     // let authRedirect = null;
@@ -146,9 +158,15 @@ class ContestCard extends Component {
             <div className="contestimagecontainer">
               <div className="contestcard-gradient"></div>
             <img src={this.props.image} className="contestcard-img"/>
-             <div className="conteststatus">
-               Registration&nbsp;<b>ends</b>&nbsp;after:&nbsp;<Timer starttimems={this.props.registertime}/>
-             </div>
+
+             
+               {this.state.conteststarted&&(
+                 <div className="conteststatus">Registration is over</div>
+               )}
+               {!this.state.conteststarted&&(
+                <div className="conteststatus">Registration&nbsp;<b>ends</b>&nbsp;after:&nbsp;<Timer starttimems={this.props.registertime} changecardbtn={this.changecontestactivestate}/></div>
+               )}
+             
             </div>
             <div className="contestmiddlebody">
              <p className="contest__name">{this.props.contestname}</p>
@@ -158,8 +176,6 @@ class ContestCard extends Component {
                     <p className="eventvalue">{
                   (new Date(this.props.starttime)).toLocaleString() }</p>
                 </div>
-              
-
              <div className="contestdetails">
                 <div className="contestinfoitem">
                     <p className="eventlabel">Entry Fee</p>
@@ -179,18 +195,30 @@ class ContestCard extends Component {
             </div>
             <div className="contestbottom">
                 <div className="registercount">
-                  {this.props.seatsfilled} registered
+                  {this.props.seatsfilled} registered&nbsp;-&nbsp;{this.props.seatsleft}seats left
                   </div>
-                  <div className="contest-card-register-button"   onClick={(e) =>
-             this.handleActiveContest(
-               e,
-               this.props.userdata.id,
-               this.props.cid,
-               this.props.id,
-             )
-           }>
-                       Register
-                  </div>
+                  {!this.props.isregistered&&!this.state.conteststarted&&(
+                    <div className="contest-card-register-button"   onClick={(e) =>
+                      this.handleActiveContest(
+                        e,
+                        this.props.userdata.id,
+                        this.props.cid,
+                        this.props.id,
+                      )
+                    }>
+                                Register
+                           </div>
+                 )}
+                 {this.props.isregistered&&!this.state.conteststarted&&(
+                  <div className="contest-card-register-button">
+                  Registered
+             </div>
+                 )} 
+                  {this.props.isregistered&&this.state.conteststarted&&(
+                  <div className="contest-card-register-button" onClick={this.handlestartclick}>
+                  Start now
+             </div>
+                 )} 
             </div>
           </div>
            <Modal
@@ -225,4 +253,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContestCard);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ContestCard));

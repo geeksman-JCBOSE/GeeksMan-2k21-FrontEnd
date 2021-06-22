@@ -17,6 +17,7 @@ class Timer extends React.Component{
     computetime(){
         let ms=new Date(this.props.starttimems)-(Date.now())
         if(ms<=0){
+            this.props.changecardbtn()
             this.setState({islive:true})
             clearInterval(this.state.intervalid)
         }
@@ -37,10 +38,6 @@ class Timer extends React.Component{
     render(){
         return (
             <div className="contest-timer">
-             {this.state.islive&&(
-                 <h5>Register time over&nbsp;!</h5>
-             )}
-             
             {!this.state.islive&&(this.state.days+'d '+this.state.hours+'h '+this.state.minutes+'m '+this.state.seconds+'s ')}
             </div>
         )
