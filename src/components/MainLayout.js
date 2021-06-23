@@ -32,8 +32,8 @@ class MainLayout extends Component {
             <Route path="/userpanel" component={UserPanel} />
             <Route path="/contact" component={Contact} />
             <Route path="/loader" component={Loader} />
+            <Route path="/contest/:cname/questions" component={ContestProblem}/>
             <Route path="/contests/:cname" component={ContestHome}/>
-            <Route path="/contests/:cname/questions" component={ContestProblem}/>
             <Route path="*" component={NotFound} />
           </Switch>
         ) : (

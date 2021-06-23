@@ -25,19 +25,21 @@ export const getQuestionsFail = (error) => {
 
 
 
-export const getQuestions = (token) => {
-  return (dispatch) => {
+export const getQuestions = (token,executeongetquestions) => {
+  console.log(token)
+  return (dispatch) =>{
     dispatch(getQuestionsStart());
         axios({
         method: 'post',
-        url: `${process.env.REACT_APP_PUBLIC}/testquestions/`,
+        url: `${process.env.REACT_APP_PUBLIC}/testquestions`,
         headers: {
           'Authorization': 'Bearer '+token
         }
       })
       .then((res) => {
+       
         console.log('Questions Get ', res.data);
-        
+        dispatch(executeongetquestions())
         dispatch(
           getQuestionsSuccess(res.data)
         );

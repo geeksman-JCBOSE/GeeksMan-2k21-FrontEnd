@@ -276,7 +276,7 @@ export const getContestToken = (uid,cid) => {
 
 
 /*==========================Get test token=======================*/
-export const gettesttoken=(token,cid)=>{
+export const gettesttoken=(token,cid,executeongetquestions)=>{
   return (dispatch)=>{
     axios({
       method: 'post',
@@ -288,8 +288,9 @@ export const gettesttoken=(token,cid)=>{
     })
       .then((res) => {
         localStorage.setItem('Testtoken',JSON.stringify({
-          token:res.data
+          token:res.data.Token
         }))
+        dispatch(actions.getQuestions(res.data.Token,executeongetquestions))
       })
       .catch((err) => {
         console.log(err)

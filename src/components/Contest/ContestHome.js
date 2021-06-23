@@ -7,6 +7,7 @@ import Modal from "../utils/modals/modal";
 import { Redirect } from "react-router-dom";
 import Loader from '../Loader/Loader'
 import Navbar from "../Navbar";
+import {withRouter} from 'react-router-dom'
 
 class ContestHome extends Component {
   state = {
@@ -52,9 +53,17 @@ class ContestHome extends Component {
       this.props.getContestToken(this.props.userid,this.props.data[id].id);
       this.setState({redirect:true})
   };
+  executeongetquestions=() =>{
+    console.log('it ran')
+    // console.log(this.props.activecontest.contestname)
+   this.props.history.push({
+     pathname:`/contest/${this.props.activecontestdata.contestname}/questions`
+   })
+  }
  starttest=()=>{
-   this.props.gettesttoken(this.props.token,this.props.activecontestdata.id)
+   this.props.gettesttoken(this.props.token,this.props.activecontestdata.id,this.executeongetquestions)
  }
+
   render() {
     console.log(this.props.activecontestdata)
     // console.log(_id)
@@ -125,8 +134,8 @@ const mapDispatchToProps = (dispatch) => {
     getcontestinfo:(token,cid)=>{
       dispatch(actions.getcontestbyid(token,cid))
     },
-    gettesttoken:(token,cid)=>{
-      dispatch(actions.gettesttoken(token,cid))
+    gettesttoken:(token,cid,executeongetquestions)=>{
+      dispatch(actions.gettesttoken(token,cid,executeongetquestions))
     }
   };
 };
@@ -144,4 +153,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(ContestHome);
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(ContestHome));
