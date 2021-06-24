@@ -78,22 +78,22 @@ function ResponsiveDrawer(props) {
   const [hour, setHour] = React.useState(-1);
   const [minutes, setMinutes] = React.useState(-1);
   const [seconds, setSeconds] = React.useState(-1);
-  // const [show, setShow] = React.useState(false);
-  // const [redirect, setRedirect] = React.useState(false);
-  // const [message,setMessage] = React.useState("");
-  // const [confirmbutton,setConfirmbutton] =React.useState("");
+  const [show, setShow] = React.useState(false);
+  const [redirect, setRedirect] = React.useState(false);
+  const [message,setMessage] = React.useState("");
+  const [confirmbutton,setConfirmbutton] =React.useState("");
 
-  // const handleTestEnd = () => {
-  //   setRedirect(true);
-  // };
+  const handleTestEnd = () => {
+    setRedirect(true);
+  };
 
   //shows the selected option by the user
   useEffect(()=>{
   let myarray=JSON.parse(localStorage.getItem('submission')).answers
   console.log(myarray)
-  let idx
+
   if( myarray.length!=0){
-   idx=myarray.findIndex(question=>question.id==activequestion._id)
+  const idx=myarray.findIndex(question=>question.id==activequestion._id)
    if(idx!=-1){
      setValue(myarray[idx].value)
    }else{
@@ -150,13 +150,14 @@ function ResponsiveDrawer(props) {
   //   }, 1000);
   // }, []);
 
-  // //Submit Button
-  // const handlePostQuestions = () => {
-  //   props.postQuestions(props.contesttoken, localStorage.getItem(["submissions"]));
-  //   setShow(true);
-  //   setConfirmbutton("true");
-  //   setMessage("Are you sure you want to submit your test?")
-  // };
+  //Submit Button
+  const handlePostQuestions = () => {
+    // props.postQuestions(props.contesttoken, JSON.parse(localStorage.getItem('submission')).answers);
+    
+    setShow(prev=>!prev);
+    setConfirmbutton("true");
+    setMessage("Are you sure you want to submit your test?")
+  };
 
   //Post questions by timer
 
@@ -220,12 +221,29 @@ const handleFindValue = (questionid) => {
     // }
 };
 
-  // //Clear Selection
+  //Clear Selection
   // const removeArrayQuestions = (e) => {
   //   e.preventDefault();
   //   setValue("#");
-  //   localStorage.removeItem(["submissions"]);
+  //   localStorage.removeItem('submission');
   // };
+
+  //clear the selected option 
+  const removesubmission=()=>{
+     const myarray=JSON.parse(localStorage.getItem('submission')).answers
+     if(myarray.length!==0){
+       const idx=myarray.findIndex(question=>question.id==activequestion._id)
+       if(idx!=-1){
+         myarray.splice(idx,1)
+       }
+       localStorage.setItem('submission',JSON.stringify(
+         {
+           answers:myarray
+         }
+       ))
+       setValue(null)
+     }
+  }
 
   // Handle Previous Button
   const handlePrev = (e) => {
@@ -378,7 +396,7 @@ const handleFindValue = (questionid) => {
                   <Button
                     variant="contained"
                     color="secondary"
-                    // onClick={(e) => handlePostQuestions(e)}
+                    onClick={(e) => handlePostQuestions(e)}
                     className="submit-button"
                   >
                     Submit
@@ -448,17 +466,10 @@ const handleFindValue = (questionid) => {
               <div className="row">
                 <div className="column50">
                   <div className="row">
+                  
                     <div className="col-sm-6">
                       <button
-                        // onClick={(e) => createArrayQuestions(e)}
-                        className="login-button"
-                      >
-                        Save
-                      </button>
-                    </div>
-                    <div className="col-sm-6">
-                      <button
-                        // onClick={(e) => removeArrayQuestions(e)}
+                        onClick={removesubmission}
                         className="login-button"
                       >
                         Clear
@@ -473,12 +484,13 @@ const handleFindValue = (questionid) => {
       </main>
       {/* {authRedirect} */}
       <Modal
-        // show={show}
-        // message={message}
+        setShow={setShow}
+        show={show}
+        message={message}
         header="Caution!"
         field=""
-        // confirm={confirmbutton}
-        // redirect={(e) => handleTestEnd()}
+        confirm={confirmbutton}
+        redirect={(e) => handleTestEnd()}
       />
     </div>
   );
@@ -503,5 +515,4 @@ const mapStateToProps = (state) => {
     contestdata:state.contest.contestdata
   };
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(ResponsiveDrawer);

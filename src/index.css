@@ -131,6 +131,7 @@ a:hover {
 .login-button:hover {
   font-size: 16px;
   border: none;
+  cursor: pointer;
   color: #eee;
   background-color: #224056;
   padding: 8px 72px;

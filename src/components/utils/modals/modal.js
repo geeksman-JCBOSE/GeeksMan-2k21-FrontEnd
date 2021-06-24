@@ -51,7 +51,10 @@ function Modal(props) {
             </Button>
           ) : (
             <>
-              <Button onClick={handleClose} color="primary">
+              <Button onClick={(e)=>{
+                props.setShow(false)
+                handleClose(e)
+              }} color="primary">
                 Disagree
               </Button>
               <Button onClick={()=>{
