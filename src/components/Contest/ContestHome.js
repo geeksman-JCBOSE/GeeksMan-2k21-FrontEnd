@@ -28,7 +28,6 @@ class ContestHome extends Component {
   
   CompareDate = (e, start,end) => {
     e.preventDefault();
-
     let startdate = new Date(start);
     let enddate = new Date(end);
     let nowdate = Date();
@@ -65,7 +64,6 @@ class ContestHome extends Component {
  }
 
   render() {
-    console.log(this.props.activecontestdata)
     // console.log(_id)
     // let authRedirect = null;
 

@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
       flexShrink: 0,
     },
   },
-  appBar: {
+  appBar:{
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
@@ -68,35 +68,49 @@ function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [selectedindex, setselected] = React.useState(0);
   const [activequestion, setactivequestion] = React.useState(
-    props.questiondata[0]
+    JSON.parse(localStorage.getItem('Questions')).questions[0]
   );
   const [tickicon, setTickicon] = React.useState(
     <DoneIcon style={{ color: "green" }} />
   );
-  const [value, setValue] = React.useState(activequestion.options[0].value);
-  const [savedindex, setSavedindex] = React.useState(null);
+  const [value, setValue] = React.useState(null);
+  // const [savedindex, setSavedindex] = React.useState(null);
   const [hour, setHour] = React.useState(-1);
   const [minutes, setMinutes] = React.useState(-1);
   const [seconds, setSeconds] = React.useState(-1);
-  const [show, setShow] = React.useState(false);
-  const [redirect, setRedirect] = React.useState(false);
-  const [message,setMessage] = React.useState("");
-  const [confirmbutton,setConfirmbutton] =React.useState("");
+  // const [show, setShow] = React.useState(false);
+  // const [redirect, setRedirect] = React.useState(false);
+  // const [message,setMessage] = React.useState("");
+  // const [confirmbutton,setConfirmbutton] =React.useState("");
 
-  const handleTestEnd = () => {
-    setRedirect(true);
-  };
+  // const handleTestEnd = () => {
+  //   setRedirect(true);
+  // };
 
-  let authRedirect = null;
-
-  if (redirect) {
-    authRedirect = <Redirect to="/" />;
+  //shows the selected option by the user
+  useEffect(()=>{
+  let myarray=JSON.parse(localStorage.getItem('submission')).answers
+  console.log(myarray)
+  let idx
+  if( myarray.length!=0){
+   idx=myarray.findIndex(question=>question.id==activequestion._id)
+   if(idx!=-1){
+     setValue(myarray[idx].value)
+   }else{
+     setValue(null)
+   }
   }
+  },[selectedindex])
+  // let authRedirect = null;
 
-  React.useEffect(() => {
-    console.log(props.questiondata);
-    handleFindValue();
-  }, []);
+  // if (redirect) {
+  //   authRedirect = <Redirect to="/" />;
+  // }
+
+  // React.useEffect(() => {
+  //   console.log(props.questiondata);
+  //   handleFindValue();
+  // }, []);
 
   //Mobile Screen
   const handleDrawerToggle = () => {
@@ -104,160 +118,168 @@ function ResponsiveDrawer(props) {
   };
 
   //get Questions
-  useEffect(() => {
-    var countDownIs = new Date().getTime();
-    var countDownDate = countDownIs+(1*60*60*1000)
+  // useEffect(() => {
+  //   var countDownIs = new Date().getTime();
+  //   var countDownDate = countDownIs+(1*60*60*1000)
 
-    // Update the count down every 1 second
-    var x = setInterval(function () {
-      // Get todays date and time
-      var now = new Date().getTime();
+  //   // Update the count down every 1 second
+  //   var x = setInterval(function () {
+  //     // Get todays date and time
+  //     var now = new Date().getTime();
 
-      // Find the distance between now an the count down date
-      var distance = countDownDate - now;
+  //     // Find the distance between now an the count down date
+  //     var distance = countDownDate - now;
 
-      // Time calculations for days, hours, minutes and seconds
-      var hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      setHour(hours);
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      setMinutes(minutes);
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      setSeconds(seconds);
-      // Output the result in an element with id="demo"
+  //     // Time calculations for days, hours, minutes and seconds
+  //     var hours = Math.floor(
+  //       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  //     );
+  //     setHour(hours);
+  //     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  //     setMinutes(minutes);
+  //     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  //     setSeconds(seconds);
+  //     // Output the result in an element with id="demo"
 
-      // If the count down is over, write some text
-      if (hours === 0 && seconds === 0 && minutes === 0) {
-        clearInterval(x);
-        handePostForce();
+  //     // If the count down is over, write some text
+  //     if (hours === 0 && seconds === 0 && minutes === 0) {
+  //       clearInterval(x);
+  //       handePostForce();
         
-      }
-    }, 1000);
-  }, []);
+  //     }
+  //   }, 1000);
+  // }, []);
 
-  //Submit Button
-  const handlePostQuestions = () => {
-    props.postQuestions(props.contesttoken, localStorage.getItem(["submissions"]));
-    setShow(true);
-    setConfirmbutton("true");
-    setMessage("Are you sure you want to submit your test?")
-  };
+  // //Submit Button
+  // const handlePostQuestions = () => {
+  //   props.postQuestions(props.contesttoken, localStorage.getItem(["submissions"]));
+  //   setShow(true);
+  //   setConfirmbutton("true");
+  //   setMessage("Are you sure you want to submit your test?")
+  // };
 
   //Post questions by timer
 
-  const handePostForce=()=>{
-    props.postQuestions(props.contesttoken, localStorage.getItem(["submissions"]));
-    setShow(true);
-    setConfirmbutton("false");
-    setMessage("The time has ended your test has been successfully submitted!")
-  }
+  // const handePostForce=()=>{
+  //   props.postQuestions(props.contesttoken, localStorage.getItem(["submissions"]));
+  //   setShow(true);
+  //   setConfirmbutton("false");
+  //   setMessage("The time has ended your test has been successfully submitted!")
+  // }
 
-  //Load Selection of Radio Buttons
+  // Load Selection of Radio Buttons
   const createSelection = (e, value) => {
     setValue(e.target.value);
   };
 
-  const createArrayQuestions = (e) => {
-    e.preventDefault();
+  // const createArrayQuestions = (e) => {
+  //   e.preventDefault();
 
-    var myArray = [];
-    // load saved array
-    if (localStorage.getItem(["submissions"]) != null) {
-      myArray = JSON.parse(localStorage.getItem(["submissions"]));
-    }
+  //   var myArray = [];
+  //   // load saved array
+  //   if (localStorage.getItem(["submissions"]) != null) {
+  //     myArray = JSON.parse(localStorage.getItem(["submissions"]));
+  //   }
 
-    var data = {
-      Question_Id: activequestion._id,
-      optionchosen: value,
-    };
+  //   var data = {
+  //     Question_Id: activequestion._id,
+  //     optionchosen: value,
+  //   };
 
-    console.log(myArray.length);
+  //   console.log(myArray.length);
 
-    if (myArray.find((element) => element.Question_Id === activequestion._id)) {
-      for (var i = 0; i < myArray.length; i++) {
-        if (myArray[i].Question_Id === activequestion._id) {
-          myArray[i] = data;
-        }
-      }
-    } else {
-      myArray.push(data);
-    }
+  //   if (myArray.find((element) => element.Question_Id === activequestion._id)) {
+  //     for (var i = 0; i < myArray.length; i++) {
+  //       if (myArray[i].Question_Id === activequestion._id) {
+  //         myArray[i] = data;
+  //       }
+  //     }
+  //   } else {
+  //     myArray.push(data);
+  //   }
 
-    // re-save array
-    localStorage.setItem(["submissions"], JSON.stringify(myArray));
-  };
+  //   // re-save array
+  //   localStorage.setItem(["submissions"], JSON.stringify(myArray));
+  // };
 
-  const handleFindValue = (questionsid) => {
-    var myArray = [];
-    // load saved array
-    if (localStorage.getItem(["submissions"]) != null) {
-      myArray = JSON.parse(localStorage.getItem(["submissions"]));
-    }
-    var arris = myArray.find(
-      (element) => element.Question_Id === questionsid
-    );
+const handleFindValue = (questionid) => {
+    // var myArray = [];
+    // // load saved array
+    // if (localStorage.getItem(["submissions"]) != null) {
+    //   myArray = JSON.parse(localStorage.getItem(["submissions"]));
+    // }
+    // var arris = myArray.find(
+    //   (element) => element.Question_Id === questionsid
+    // );
 
-    if (arris !== undefined) {
-      setValue(arris.optionchosen);
-    }
-    else{
-      setValue(value);
-    }
-  };
+    // if (arris !== undefined) {
+    //   setValue(arris.optionchosen);
+    // }
+    // else{
+    //   setValue(value);
+    // }
+};
 
-  //Clear Selection
-  const removeArrayQuestions = (e) => {
-    e.preventDefault();
-    setValue("#");
-    localStorage.removeItem(["submissions"]);
-  };
+  // //Clear Selection
+  // const removeArrayQuestions = (e) => {
+  //   e.preventDefault();
+  //   setValue("#");
+  //   localStorage.removeItem(["submissions"]);
+  // };
 
-  //Handle Previous Button
+  // Handle Previous Button
   const handlePrev = (e) => {
     e.preventDefault();
-    handleFindValue(activequestion._id);
+    // handleFindValue(activequestion._id);
     if (selectedindex !== 0) {
       setselected(selectedindex - 1);
-      setactivequestion(props.questiondata[selectedindex - 1]);
-      console.log(selectedindex - 1);
-    } else {
-      setselected(selectedindex);
-      setactivequestion(props.questiondata[selectedindex]);
+      setactivequestion(JSON.parse(localStorage.getItem('Questions')).questions[selectedindex - 1]);
     }
   };
 
   //Handle Next Button
   const handleNext = (e) => {
     e.preventDefault();
-    handleFindValue(activequestion._id);
-    var len = Object.keys(props.questiondata).length - 1;
-    if (selectedindex !== len) {
+    // handleFindValue(activequestion._id);
+    var len = JSON.parse(localStorage.getItem('Questions')).questions.length - 1;
+    if (selectedindex !== len){
       setselected(selectedindex + 1);
-      setactivequestion(props.questiondata[selectedindex + 1]);
-      console.log(selectedindex + 1);
-    } else {
-      setselected(selectedindex);
-      setactivequestion(props.questiondata[selectedindex]);
+      setactivequestion(JSON.parse(localStorage.getItem('Questions')).questions[selectedindex+1]);
     }
   };
-
-  //Handle Green Tick
-
-  const handleGreenTick = (index) => {
-    var myArray = [];
-    if (localStorage.getItem(["submissions"]) !== null) {
-      myArray = JSON.parse(localStorage.getItem(["submissions"]));
+  // Handle Green Tick
+  const handleGreenTick = (_id) => {
+    let myArray = [];
+    if (localStorage.getItem('submission') !== null) {
+      myArray = JSON.parse(localStorage.getItem('submission')).answers;
     }
-
-    const help = myArray.findIndex((rank) => rank.Question_Id === index);
-    if (help >= 0 && help <= 49) {
+    let help
+    if(myArray.length!=0)
+     help = myArray.findIndex((question) => question.id === _id);
+    else 
+    return false
+    if(help!=-1){
       return true;
-    } else {
-      return false;
     }
+    return false
   };
 
+  const handleanswerclick=(_id,value)=>{
+      let answers=JSON.parse(localStorage.getItem('submission')).answers
+      if(answers.length===0){
+        answers.push({id:_id,value})
+      }else{
+      let idx=answers.findIndex(answer=>answer.id===_id)
+      if(idx!=-1){
+           answers[idx].value=value
+      }else{
+        answers.push({id:_id,value})
+      }
+    }
+    localStorage.setItem('submission',JSON.stringify({
+      answers
+    }))
+  }
   //Drawer Map
   var drawer = (
     <div>
@@ -267,31 +289,29 @@ function ResponsiveDrawer(props) {
       </ListItem>
       <Divider />
       <List>
-        {props.questiondata.map((questions, index) => (
+        {JSON.parse(localStorage.getItem('Questions')).questions.map((question, index) => (
           <React.Fragment>
             <ListItem
               button
               alignItems="center"
               index={index}
               selected={selectedindex === index}
-              key={questions._id}
+              key={question._id}
               onClick={() => {
-                setactivequestion(questions);
+                setactivequestion(question);
                 setselected(index);
-                handleFindValue(questions._id)
+                handleFindValue(question._id)
               }}
             >
               <ListItemIcon>
                 {" "}
                 <QuestionIcon />{" "}
               </ListItemIcon>
-              <ListItemText center primary={"Question-" + index} />
+              <ListItemText center primary={"Question-" + parseInt(index+1)} />
               <ListItemIcon>
-                {localStorage.getItem(["submissions"])
-                  ? handleGreenTick(questions._id)
-                    ? tickicon
-                    : null
-                  : null}
+                {localStorage.getItem('submission')&&handleGreenTick(question._id)&&(
+                  tickicon
+               )}
               </ListItemIcon>
             </ListItem>
             <Divider />
@@ -300,7 +320,6 @@ function ResponsiveDrawer(props) {
       </List>
     </div>
   );
-
   //Timer
 
   const container =
@@ -333,6 +352,10 @@ function ResponsiveDrawer(props) {
                   <Button
                     color="danger"
                     variant="contained"
+                    disabled={selectedindex===0}
+                    style={selectedindex===0?{color: 'rgba(0, 0, 0, 0.87)',
+                      boxShadow:' 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
+                      backgroundColor:'#e0e0e0',opacity:'.4'}:null}
                     onClick={(e) => handlePrev(e)}
                   >
                     &larr; prev
@@ -342,6 +365,10 @@ function ResponsiveDrawer(props) {
                   <Button
                     variant="contained"
                     color="danger"
+                    disabled={selectedindex===JSON.parse(localStorage.getItem('Questions')).questions.length-1}
+                    style={selectedindex===JSON.parse(localStorage.getItem('Questions')).questions.length-1?{color: 'rgba(0, 0, 0, 0.87)',
+                    boxShadow:' 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
+                    backgroundColor:'#e0e0e0',opacity:'.4'}:null}
                     onClick={(e) => handleNext(e)}
                   >
                     next &rarr;
@@ -351,7 +378,7 @@ function ResponsiveDrawer(props) {
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={(e) => handlePostQuestions(e)}
+                    // onClick={(e) => handlePostQuestions(e)}
                     className="submit-button"
                   >
                     Submit
@@ -405,26 +432,16 @@ function ResponsiveDrawer(props) {
           <div className="optionsselect">
             <FormControl component="fieldset">
               <RadioGroup aria-label="Questions" name="Question" value={value} >
-                <FormControlLabel
-                  value={activequestion.options[0].value}
-                  control={<Radio onClick={(e) => createSelection(e)} />}
-                  label={activequestion.options[0].option}
-                />
-                <FormControlLabel
-                  value={activequestion.options[1].value}
-                  control={<Radio onClick={(e) => createSelection(e)} />}
-                  label={activequestion.options[1].option}
-                />
-                <FormControlLabel
-                  value={activequestion.options[2].value}
-                  control={<Radio onClick={(e) => createSelection(e)} />}
-                  label={activequestion.options[2].option}
-                />
-                <FormControlLabel
-                  value={activequestion.options[3].value}
-                  control={<Radio onClick={(e) => createSelection(e)} />}
-                  label={activequestion.options[3].option}
-                />
+                {
+                  activequestion.options.map((option)=>{
+                    return   <FormControlLabel
+                    onInput={()=>handleanswerclick(activequestion._id,option.value)}
+                    value={option.value}
+                    control={<Radio onClick={(e) => createSelection(e)} />}
+                    label={option.value}
+                  />
+                  })
+                }
               </RadioGroup>
               <br />
               <br />
@@ -433,7 +450,7 @@ function ResponsiveDrawer(props) {
                   <div className="row">
                     <div className="col-sm-6">
                       <button
-                        onClick={(e) => createArrayQuestions(e)}
+                        // onClick={(e) => createArrayQuestions(e)}
                         className="login-button"
                       >
                         Save
@@ -441,7 +458,7 @@ function ResponsiveDrawer(props) {
                     </div>
                     <div className="col-sm-6">
                       <button
-                        onClick={(e) => removeArrayQuestions(e)}
+                        // onClick={(e) => removeArrayQuestions(e)}
                         className="login-button"
                       >
                         Clear
@@ -454,14 +471,14 @@ function ResponsiveDrawer(props) {
           </div>
         </Typography>
       </main>
-      {authRedirect}
+      {/* {authRedirect} */}
       <Modal
-        show={show}
-        message={message}
+        // show={show}
+        // message={message}
         header="Caution!"
         field=""
-        confirm={confirmbutton}
-        redirect={(e) => handleTestEnd()}
+        // confirm={confirmbutton}
+        // redirect={(e) => handleTestEnd()}
       />
     </div>
   );

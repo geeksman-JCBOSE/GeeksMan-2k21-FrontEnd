@@ -39,6 +39,10 @@ export const getQuestions = (token,executeongetquestions) => {
       .then((res) => {
        
         console.log('Questions Get ', res.data);
+        localStorage.setItem('Questions',JSON.stringify({
+          questions:res.data
+        }))
+        localStorage.setItem('submission',JSON.stringify({answers:[]}))
         dispatch(executeongetquestions())
         dispatch(
           getQuestionsSuccess(res.data)
