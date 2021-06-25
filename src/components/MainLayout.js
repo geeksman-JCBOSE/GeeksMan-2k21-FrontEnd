@@ -12,14 +12,16 @@ import ContestHome from './Contest/ContestHome'
 import * as actions from "../store/actions/index";
 import Loader from './Loader/Loader'
 import ContestProblem from './questionpage/Questiondrawer'
+import Testsubmitsuccess from './utils/Testsubmitsuccess'
 class MainLayout extends Component {
   componentDidMount(){
-    this.props.authCheckStatus();  
+    
   }
   render(){
     if(this.props.isAuthenticated){
       this.props.getUser(this.props.userid)
     }
+    this.props.authCheckStatus(); 
   return (
     <div className="main-layout">
       <BrowserRouter>
@@ -34,6 +36,7 @@ class MainLayout extends Component {
             <Route path="/loader" component={Loader} />
             <Route path="/contest/:cname/questions" component={ContestProblem}/>
             <Route path="/contests/:cname" component={ContestHome}/>
+            <Route path="/submit" component={Testsubmitsuccess}/>
             <Route path="*" component={NotFound} />
           </Switch>
         ) : (

@@ -25,8 +25,7 @@ export const getQuestionsFail = (error) => {
 
 
 
-export const getQuestions = (token,executeongetquestions) => {
-  console.log(token)
+export const getQuestions = (token,executeongetquestions,testtime) => {
   return (dispatch) =>{
     dispatch(getQuestionsStart());
         axios({
@@ -39,6 +38,12 @@ export const getQuestions = (token,executeongetquestions) => {
       .then((res) => {
        
         console.log('Questions Get ', res.data);
+        localStorage.setItem('Testtoken',JSON.stringify({
+          token
+        }))
+        localStorage.setItem('endtime',JSON.stringify({
+          endtime:testtime
+        }))
         localStorage.setItem('Questions',JSON.stringify({
           questions:res.data
         }))
@@ -80,24 +85,17 @@ export const postQuestionsStart = () => {
   
   
   
-  export const postQuestions = (token,data) => {
+  export const postQuestions = (token,data,redirectonsubmit) => {
     return (dispatch) => {
-    
-      var answer = JSON.parse(data);
-      
-
       var postData = ({
-        answer:answer
+        answer:data
       });
-
       console.log(postData)
-  
       let axiosConfig = {
         headers: {
           'Authorization': 'Bearer '+token
         },
       };
-  
       axios
         .post(
           process.env.REACT_APP_PUBLIC+"/submit",
@@ -105,8 +103,13 @@ export const postQuestionsStart = () => {
           axiosConfig
         )
         .then((res) => {
-          console.log('Questions Posted ', res);
-          localStorage.clear(["submissions"])
+          setTimeout(()=>{
+          localStorage.removeItem('submission')
+          localStorage.removeItem('Questions')
+          localStorage.removeItem('Testtoken')
+          localStorage.removeItem('endtime')
+          },2000)
+          dispatch(redirectonsubmit())
           dispatch(
             postQuestionsSuccess(res.status)
           );

@@ -61,7 +61,12 @@ function Modal(props) {
                 if(props.page==="login")
                 history.push("/login")
                 else if(props.page==="/userpanel")
-                history.push("/userpanel")}} color="primary" autoFocus>
+                history.push("/userpanel")
+                
+                if(props.handlepostquestions){
+                  props.handlepostquestions()
+                }
+                }} color="primary" autoFocus>
                 Agree
               </Button>
             </>

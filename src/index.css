@@ -129,21 +129,29 @@ a:hover {
 }
 
 .login-button:hover {
-  font-size: 16px;
-  border: none;
+  box-shadow: 0 6px 10px 2px #49c2b9;
   cursor: pointer;
   color: #eee;
+}
+.MuiTypography-paragraph {
+  padding-left: 3rem!important;
+  padding-top: 3rem!important;
+}
+.clear-button{
+  font-size: 16px;
+  border: none;
+  color: #eee;
   background-color: #224056;
-  padding: 8px 72px;
+  padding: 8px 26px;
+  white-space: nowrap;
   margin: 18px;
   box-shadow: 0 6px 10px 2px #ccc;
   text-decoration: none;
 }
-
-.login-button:hover {
+.clear-button:hover{
   box-shadow: 0 6px 10px 2px #49c2b9;
+  cursor: pointer;
 }
-
 .mainLogo {
   display: block;
   margin-left: auto;

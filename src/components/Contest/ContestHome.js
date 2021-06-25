@@ -54,16 +54,15 @@ class ContestHome extends Component {
   };
   executeongetquestions=() =>{
     console.log('it ran')
-    // console.log(this.props.activecontest.contestname)
    this.props.history.push({
      pathname:`/contest/${this.props.activecontestdata.contestname}/questions`
    })
   }
  starttest=()=>{
-   this.props.gettesttoken(this.props.token,this.props.activecontestdata.id,this.executeongetquestions)
+   this.props.gettesttoken(this.props.token,this.props.activecontestdata.id,this.executeongetquestions,"2021-06-25T23:52:00.894")
  }
-
   render() {
+    console.log(this.props.activecontestdata?this.props.activecontestdata.endtime:null)
     // console.log(_id)
     // let authRedirect = null;
 
@@ -132,8 +131,8 @@ const mapDispatchToProps = (dispatch) => {
     getcontestinfo:(token,cid)=>{
       dispatch(actions.getcontestbyid(token,cid))
     },
-    gettesttoken:(token,cid,executeongetquestions)=>{
-      dispatch(actions.gettesttoken(token,cid,executeongetquestions))
+    gettesttoken:(token,cid,executeongetquestions,testtime)=>{
+      dispatch(actions.gettesttoken(token,cid,executeongetquestions,testtime))
     }
   };
 };

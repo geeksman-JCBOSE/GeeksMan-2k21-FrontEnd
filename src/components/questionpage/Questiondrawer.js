@@ -24,7 +24,7 @@ import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import aayush from "../images/png/aayush.jpg";
 import Modal from "../utils/modals/modal";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 const drawerWidth = 290;
 
@@ -117,57 +117,61 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
-  //get Questions
-  // useEffect(() => {
-  //   var countDownIs = new Date().getTime();
-  //   var countDownDate = countDownIs+(1*60*60*1000)
+  // get Questions
+  useEffect(() => {
+    var countDownIs = new Date().getTime();
+    var countDownDate = new Date(JSON.parse(localStorage.getItem('endtime')).endtime).getTime()
+    console.log(JSON.parse(localStorage.getItem('endtime')).endtime)
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+      // Get todays date and time
+      var now = new Date().getTime();
 
-  //   // Update the count down every 1 second
-  //   var x = setInterval(function () {
-  //     // Get todays date and time
-  //     var now = new Date().getTime();
+      // Find the distance between now an the count down date
+      var distance = countDownDate - now;
 
-  //     // Find the distance between now an the count down date
-  //     var distance = countDownDate - now;
+      // Time calculations for days, hours, minutes and seconds
+      var hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      setHour(hours);
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      setMinutes(minutes);
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      setSeconds(seconds);
+      // Output the result in an element with id="demo"
 
-  //     // Time calculations for days, hours, minutes and seconds
-  //     var hours = Math.floor(
-  //       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  //     );
-  //     setHour(hours);
-  //     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  //     setMinutes(minutes);
-  //     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  //     setSeconds(seconds);
-  //     // Output the result in an element with id="demo"
-
-  //     // If the count down is over, write some text
-  //     if (hours === 0 && seconds === 0 && minutes === 0) {
-  //       clearInterval(x);
-  //       handePostForce();
+      // If the count down is over, write some text
+      if (hours === 0 && seconds === 0 && minutes === 0) {
+        clearInterval(x);
+        handePostForce();
         
-  //     }
-  //   }, 1000);
-  // }, []);
+      }
+    }, 1000);
+  }, []);
 
   //Submit Button
   const handlePostQuestions = () => {
     // props.postQuestions(props.contesttoken, JSON.parse(localStorage.getItem('submission')).answers);
-    
     setShow(prev=>!prev);
     setConfirmbutton("true");
     setMessage("Are you sure you want to submit your test?")
   };
-
-  //Post questions by timer
-
-  // const handePostForce=()=>{
-  //   props.postQuestions(props.contesttoken, localStorage.getItem(["submissions"]));
-  //   setShow(true);
-  //   setConfirmbutton("false");
-  //   setMessage("The time has ended your test has been successfully submitted!")
-  // }
-
+  const history=useHistory()
+  const redirecttosubmit=()=>{
+    history.push('/submit')
+  }
+  // Post questions by timer
+  const handePostForce=()=>{
+    props.postQuestions(JSON.parse(localStorage.getItem('Testtoken')).token,JSON.parse(localStorage.getItem('submission')).answers,redirecttosubmit)
+    setShow(true);
+    setConfirmbutton("false");
+    setMessage("The time has ended your test has been successfully submitted!")
+  }
+  const handlepostquestions=()=>{
+    console.log('submitted')
+     props.postQuestions(JSON.parse(localStorage.getItem('Testtoken')).token,JSON.parse(localStorage.getItem('submission')).answers,redirecttosubmit)
+  }
   // Load Selection of Radio Buttons
   const createSelection = (e, value) => {
     setValue(e.target.value);
@@ -254,7 +258,7 @@ const handleFindValue = (questionid) => {
       setactivequestion(JSON.parse(localStorage.getItem('Questions')).questions[selectedindex - 1]);
     }
   };
-
+   
   //Handle Next Button
   const handleNext = (e) => {
     e.preventDefault();
@@ -443,7 +447,7 @@ const handleFindValue = (questionid) => {
         <Typography paragraph>
           <div className="mainquestion">
             <p>
-              <span>Question: </span>
+              <span><b>Question{selectedindex+1}</b>&nbsp;&nbsp;</span>
               {activequestion.question}
             </p>
           </div>
@@ -470,9 +474,9 @@ const handleFindValue = (questionid) => {
                     <div className="col-sm-6">
                       <button
                         onClick={removesubmission}
-                        className="login-button"
+                        className="clear-button"
                       >
-                        Clear
+                        Clear Choice
                       </button>
                     </div>
                   </div>
@@ -490,6 +494,7 @@ const handleFindValue = (questionid) => {
         header="Caution!"
         field=""
         confirm={confirmbutton}
+        handlepostquestions={handlepostquestions}
         redirect={(e) => handleTestEnd()}
       />
     </div>
@@ -501,8 +506,8 @@ const mapDispatchToProps = (dispatch) => {
     getQuestions: (token) => {
       dispatch(actions.getQuestions(token));
     },
-    postQuestions: (token, data) => {
-      dispatch(actions.postQuestions(token, data));
+    postQuestions: (token, data,redirecttosubmit) => {
+      dispatch(actions.postQuestions(token, data,redirecttosubmit));
     },
   };
 };
