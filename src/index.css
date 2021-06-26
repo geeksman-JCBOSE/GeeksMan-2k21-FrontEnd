@@ -32,6 +32,12 @@
   /* new */
   --homebackground:#f6fcfb;
   --home-text:black;
+  --nav-link:black;
+  --contestbackground:white;
+  --contestHeader:#eee;
+  --contestcardbody:white;
+  --contest-description:#616161;
+  --black-to-pink:black;
 }
 
 /*----------  fonts  ----------*/
@@ -86,9 +92,10 @@ a:hover {
 .homepage {
   height: 100vh;
   box-sizing: border-box;
-  background-color: #f6fcfb;
+  background-color: var(--homebackground);
   background-image: url("components/images/svg/bg-binary.svg");
   background-size: cover;
+  color: var(--home-text);
 }
 
 .owl-theme .item {
@@ -424,7 +431,7 @@ a:hover {
 .contest-slide {
   padding-top: 5%;
   text-align: center;
-  color: #444;
+  color: var(--home-text);
 }
 
 .contest-box-container {
@@ -597,11 +604,11 @@ nav {
   align-items: center;
 }
 .navbar-logo{
-  color: black;
+  color: var(--nav-link);
   font-weight: 600;
 }
 .navbar-logo:hover{
-  color: black;
+  color: var(--nav-link);
 }
 .navbar__links ul {
   display: flex;
@@ -614,7 +621,7 @@ nav {
 }
 .navbar__links ul a li,.navbar__links ul div li {
   font-size: 1.3rem;
-  color:black;
+  color:var(--nav-link);
   letter-spacing: 0.1rem;
 }
 
@@ -913,6 +920,7 @@ nav {
 
 .contests-container,
 .practice-container {
+  background-color: var(--contestbackground);
   padding: 12px 72px;
 }
 
@@ -932,6 +940,9 @@ nav {
   
   margin-bottom: 24px;
 }
+.row h3{
+  color:var(--primary);
+}
 .contest_sections{
   margin-top: 1rem;
 }
@@ -939,7 +950,7 @@ nav {
   display: inline-block;
   font-size: 30px;
   font-weight: 600;
-  color: #224056;
+  color: var(--primary);
   transition: all .2s;
 }
 .contests-section-heading:hover{
@@ -1022,9 +1033,11 @@ nav {
     letter-spacing: .2px;
     font-weight: 700;
     min-height: 50px;
+    color:var(--home-text);
 }
 .contestmiddlebody{
   padding: 20px 16px;
+  background-color: var(--contestcardbody);
 }
 .contest-card:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -1034,7 +1047,7 @@ nav {
 .contestdetails{
   justify-content: space-between;
   display: flex;
-    border-bottom: 1px solid #f3f3f3;
+    border-bottom: 1px solid transparent;
     padding-bottom: 10px;
 }
 .contestinfoitem{
@@ -1044,8 +1057,9 @@ nav {
 }
 .eventlabel{
   font-size:.9rem;
-  color: rgba(28,28,28,.6);
+  color: var(--black-to-pink);
   margin: 0;
+  white-space: nowrap;
 }
 
 .eventvalue{
@@ -1058,7 +1072,7 @@ nav {
   height: 57px;
   font-size:1.1rem;
   line-height: 19px;
-  color: #616161;
+  color: var(--contest-description);
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
@@ -1073,6 +1087,7 @@ nav {
     border-top: 1px solid hsla(0,0%,59.2%,.1);
     min-height: 30px;
     align-items:center;
+    background-color: var(--contestcardbody);
 }
 
 

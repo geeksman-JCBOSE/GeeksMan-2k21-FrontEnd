@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -11,24 +11,46 @@ import Geeksman from "./images/png/geeksman.png";
 import "bootstrap/js/src/collapse.js";
 
 const Navbar = (props) => {
-  const [state, setState] = React.useState({
-    checkedA: true,
-  });
-  if(state.checkedA==false){
+const [state,setState]=useState('light')
+  useEffect(() => {
+    const mode=localStorage.getItem('mode')
+    if(!mode){
+      localStorage.setItem('mode',JSON.stringify({
+        mode:'light'
+      }))
+     setState('light');
+    }
+    else{
+      setState(JSON.parse(localStorage.getItem('mode')).mode)
+    }
+  }, [])
+  if(state==='dark'){
     //enable dark mode...
+  
     console.log('dark mode')
-    document.documentElement.style.setProperty('--homebackground', 'rgba(31, 29, 29, 0.882)');
+    document.documentElement.style.setProperty('--homebackground', 'rgb(25,30,44)');
     document.documentElement.style.setProperty('--home-text', 'white');
+    document.documentElement.style.setProperty('--nav-link', 'white');
     document.documentElement.style.setProperty('--primary', 'white');
+    document.documentElement.style.setProperty('--contestbackground', 'rgb(25,30,44)');
+    document.documentElement.style.setProperty('--contestHeader', '#673AB7');
+    document.documentElement.style.setProperty('--contestcardbody', '#2B2F3E');
+    document.documentElement.style.setProperty('--black-to-pink', '#EE4861');
     const initialcolor= getComputedStyle(document.documentElement)
     .getPropertyValue('--home-text')
     console.log(initialcolor)
   }
-  if(state.checkedA==true){
+  if(state==='light'){
     console.log('light mode')
     document.documentElement.style.setProperty('--homebackground', '#f6fcfb');
     document.documentElement.style.setProperty('--home-text', 'black');
+    document.documentElement.style.setProperty('--nav-link', 'black');
     document.documentElement.style.setProperty('--primary', '#224056');
+    document.documentElement.style.setProperty('--contestbackground', 'white');
+    document.documentElement.style.setProperty('--contestHeader', '#eee');
+    document.documentElement.style.setProperty('--contestcardbody', 'white');
+    document.documentElement.style.setProperty('--contest-description', '#616161');
+    document.documentElement.style.setProperty('--black-to-pink', 'black');
     const initialcolor= getComputedStyle(document.documentElement)
     .getPropertyValue('--home-text')
     console.log(initialcolor)
@@ -36,7 +58,18 @@ const Navbar = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    if(state==='light'){
+      localStorage.setItem('mode',JSON.stringify({
+        mode:'dark'
+      }))
+      setState('dark')
+    }
+    else{
+      localStorage.setItem('mode',JSON.stringify({
+        mode:'light'
+      }))
+      setState('light')
+    }
   };
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -91,7 +124,7 @@ const Navbar = (props) => {
               <div className="navbar__userprofile">
            
              {props.isAuthenticated&&(
-                <div>
+                <div style={{color:`${getComputedStyle(document.documentElement).getPropertyValue('--home-text')}`}} >
                 <IconButton
                    aria-label="account of current user"
                     aria-controls="menu-appbar"
@@ -122,7 +155,7 @@ const Navbar = (props) => {
                 </div>
              )}   
                   <Switch
-                    checked={state.checkedA}
+                    checked={!(state==='light')}
                     onChange={handleChange}
                     name="checkedA"
                     inputProps={{ 'aria-label': 'secondary checkbox' }}
