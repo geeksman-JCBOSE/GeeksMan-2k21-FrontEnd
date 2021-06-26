@@ -21,79 +21,86 @@ const Navbar = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleburgerclick=()=>{
+    const burger=document.querySelector('.navbar-burger')
+    const nav=document.querySelector('.navbar__links ul')
+    nav.classList.toggle('nav-active')
+    burger.classList.toggle('toggle')
+    const navlinks=document.querySelectorAll('.navbar__links ul a')
+    navlinks.forEach((link,index)=>{
+        if(link.style.animation){
+            link.style.animation=``
+        }else{
+         link.style.animation=`navlinksfade 0.5s ease forwards ${index/7+.5}s`
+        }
+    })
+}
 
   return (
-    <nav className="navbar navbar-expand-md">
-      <div className="container-fluid">
-        <Link className="navbar-logo navbar-brand" to="/">
-          <img alt="svgImg" width="48px" src={Geeksman} />
-          GeeksMan
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+            <div className="navbar">
+                <div className="navbar__container">
+                <div className="navbar-burger" onClick={handleburgerclick}>
+                          <div className="line1"></div>
+                          <div className="line2"></div>
+                          <div className="line3"></div>
+                      </div>
+                  <div className="navbar__logo-links">
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/contests">
-                Contests
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link  " to="/about">
-                About
-              </NavLink>
-            </li>
-            {props.isAuthenticated&&(<li className="nav-item">
-          <div className="nav-link logout" onClick={props.authlogout}>
-                Logout    
-          </div>
-          </li>)}
-          
-            {props.isAuthenticated && (
-              <div>
-                <IconButton
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleMenu}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={open}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}><Link to="/userpanel">Profile</Link></MenuItem>
-                  <MenuItem onClick={handleClose}><Link to="/userpanel">Settings</Link></MenuItem>
-                </Menu>
+                  <div className="navbar__logo">
+                    <Link className="navbar-logo" to="/">
+                    <img src={Geeksman}/> GeeksMan
+                    </Link>
+                    
+                  </div>
+              <div className="navbar__links">
+                 <ul>
+                     <Link to="/" ><li>Home</li></Link>
+                     <Link to="/contests"><li>Contests</li></Link>
+                     <Link to="/about"><li>About</li></Link>
+                     {props.isAuthenticated&&(
+                     <Link onClick={props.authlogout}><li> Logout</li></Link>
+                     )}
+                 </ul>
               </div>
-            )}
-          </ul>
-        </div>
-      </div>
-    </nav>
+              </div>
+            
+              <div className="navbar__userprofile">
+             {props.isAuthenticated&&(
+                <div>
+                <IconButton
+                   aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                   aria-haspopup="true"
+                   onClick={handleMenu}
+                   color="inherit"
+                   >
+                   <AccountCircle />
+                 </IconButton>
+                 <Menu
+                   id="menu-appbar"
+                   anchorEl={anchorEl}
+                   anchorOrigin={{
+                     vertical: "top",
+                     horizontal: "right",
+                   }}
+                   keepMounted
+                   transformOrigin={{
+                     vertical: "top",
+                     horizontal: "right",
+                   }}
+                   open={open}
+                   onClose={handleClose}
+                 >
+                   <MenuItem onClick={handleClose}><Link to="/userpanel">Profile</Link></MenuItem>
+                   <MenuItem onClick={handleClose}><Link to="/userpanel">Settings</Link></MenuItem>
+                  </Menu>
+                </div>
+             )}   
+               
+            </div>
+              </div>
+              </div>
+    
   );
 };
 
