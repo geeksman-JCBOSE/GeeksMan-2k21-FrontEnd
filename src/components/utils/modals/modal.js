@@ -9,8 +9,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import * as actions from "../../../store/actions/index";
 import { connect } from "react-redux";
 import {useHistory} from 'react-router-dom'
+import Loader from  '../../Loader/Loader'
 function Modal(props) {
-  const [open, setOpen] = React.useState(true);
   const [email,setEmail] = React.useState("");
   const history=useHistory()
   const handleClose = (e) => {
@@ -18,12 +18,12 @@ function Modal(props) {
     if(props.field!==""){
       props.changePassword(email);
     }
-    setOpen(false);
   };
   return (
     <div>
+     
       <Dialog
-        open={open && props.show}
+        open={props.show}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -46,23 +46,31 @@ function Modal(props) {
         </DialogContent>
         <DialogActions>
           {props.confirm === "false" ? (
-            <Button onClick={e=>handleClose(e)} color="primary" autoFocus>
+            <Button onClick={e=>{
+              if(props.setShow)
+              props.setShow()
+              handleClose(e)    
+              }} color="primary" autoFocus>
               Agree
             </Button>
           ) : (
             <>
               <Button onClick={(e)=>{
-                props.setShow(false)
+                props.setShow()
                 handleClose(e)
               }} color="primary">
                 Disagree
               </Button>
               <Button onClick={()=>{
+                 if(props.setShow)
+                   props.setShow()
                 if(props.page==="login")
                 history.push("/login")
                 else if(props.page==="/userpanel")
                 history.push("/userpanel")
-                
+                if(props.starttest){
+                  props.starttest()
+                }
                 if(props.handlepostquestions){
                   props.handlepostquestions()
                 }

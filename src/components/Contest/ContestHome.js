@@ -28,10 +28,9 @@ class ContestHome extends Component {
   
   CompareDate = (e, start,end) => {
     e.preventDefault();
-    let startdate = new Date(start);
-    let enddate = new Date(end);
-    let nowdate = Date();
-    console.log(startdate)
+    let startdate = new Date(start).getTime();
+    let enddate = new Date(end).getTime();
+    let nowdate = Date.now();
         if (startdate > nowdate && nowdate<enddate) {
             this.setState({ open: true, message: "The contest is not active. Either the Contest has not started or its not your slot, please wait for your time slot or the contest to start.", header:"Message!" });
         }
@@ -47,11 +46,9 @@ class ContestHome extends Component {
             })
         }
   };
-  onRedirect = (e,id) => {
-      e.preventDefault(); 
-      this.props.getContestToken(this.props.userid,this.props.data[id].id);
-      this.setState({redirect:true})
-  };
+  setShow=()=>{
+    this.setState({open:false})
+  }
   executeongetquestions=() =>{
     console.log('it ran')
    this.props.history.push({
@@ -62,24 +59,14 @@ class ContestHome extends Component {
    this.props.gettesttoken(this.props.token,this.props.activecontestdata.id,this.executeongetquestions,"2021-06-25T23:52:00.894")
  }
   render() {
-    console.log(this.props.activecontestdata?this.props.activecontestdata.endtime:null)
-    // console.log(_id)
-    // let authRedirect = null;
-
-    // var id=(localStorage.getItem("activecontest"));
-
-    // if (this.state.redirect && this.props.contesttoken!==null) {
-    //   this.props.getQuestions(this.props.contesttoken)
-    // }
-    // if(this.props.questiondata!==null){
-    //   authRedirect = (
-    //     <Redirect to={"/contests/" + this.props.data[id].Contestname + "/questions"} />
-    //   );
-    // }
-
     return (
       <>
       <div id="contest-home">
+      {this.props.loading&&(
+        <Loader/>
+      )
+      }
+    
         <Navbar/>
         <ContestHeader content="Contest Details" />
         <div className="row">
@@ -97,23 +84,23 @@ class ContestHome extends Component {
           </div>
           <div className="col-md-5">
             <button
-            // onClick={e=>this.CompareDate(e,this.props.activecontestdata.starttime,this.props.activecontestdata.endtime)}
+              onClick={e=>this.CompareDate(e,"2021-06-26T22:20:00.894","2021-06-26T23:52:00.894")}
               className="contest-register-button"
-              onClick={this.starttest}
+              // onClick={this.starttest}
             >
               Start Now
             </button>
           </div>
         </div>
-        {/* <Modal
+        <Modal
           show={this.state.open}
+          setShow={this.setShow}
           message={this.state.message}
-          redirect={e=>this.onRedirect(e,id)}
           confirm={this.state.confirm}
           heading={this.state.header}
+          starttest={this.starttest}
           field=""
-        /> */}
-        {/* {authRedirect}  */}
+        />
       </div>
       </>
     );
@@ -146,7 +133,7 @@ const mapStateToProps = (state) => {
     registeruserdata:state.contest.registeruserdata,
     contesttoken:state.contest.contesttoken,
     questiondata: state.question.questionsdata,
-    loading:state.contest.tokenloading
+    loading:state.starttestloading.loading
   };
 };
 

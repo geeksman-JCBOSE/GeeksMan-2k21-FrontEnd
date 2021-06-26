@@ -278,6 +278,7 @@ export const getContestToken = (uid,cid) => {
 /*==========================Get test token=======================*/
 export const gettesttoken=(token,cid,executeongetquestions,testtime)=>{
   return (dispatch)=>{
+   dispatch(actions.setteststartloading())
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_PUBLIC}/gettesttoken`,
@@ -291,6 +292,7 @@ export const gettesttoken=(token,cid,executeongetquestions,testtime)=>{
         dispatch(actions.getQuestions(res.data.Token,executeongetquestions,testtime))
       })
       .catch((err) => {
+        dispatch(actions.resetteststartloading())
         console.log(err)
       });
   }

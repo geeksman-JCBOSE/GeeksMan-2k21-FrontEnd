@@ -9,3 +9,5 @@ export { getUser, postUser, getUserContest, patchUser } from "./users";
 export {getMember} from './about'
 
 export {setloading,resetloading} from './loading'
+
+export {setteststartloading,resetteststartloading} from './Teststartloading'

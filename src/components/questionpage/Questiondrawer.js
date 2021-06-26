@@ -22,9 +22,9 @@ import DoneIcon from "@material-ui/icons/Done";
 import Button from "@material-ui/core/Button";
 import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
-import aayush from "../images/png/aayush.jpg";
 import Modal from "../utils/modals/modal";
-import { Redirect, useHistory } from "react-router-dom";
+import Loader from '../Loader/Loader'
+import {  useHistory } from "react-router-dom";
 
 const drawerWidth = 290;
 
@@ -82,6 +82,11 @@ function ResponsiveDrawer(props) {
   const [redirect, setRedirect] = React.useState(false);
   const [message,setMessage] = React.useState("");
   const [confirmbutton,setConfirmbutton] =React.useState("");
+// history for redirecting to submit page
+  const history=useHistory()
+  const redirecttosubmit=()=>{
+    history.push('/submit')
+  }
 
   const handleTestEnd = () => {
     setRedirect(true);
@@ -101,16 +106,6 @@ function ResponsiveDrawer(props) {
    }
   }
   },[selectedindex])
-  // let authRedirect = null;
-
-  // if (redirect) {
-  //   authRedirect = <Redirect to="/" />;
-  // }
-
-  // React.useEffect(() => {
-  //   console.log(props.questiondata);
-  //   handleFindValue();
-  // }, []);
 
   //Mobile Screen
   const handleDrawerToggle = () => {
@@ -152,15 +147,11 @@ function ResponsiveDrawer(props) {
 
   //Submit Button
   const handlePostQuestions = () => {
-    // props.postQuestions(props.contesttoken, JSON.parse(localStorage.getItem('submission')).answers);
     setShow(prev=>!prev);
     setConfirmbutton("true");
     setMessage("Are you sure you want to submit your test?")
   };
-  const history=useHistory()
-  const redirecttosubmit=()=>{
-    history.push('/submit')
-  }
+ 
   // Post questions by timer
   const handePostForce=()=>{
     props.postQuestions(JSON.parse(localStorage.getItem('Testtoken')).token,JSON.parse(localStorage.getItem('submission')).answers,redirecttosubmit)
@@ -177,60 +168,6 @@ function ResponsiveDrawer(props) {
     setValue(e.target.value);
   };
 
-  // const createArrayQuestions = (e) => {
-  //   e.preventDefault();
-
-  //   var myArray = [];
-  //   // load saved array
-  //   if (localStorage.getItem(["submissions"]) != null) {
-  //     myArray = JSON.parse(localStorage.getItem(["submissions"]));
-  //   }
-
-  //   var data = {
-  //     Question_Id: activequestion._id,
-  //     optionchosen: value,
-  //   };
-
-  //   console.log(myArray.length);
-
-  //   if (myArray.find((element) => element.Question_Id === activequestion._id)) {
-  //     for (var i = 0; i < myArray.length; i++) {
-  //       if (myArray[i].Question_Id === activequestion._id) {
-  //         myArray[i] = data;
-  //       }
-  //     }
-  //   } else {
-  //     myArray.push(data);
-  //   }
-
-  //   // re-save array
-  //   localStorage.setItem(["submissions"], JSON.stringify(myArray));
-  // };
-
-const handleFindValue = (questionid) => {
-    // var myArray = [];
-    // // load saved array
-    // if (localStorage.getItem(["submissions"]) != null) {
-    //   myArray = JSON.parse(localStorage.getItem(["submissions"]));
-    // }
-    // var arris = myArray.find(
-    //   (element) => element.Question_Id === questionsid
-    // );
-
-    // if (arris !== undefined) {
-    //   setValue(arris.optionchosen);
-    // }
-    // else{
-    //   setValue(value);
-    // }
-};
-
-  //Clear Selection
-  // const removeArrayQuestions = (e) => {
-  //   e.preventDefault();
-  //   setValue("#");
-  //   localStorage.removeItem('submission');
-  // };
 
   //clear the selected option 
   const removesubmission=()=>{
@@ -322,7 +259,6 @@ const handleFindValue = (questionid) => {
               onClick={() => {
                 setactivequestion(question);
                 setselected(index);
-                handleFindValue(question._id)
               }}
             >
               <ListItemIcon>
@@ -349,6 +285,10 @@ const handleFindValue = (questionid) => {
 
   return (
     <div className={classes.root}>
+      {props.loading&&(
+         <Loader/>
+      )}
+     
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
@@ -517,7 +457,8 @@ const mapStateToProps = (state) => {
     token: state.auth.token,
     questiondata: state.question.questionsdata,
     contesttoken: state.contest.contesttoken,
-    contestdata:state.contest.contestdata
+    contestdata:state.contest.contestdata,
+    loading:state.starttestloading.loading
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ResponsiveDrawer);
