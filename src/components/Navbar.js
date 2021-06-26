@@ -6,14 +6,38 @@ import Menu from "@material-ui/core/Menu";
 import { connect } from "react-redux";
 import * as actions from "../store/actions/index";
 import { NavLink, Link } from "react-router-dom";
+import Switch from '@material-ui/core/Switch';
 import Geeksman from "./images/png/geeksman.png";
 import "bootstrap/js/src/collapse.js";
 
 const Navbar = (props) => {
-  
+  const [state, setState] = React.useState({
+    checkedA: true,
+  });
+  if(state.checkedA==false){
+    //enable dark mode...
+    console.log('dark mode')
+    document.documentElement.style.setProperty('--homebackground', 'rgba(31, 29, 29, 0.882)');
+    document.documentElement.style.setProperty('--home-text', 'white');
+    document.documentElement.style.setProperty('--primary', 'white');
+    const initialcolor= getComputedStyle(document.documentElement)
+    .getPropertyValue('--home-text')
+    console.log(initialcolor)
+  }
+  if(state.checkedA==true){
+    console.log('light mode')
+    document.documentElement.style.setProperty('--homebackground', '#f6fcfb');
+    document.documentElement.style.setProperty('--home-text', 'black');
+    document.documentElement.style.setProperty('--primary', '#224056');
+    const initialcolor= getComputedStyle(document.documentElement)
+    .getPropertyValue('--home-text')
+    console.log(initialcolor)
+  }
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -63,8 +87,9 @@ const Navbar = (props) => {
                  </ul>
               </div>
               </div>
-            
+              
               <div className="navbar__userprofile">
+           
              {props.isAuthenticated&&(
                 <div>
                 <IconButton
@@ -96,7 +121,12 @@ const Navbar = (props) => {
                   </Menu>
                 </div>
              )}   
-               
+                  <Switch
+                    checked={state.checkedA}
+                    onChange={handleChange}
+                    name="checkedA"
+                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                  />
             </div>
               </div>
               </div>

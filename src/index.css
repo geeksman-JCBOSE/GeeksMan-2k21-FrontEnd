@@ -29,6 +29,9 @@
   --bg-secondary: #bce1f3;
   --primary: #224056;
   --secondary: #49c2b9;
+  /* new */
+  --homebackground:#f6fcfb;
+  --home-text:black;
 }
 
 /*----------  fonts  ----------*/
