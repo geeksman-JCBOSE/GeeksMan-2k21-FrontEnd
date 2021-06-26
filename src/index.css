@@ -1197,6 +1197,7 @@ nav {
 #contest-home .contest-register-button:hover {
   box-shadow: 0 6px 10px 2px #49c2b9;
   text-decoration: none;
+  cursor: pointer;
 }
 
 
