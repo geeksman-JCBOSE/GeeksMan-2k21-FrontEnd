@@ -1,6 +1,6 @@
 import * as actionTypes from './actionsTypes';
 import axios from 'axios';
-
+import * as actions from './index'
 /*============Get Questions===========*/
 
 export const getQuestionsStart = () => {
@@ -48,12 +48,14 @@ export const getQuestions = (token,executeongetquestions,testtime) => {
           questions:res.data
         }))
         localStorage.setItem('submission',JSON.stringify({answers:[]}))
+        dispatch(actions.resetteststartloading)
         dispatch(executeongetquestions())
         dispatch(
           getQuestionsSuccess(res.data)
         );
       })
       .catch((err) => {
+        dispatch(actions.resetteststartloading())
         dispatch(getQuestionsFail(err));
       });
   };
@@ -87,6 +89,7 @@ export const postQuestionsStart = () => {
   
   export const postQuestions = (token,data,redirectonsubmit) => {
     return (dispatch) => {
+      dispatch(actions.setteststartloading())
       var postData = ({
         answer:data
       });
@@ -109,12 +112,14 @@ export const postQuestionsStart = () => {
           localStorage.removeItem('Testtoken')
           localStorage.removeItem('endtime')
           },2000)
+          dispatch(actions.resetteststartloading())
           dispatch(redirectonsubmit())
           dispatch(
             postQuestionsSuccess(res.status)
           );
         })
         .catch((err) => {
+          dispatch(actions.resetteststartloading())
           dispatch(postQuestionsFail(err))
           console.log(err)
         });
