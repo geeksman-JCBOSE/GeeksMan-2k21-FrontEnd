@@ -61,13 +61,15 @@ class ContestHome extends Component {
   render() {
     return (
       <>
+      <div className="contest-page" >
+      <Navbar/>
       <div id="contest-home">
       {this.props.loading&&(
         <Loader/>
       )
       }
     
-        <Navbar/>
+        
         <ContestHeader content="Contest Details" />
         <div className="row">
           <div className="col-md-7" style={{"paddingLeft":"6rem"}}>
@@ -84,7 +86,7 @@ class ContestHome extends Component {
           </div>
           <div className="col-md-5">
             <button
-              onClick={e=>this.CompareDate(e,"2021-06-26T22:20:00.894","2021-06-26T23:52:00.894")}
+              onClick={e=>this.CompareDate(e,"2021-06-27T22:20:00.894","2021-06-28T23:52:00.894")}
               className="contest-register-button"
               // onClick={this.starttest}
             >
@@ -101,6 +103,7 @@ class ContestHome extends Component {
           starttest={this.starttest}
           field=""
         />
+      </div>
       </div>
       </>
     );

@@ -11,18 +11,19 @@ class Contests extends Component {
   }
   render(){
     return (
-        <div>
+        <div className="contests-container" >
           {this.props.loading&&(
             <Loader/>
           )}
-         <div className="contests-container">
+          <Navbar/>
+       
           <div className="contests">
-              <Navbar/>
+              
                {!this.props.loading&&(
                <ContestsHome/>
                )}
           </div>
-          </div>
+        
           </div>
     );
 }

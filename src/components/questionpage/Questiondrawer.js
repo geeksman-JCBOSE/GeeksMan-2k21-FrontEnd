@@ -284,7 +284,7 @@ function ResponsiveDrawer(props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{backgroundColor:`${getComputedStyle(document.documentElement).getPropertyValue('--homebackground')}`,height:'100vh'}} >
       {props.loading&&(
          <Loader/>
       )}

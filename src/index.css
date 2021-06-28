@@ -920,19 +920,23 @@ nav {
 =            Contests            =
 =============================================*/
 
-.contests-container,
+.contests,
 .practice-container {
   background-color: var(--contestbackground);
   padding: 12px 72px;
 }
 
 @media screen and (max-width: 768px) {
-  .contests-container,
+  .contests,
   .practice-container {
     padding: 16px;
   }
 }
-
+.contests-container{
+  background-color: var(--contestbackground);
+  min-height: 100vh;
+  min-width: 100vw;
+}
 /*----------  ContestsHome  ----------*/
 .contests-header {
   font-size: 20px;
@@ -1146,7 +1150,7 @@ nav {
 
 .contest-card-register-button:hover {
   border: 1px solid var(--primary);
-  background: var(--primary);
+  background: #224056;
   color: #eee;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
@@ -1161,17 +1165,27 @@ nav {
 
 
 /*----------  ContestHome  ----------*/
+.contest-page{
+  height:100vh;
+  background-color: var(--homebackground);
+}
+#contest-home{
+  padding: 0px 5rem;
+}
 #contest-home .contest-name {
   font-size: 28px;
   font-weight: 600;
+  color:var(--home-text);
 }
 
 #contest-home .contest-remaining-time {
   font-size: 15px;
+  color:var(--home-text)
 }
 
 #contest-home .contest-instructions-container {
   margin: 16px 0;
+  color:var(--home-text);
 }
 
 #contest-home .contest-instructions-heading {
@@ -1189,7 +1203,8 @@ nav {
   margin: 16px auto;
   font-size: 16px;
   padding: 8px 32px;
-  background: var(--primary);
+  /* background: var(--primary); */
+  background-color: #224056;
   color: #fff;
   border: 1px solid var(--primary);
 }

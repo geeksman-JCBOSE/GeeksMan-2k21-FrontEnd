@@ -36,7 +36,7 @@ const [state,setState]=useState('light')
     document.documentElement.style.setProperty('--contestHeader', '#673AB7');
     document.documentElement.style.setProperty('--contestcardbody', '#2B2F3E');
     document.documentElement.style.setProperty('--black-to-pink', '#EE4861');
- 
+    document.documentElement.style.setProperty('--bg-primary', '#B4B5BA');
   }
   if(state==='light'){
     console.log('light mode')
@@ -49,6 +49,7 @@ const [state,setState]=useState('light')
     document.documentElement.style.setProperty('--contestcardbody', 'white');
     document.documentElement.style.setProperty('--contest-description', '#616161');
     document.documentElement.style.setProperty('--black-to-pink', 'black');
+    document.documentElement.style.setProperty('--bg-primary', '#dbf3f1');
    
   }
   const [anchorEl, setAnchorEl] = React.useState(null);
