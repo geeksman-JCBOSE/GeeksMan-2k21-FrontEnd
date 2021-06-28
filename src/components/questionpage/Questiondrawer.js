@@ -24,6 +24,7 @@ import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import Modal from "../utils/modals/modal";
 import Loader from '../Loader/Loader'
+import ImageZoom from 'react-medium-image-zoom'
 import {  useHistory } from "react-router-dom";
 
 const drawerWidth = 290;
@@ -279,6 +280,49 @@ function ResponsiveDrawer(props) {
     </div>
   );
   //Timer
+  const [state,setState]=React.useState('light')
+  useEffect(() => {
+    const mode=localStorage.getItem('mode')
+    if(!mode){
+      localStorage.setItem('mode',JSON.stringify({
+        mode:'light'
+      }))
+     setState('light');
+    }
+    else{
+      setState(JSON.parse(localStorage.getItem('mode')).mode)
+    }
+  }, [])
+  if(state==='dark'){
+    //enable dark mode...
+  
+    console.log('dark mode')
+    document.documentElement.style.setProperty('--homebackground', 'rgb(25,30,44)');
+    document.documentElement.style.setProperty('--home-text', 'white');
+    document.documentElement.style.setProperty('--nav-link', 'white');
+    document.documentElement.style.setProperty('--primary', 'white');
+    document.documentElement.style.setProperty('--contestbackground', 'rgb(25,30,44)');
+    document.documentElement.style.setProperty('--contestHeader', '#673AB7');
+    document.documentElement.style.setProperty('--contestcardbody', '#2B2F3E');
+    document.documentElement.style.setProperty('--black-to-pink', '#EE4861');
+    document.documentElement.style.setProperty('--bg-primary', '#B4B5BA');
+    document.documentElement.style.setProperty('--ques-page-navbar', 'rgb(25,30,44)');
+  }
+  if(state==='light'){
+    console.log('light mode')
+    document.documentElement.style.setProperty('--homebackground', '#f6fcfb');
+    document.documentElement.style.setProperty('--home-text', 'black');
+    document.documentElement.style.setProperty('--nav-link', 'black');
+    document.documentElement.style.setProperty('--primary', '#224056');
+    document.documentElement.style.setProperty('--contestbackground', 'white');
+    document.documentElement.style.setProperty('--contestHeader', '#eee');
+    document.documentElement.style.setProperty('--contestcardbody', 'white');
+    document.documentElement.style.setProperty('--contest-description', '#616161');
+    document.documentElement.style.setProperty('--black-to-pink', 'black');
+    document.documentElement.style.setProperty('--bg-primary', '#dbf3f1');
+    document.documentElement.style.setProperty('--ques-page-navbar', '#3f51b5');
+   
+  }
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -382,7 +426,8 @@ function ResponsiveDrawer(props) {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
+
+      <main className={classes.content} style={{color:`${getComputedStyle(document.documentElement).getPropertyValue('--home-text')}`}} >
         <div className={classes.toolbar} />
         <Typography paragraph>
           <div className="mainquestion">
@@ -390,6 +435,10 @@ function ResponsiveDrawer(props) {
               <span><b>Question{selectedindex+1}</b>&nbsp;&nbsp;</span>
               {activequestion.question}
             </p>
+           {activequestion.image && <div className="ques_image" >
+                <img src={activequestion.image} height="200px" width="500px" alt="ques image" />
+            
+            </div>}
           </div>
           <div className="optionsselect">
             <FormControl component="fieldset">

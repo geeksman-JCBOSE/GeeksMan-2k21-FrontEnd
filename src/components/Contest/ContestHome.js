@@ -70,13 +70,14 @@ class ContestHome extends Component {
     return (
       <>
       <div className="contest-page" >
-      <Navbar/>
-      <div id="contest-home">
       {this.props.loading&&(
         <Loader/>
       )
       }
-        <Navbar/>
+      <Navbar/>
+      <div id="contest-home">
+     
+        {/* <Navbar/> */}
         <ContestHeader content="Contest Details" />
         <div className="row">
           <div className="col-md-7" style={{"paddingLeft":"6rem"}}>
