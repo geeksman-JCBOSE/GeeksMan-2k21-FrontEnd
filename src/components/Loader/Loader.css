@@ -13,8 +13,8 @@
     overflow: hidden;
   }
 .spinnerf {
-    width:200px !important;
-    height:200px !important; 
+    width:130px !important;
+    height:130px !important; 
     border-radius: 50%;
     perspective: 800px;
   }

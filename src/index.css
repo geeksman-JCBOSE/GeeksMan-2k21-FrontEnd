@@ -38,6 +38,7 @@
   --contestcardbody:white;
   --contest-description:#616161;
   --black-to-pink:black;
+  --ques-page-navbar:#3f51b5;
 }
 
 /*----------  fonts  ----------*/
@@ -1215,8 +1216,34 @@ nav {
   cursor: pointer;
 }
 
+/*------------question page ---------*/
+.MuiIconButton-label{
+  color: var(--home-text);
+}
+.PrivateRadioButtonIcon-checked-29{
+  color:#EE4861;
+}
+.mainquestion p span b{
+ color:var(--home-text);
+}
+.MuiAppBar-colorPrimary {
+  background-color: var(--ques-page-navbar)!important;
+}
+.ques_image img{
+  height: 200px;
+  width:500px
+}
 
-
+@media only screen and (max-width: 600px) {
+  .ques_image img{
+    height: 200px;
+    width:300px;
+  }
+  .MuiTypography-paragraph{
+    padding-left: 0.75rem!important;
+    padding-top: 0.75rem!important;
+  }
+}
 
 /*=============================================
 =            Problems            =

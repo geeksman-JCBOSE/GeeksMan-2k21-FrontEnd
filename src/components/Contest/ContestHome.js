@@ -70,12 +70,13 @@ class ContestHome extends Component {
     return (
       <>
       <div className="contest-page" >
-      <Navbar/>
-      <div id="contest-home">
       {this.props.loading&&(
         <Loader/>
       )
       }
+      <Navbar/>
+      <div id="contest-home">
+     
         {/* <Navbar/> */}
         <ContestHeader content="Contest Details" />
         <div className="row">
