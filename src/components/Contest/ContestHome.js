@@ -69,6 +69,8 @@ class ContestHome extends Component {
   render() {
     return (
       <>
+      <div className="contest-page" >
+      <Navbar/>
       <div id="contest-home">
       {this.props.loading&&(
         <Loader/>
@@ -107,6 +109,7 @@ class ContestHome extends Component {
           starttest={this.starttest}
           field=""
         />
+      </div>
       </div>
       </>
     );
