@@ -410,7 +410,6 @@ function ResponsiveDrawer(props) {
               <div className="row">
                 <div className="column50">
                   <div className="row">
-                  
                     <div className="col-sm-6">
                       <button
                         onClick={removesubmission}

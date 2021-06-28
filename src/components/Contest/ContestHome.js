@@ -76,7 +76,7 @@ class ContestHome extends Component {
         <Loader/>
       )
       }
-        {/* <Navbar/> */}
+        <Navbar/>
         <ContestHeader content="Contest Details" />
         <div className="row">
           <div className="col-md-7" style={{"paddingLeft":"6rem"}}>
