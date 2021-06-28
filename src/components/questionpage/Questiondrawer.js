@@ -114,8 +114,8 @@ function ResponsiveDrawer(props) {
 
   // get Questions
   useEffect(() => {
-    var countDownIs = new Date().getTime();
-    var countDownDate = new Date(JSON.parse(localStorage.getItem('endtime')).endtime).getTime()
+    // var countDownIs = new Date().getTime();
+    var countDownDate=JSON.parse(localStorage.getItem('endtime')).endtime
     console.log(JSON.parse(localStorage.getItem('endtime')).endtime)
     // Update the count down every 1 second
     var x = setInterval(function () {
