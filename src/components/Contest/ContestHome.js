@@ -91,7 +91,7 @@ class ContestHome extends Component {
           </div>
           <div className="col-md-5">
             <button
-              onClick={e=>this.CompareDate(e,this.props.activecontestdata.starttime,this.props.activecontestdata.endtime)}
+              onClick={e=>this.CompareDate(e,this.props.activecontestdata.teststarttime,this.props.activecontestdata.testendtime)}
               className="contest-register-button"
               // onClick={this.starttest}
             >
