@@ -95,7 +95,6 @@ class ContestHome extends Component {
             <button
               onClick={e=>this.CompareDate(e,this.props.activecontestdata.teststarttime,this.props.activecontestdata.testendtime)}
               className="contest-register-button"
-              // onClick={this.starttest}
             >
               Start Now
             </button>

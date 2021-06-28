@@ -19,19 +19,20 @@ class ContestsHome extends Component {
          key={contest.id}
          contestname={contest.contestname}
          starttime={contest.starttime}
-         smalldescription={contest.contestdetail}
+         endtime={contest.endtime}
          registertime={contest.registration_endtime}
-         conteststarttime={contest.starttime}
-         startdate={contest.startdate}
+         slotstarttime={new Date(contest.teststarttime).getTime()}
+         slotendtime={new Date(contest.testendtime).getTime()}
+         smalldescription={contest.contestdetail}
          venue={contest.venue}
          seatsfilled={contest.seats_filled}
-         enddate={contest.enddate}
          seatsleft={contest.seats_left}
          isregistered={contest.isregistered}
-         endtime={contest.endtime}
          id={index}
          image={contest.image}
          cid={contest.id}
+         contesttype={contest.contesttype}
+         testgiven={contest.testgiven}
        />
        </div>
        if(contest.contesttype==="ongoing"){
