@@ -198,7 +198,7 @@ class ContestCard extends Component {
                   {this.props.seatsfilled} registered&nbsp;-&nbsp;{this.props.seatsleft}seats left
                   </div>
                   {!this.props.isregistered&&!this.state.conteststarted&&(
-                    <div className="contest-card-register-button"   onClick={(e) =>
+                    <div className="contest-card-register-button" onClick={(e) =>
                       this.handleActiveContest(
                         e,
                         this.props.userdata.id,
@@ -206,8 +206,8 @@ class ContestCard extends Component {
                         this.props.id,
                       )
                     }>
-                                Register
-                           </div>
+                        Register
+                    </div>
                  )}
                  {this.props.isregistered&&!this.state.conteststarted&&(
                   <div className="contest-card-register-button">

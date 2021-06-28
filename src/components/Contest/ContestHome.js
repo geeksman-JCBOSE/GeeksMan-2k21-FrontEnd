@@ -55,8 +55,16 @@ class ContestHome extends Component {
      pathname:`/contest/${this.props.activecontestdata.contestname}/questions`
    })
   }
+
  starttest=()=>{
-   this.props.gettesttoken(this.props.token,this.props.activecontestdata.id,this.executeongetquestions,"2021-06-25T23:52:00.894")
+   let time=parseInt(this.props.activecontestdata.contestduration)*60*60*1000
+   let slotend=new Date(this.props.activecontestdata.testendtime).getTime()
+   let contesttime
+   if((Date.now()+time)>=slotend)
+   contesttime=time-((Date.now()+time)-slotend)+Date.now()
+   else
+   contesttime=time+Date.now()
+   this.props.gettesttoken(this.props.token,this.props.activecontestdata.id,this.executeongetquestions,contesttime)
  }
   render() {
     return (
@@ -66,7 +74,6 @@ class ContestHome extends Component {
         <Loader/>
       )
       }
-    
         <Navbar/>
         <ContestHeader content="Contest Details" />
         <div className="row">
@@ -84,7 +91,7 @@ class ContestHome extends Component {
           </div>
           <div className="col-md-5">
             <button
-              onClick={e=>this.CompareDate(e,"2021-06-26T22:20:00.894","2021-06-26T23:52:00.894")}
+              onClick={e=>this.CompareDate(e,this.props.activecontestdata.starttime,this.props.activecontestdata.endtime)}
               className="contest-register-button"
               // onClick={this.starttest}
             >

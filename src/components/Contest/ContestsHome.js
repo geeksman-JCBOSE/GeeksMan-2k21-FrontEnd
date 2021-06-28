@@ -12,6 +12,7 @@ class ContestsHome extends Component {
   previouscards=[]
   upcomingcards=[]
   makecard(){
+    if(this.props.data){
     this.props.data.forEach((contest, index) => {
       let protocard= <div class={this.classes.cards}>
        <ContestCard
@@ -41,6 +42,7 @@ class ContestsHome extends Component {
             this.upcomingcards.push(protocard)
        }
      })
+    }
   }
   classes = {
       cards:
