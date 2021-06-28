@@ -26,10 +26,7 @@ class ContestCard extends Component {
     conteststarted:false
   }
   componentDidMount(){
-    // console.log(this.props.rcontest)
-    // this.setState({
-    //   isregistered:this.props.rcontest.find(contest=>contest.contestid==this.props.cid),
-    // })
+
   }
   changecontestactivestate=()=>{
     this.setState({
@@ -53,11 +50,6 @@ class ContestCard extends Component {
         });
       }else{
         this.props.registerContest(userid,id);
-        // this.setState({ redirectto: true });
-        // if (this.props.userdata) {
-        //   localStorage.setItem("activecontest", index);
-        // }
-        // this.props.history.push(`/contest/${this.props.contestname}/${id}`)
       }
     } else {
       this.setState({
@@ -82,91 +74,22 @@ class ContestCard extends Component {
     })
   }
   render() {
-   
-    // let authRedirect = null;
-    // if (this.state.redirect) {
-    //   authRedirect = <Redirect to={"/contests/" + this.props.contestname} />;
-    // }
-    // let authRedirect2 = null;
-    // if (this.state.redirecttouser) {
-    //   if (this.state.page === "login") {
-    //     authRedirect = <Redirect to="/login" />;
-    //   } else {
-    //     authRedirect2 = <Redirect to="/userpanel" />;
-    //   }
-    // }
-
-    // if (this.state.registeruserdata !== null) {
-    //   if (this.state.redirectto) {
-    //     this.handleRedirect();
-    //   }
-    // }
     return (
       <>
         <div className="contest-card">
-          {/* {authRedirect}
-          {authRedirect2} */}
-          {/* <div
-            className="contest-card-heading"
-            onClick={(e) =>
-              this.handleActiveContest(
-                e,
-                this.props.userdata.id,
-                this.props.cid,
-                this.props.id
-              )
-            }
-          >
-            {this.props.contestname}
-          </div>
-          <div className="contest-card-description">
-            {this.props.smalldescription}
-          </div>
-          <div className="contest-card-timer">
-            <span className="contest-card-timer-prefix">Starts at </span>
-            <span className="contes-card-time">{
-            this.props.starttime.split('T')[0]
-            }&nbsp;&nbsp;&nbsp;{this.props.endtime.split('T')[1].split(':')[0]}:{this.props.endtime.split('T')[1].split(':')[1]}</span>
-          </div>
-          <div className="contest-card-timer">
-            <span className="contest-card-timer-prefix">Ends at </span>
-            <span className="contes-card-time">{
-            this.props.endtime.split('T')[0]
-            }&nbsp;&nbsp;&nbsp;{this.props.endtime.split('T')[1].split(':')[0]}:{this.props.endtime.split('T')[1].split(':')[1]}</span>
-          </div>
-          <Timer starttime={this.props.starttime}/>
-          {this.props.isregistered==-1&&(
-           <div className="contest-card-register-button"
-           onClick={(e) =>
-             this.handleActiveContest(
-               e,
-               this.props.userdata.id,
-               this.props.cid,
-               this.props.id
-             )
-           }
-         >
-           Register Now
-         </div>
-          )}          
-          {this.props.isregistered!=-1&&(
-            <div className="contest-card-registered-tag">
-            <h2>Registered</h2>
-            </div>
-          )} */}
           <div className="contestcardcontainer">
             <div className="contestimagecontainer">
               <div className="contestcard-gradient"></div>
             <img src={this.props.image} className="contestcard-img"/>
-
-             
-               {this.state.conteststarted&&(
+               {this.state.conteststarted&&(Date.now()<this.props.slotstarttime)&&(
                  <div className="conteststatus">Registration is over</div>
+               )}
+               {(Date.now()>=this.props.slotstarttime&&(Date.now()>=this.props.slotstarttime&&Date.now()<this.props.slotendtime))&&(
+                 <div className="conteststatus">Contest is live</div>
                )}
                {!this.state.conteststarted&&(
                 <div className="conteststatus">Registration&nbsp;<b>ends</b>&nbsp;after:&nbsp;<Timer starttimems={this.props.registertime} changecardbtn={this.changecontestactivestate}/></div>
                )}
-             
             </div>
             <div className="contestmiddlebody">
              <p className="contest__name">{this.props.contestname}</p>
@@ -209,12 +132,12 @@ class ContestCard extends Component {
                         Register
                     </div>
                  )}
-                 {this.props.isregistered&&!this.state.conteststarted&&(
+                 {this.props.isregistered&&!this.state.conteststarted&&(Date.now()<this.props.slotstarttime)&&(
                   <div className="contest-card-register-button">
                   Registered
-             </div>
+                 </div>
                  )} 
-                  {this.props.isregistered&&this.state.conteststarted&&(
+                  {this.props.isregistered&&this.state.conteststarted&&(!this.props.testgiven)&&(Date.now()>=this.props.slotstarttime&&Date.now()<this.props.slotendtime)&&(
                   <div className="contest-card-register-button" onClick={this.handlestartclick}>
                   Start now
              </div>
