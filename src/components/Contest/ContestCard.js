@@ -85,7 +85,7 @@ class ContestCard extends Component {
                  <div className="conteststatus">Registration is over</div>
                )}
                {(Date.now()>=this.props.slotstarttime&&(Date.now()>=this.props.slotstarttime&&Date.now()<this.props.slotendtime))&&(
-                 <div className="conteststatus">Contest is live</div>
+                 <div className="conteststatus">This Contest is live</div>
                )}
                {!this.state.conteststarted&&(
                 <div className="conteststatus">Registration&nbsp;<b>ends</b>&nbsp;after:&nbsp;<Timer starttimems={this.props.registertime} changecardbtn={this.changecontestactivestate}/></div>
