@@ -990,7 +990,8 @@ nav {
   margin: 24px;
   border: 1px solid #dadada;
   border-radius: 8px; */
-  background: #fff;
+    min-height: 540px;
+    background: var(--contestcardbody);
     border-radius: 5px;
     width: 95%;
     margin-right: 25px;
@@ -2106,4 +2107,21 @@ nav {
 .returnbtn:hover{
   cursor: pointer;
   background-color:#9ABC66;
+}
+
+
+/*==================Contest register page========================*/
+
+
+.contest-register-page-timer{
+  color: var(--home-text);
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+}
+.contest-registerpage-header{
+  color: var(--home-text);
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
 }

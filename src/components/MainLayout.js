@@ -13,6 +13,7 @@ import * as actions from "../store/actions/index";
 import Loader from './Loader/Loader'
 import ContestProblem from './questionpage/Questiondrawer'
 import Testsubmitsuccess from './utils/Testsubmitsuccess'
+import ContestRegister from "./Contest/ContestRegister";
 class MainLayout extends Component {
   componentDidMount(){
     
@@ -34,6 +35,7 @@ class MainLayout extends Component {
             <Route path="/userpanel" component={UserPanel} />
             <Route path="/contact" component={Contact} />
             <Route path="/loader" component={Loader} />
+            <Route path="/contests/register/:cid" component={ContestRegister}/>
             <Route path="/contest/:cname/questions" component={ContestProblem}/>
             <Route path="/contests/:cname" component={ContestHome}/>
             <Route path="/submit" component={Testsubmitsuccess}/>
@@ -42,6 +44,7 @@ class MainLayout extends Component {
         ) : (
           <Switch>
             <Route exact path="/" component={HomePage} />
+            <Route path="/contests/register/:cid" component={ContestRegister}/>
             <Route path="/login" component={LoginPage} />
             <Route exact path="/contests" component={Contests} />
             <Route path="/about" component={About} />

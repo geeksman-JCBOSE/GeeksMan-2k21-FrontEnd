@@ -17,7 +17,10 @@ class Timer extends React.Component{
     computetime(){
         let ms=new Date(this.props.starttimems)-(Date.now())
         if(ms<=0){
-            this.props.changecardbtn()
+            if(this.props.changecardbtn){
+                this.props.changecardbtn()
+
+            }
             this.setState({islive:true})
             clearInterval(this.state.intervalid)
         }

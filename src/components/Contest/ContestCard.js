@@ -8,69 +8,12 @@ import Loader from "../Loader/Loader";
 import { withRouter } from 'react-router-dom'
 import Timer from './timer'
 class ContestCard extends Component {
-  // state = {
-  //   open: false,
-  //   message: "NULL",
-  //   yesbutton: false,
-  //   redirect: false,
-  //   redirectto: false,
-  // show: false,
-  //   redirecttouser: false,
-  //   page: "not",
-  // };
   state={
-    isregistered:null,
-    show:false,
-    message:null,
-    page:null,
     conteststarted:false
-  }
-  componentDidMount(){
-
   }
   changecontestactivestate=()=>{
     this.setState({
       conteststarted:true
-    })
-  }
-  handleActiveContest = (e, userid, id, index) => {
-    e.preventDefault();
-    if (this.props.isAuthenticated){
-      if(
-        this.props.userdata.college === null ||
-        this.props.userdata.phoneno === null ||
-        this.props.userdata.year === null ||
-        this.props.userdata.Branch === null
-      ){
-        this.setState({
-          show: true,
-          message:
-            "You have to complete your details before registering for any contest",
-          page:"userpanel"
-        });
-      }else{
-        this.props.registerContest(userid,id);
-      }
-    } else {
-      this.setState({
-        show: true,
-        message: "Please Login First",
-        page: "login",
-      });
-    }
-  };
-  handleRedirect = () => {
-    this.setState({ redirect: true });
-  };
-  handleRedirectToUserPanel = (e) => {
-    e.preventDefault();
-    this.setState({ redirecttouser: true });
-  };
-   
-  handlestartclick=()=>{
-    this.props.history.push({
-      pathname:`/contests/${this.props.contestname}`,
-      search:`?id=${this.props.cid}`,
     })
   }
   render() {
@@ -121,16 +64,9 @@ class ContestCard extends Component {
                   {this.props.seatsfilled} registered&nbsp;-&nbsp;{this.props.seatsleft}seats left
                   </div>
                   {!this.props.isregistered&&!this.state.conteststarted&&(
-                    <div className="contest-card-register-button" onClick={(e) =>
-                      this.handleActiveContest(
-                        e,
-                        this.props.userdata.id,
-                        this.props.cid,
-                        this.props.id,
-                      )
-                    }>
-                        Register
-                    </div>
+                      <Link  className="contest-card-register-button" to={`/contests/register/${this.props.cid}`}>
+                       Register
+                      </Link>
                  )}
                  {this.props.isregistered&&!this.state.conteststarted&&(Date.now()<this.props.slotstarttime)&&(
                   <div className="contest-card-register-button">
@@ -138,21 +74,10 @@ class ContestCard extends Component {
                  </div>
                  )} 
                   {this.props.isregistered&&this.state.conteststarted&&(!this.props.testgiven)&&(Date.now()>=this.props.slotstarttime&&Date.now()<this.props.slotendtime)&&(
-                  <div className="contest-card-register-button" onClick={this.handlestartclick}>
-                  Start now
-             </div>
+                  <Link className="contest-card-register-button" to={`/contests/register/${this.props.cid}`}>Start now</Link>
                  )} 
             </div>
           </div>
-           <Modal
-            show={this.state.show}
-            heading="Error Correction"
-            message={this.state.message}
-            field=""
-            page={this.state.page}
-            confirm="true"
-            // redirect={(e) => this.handleRedirectToUserPanel(e)}
-          />
         </div>
       </>
     );

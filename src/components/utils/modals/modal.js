@@ -64,10 +64,10 @@ function Modal(props) {
               <Button onClick={()=>{
                  if(props.setShow)
                    props.setShow()
-                if(props.page==="login")
-                history.push("/login")
-                else if(props.page==="/userpanel")
-                history.push("/userpanel")
+                 if(props.redirect){
+                   props.redirect()
+                 }
+
                 if(props.starttest){
                   props.starttest()
                 }

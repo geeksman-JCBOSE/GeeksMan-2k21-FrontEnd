@@ -24,7 +24,6 @@ import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import Modal from "../utils/modals/modal";
 import Loader from '../Loader/Loader'
-import ImageZoom from 'react-medium-image-zoom'
 import {  useHistory } from "react-router-dom";
 
 const drawerWidth = 290;
