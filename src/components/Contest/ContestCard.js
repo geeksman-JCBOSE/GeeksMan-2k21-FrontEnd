@@ -68,7 +68,7 @@ class ContestCard extends Component {
                        Register
                       </Link>
                  )}
-                 {this.props.isregistered&&!this.state.conteststarted&&(Date.now()<this.props.slotstarttime)&&(
+                 {this.props.isregistered&&(Date.now()<this.props.slotstarttime)&&(
                   <div className="contest-card-register-button">
                   Registered
                  </div>

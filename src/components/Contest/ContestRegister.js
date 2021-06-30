@@ -68,6 +68,9 @@ const ContestRegister = (props) => {
   };
 
   const handlestartclick=()=>{
+    localStorage.setItem('oneminute',JSON.stringify({
+        time:Date.now()+60*1000
+      }))
     history.push({
       pathname:`/contests/${contestdata.contestname}`,
       search:`?id=${contestid}`,

@@ -982,7 +982,15 @@ nav {
   font-size: 16px;
   display: inline-block;
 }
-
+.contest-startsixty-timer{
+  color: var(--home-text);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-top: 2rem;
+}
 /*----------  ContestCard  ----------*/
 .contest-card {
   /* padding: 17px;

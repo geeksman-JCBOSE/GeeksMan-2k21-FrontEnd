@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import ContestHeader from "./ContestHeader";
-import { Link } from "react-router-dom";
 import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import Modal from "../utils/modals/modal";
-import { Redirect } from "react-router-dom";
 import Loader from '../Loader/Loader'
 import Navbar from "../Navbar";
 import {withRouter} from 'react-router-dom'
@@ -17,13 +15,39 @@ class ContestHome extends Component {
     confirm:"false",
     header:"",
     contest:[],
-    _id:null
+    _id:null,
+    disabled:true,
+    secondtimer:null
   };
 
   componentDidMount(){
     const search = this.props.location.search;
     const _id = new URLSearchParams(search).get("id")
     this.props.getcontestinfo(this.props.token,_id)
+    if(localStorage.getItem('oneminute')){
+    let countDownDate=JSON.parse(localStorage.getItem('oneminute')).time
+    // Update the count down every 1 second
+    let x = setInterval( ()=>{
+      // Get todays date and time
+      var now = new Date().getTime();
+
+      // Find the distance between now an the count down date
+      var distance = countDownDate - now;
+
+      // Time calculations for seconds
+      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      this.setState({secondtimer:seconds});
+      // Output the result in an element with id="demo"
+
+      // If the count down is over, write some text
+      if (seconds === 0 ) {
+        clearInterval(x);
+         localStorage.removeItem('oneminute')
+         this.setState({disabled:false})
+        
+      }
+    }, 1000);
+  }
   }
   
   CompareDate = (e, start,end) => {
@@ -76,17 +100,12 @@ class ContestHome extends Component {
       }
       <Navbar/>
       <div id="contest-home">
-     
-        {/* <Navbar/> */}
         <ContestHeader content="Contest Details" />
         <div className="row">
           <div className="col-md-7" style={{"paddingLeft":"6rem"}}>
             <div className="contest-name">{this.props.activecontestdata?this.props.activecontestdata.contestname:null}</div>
-            <div className="contest-remaining-time">
-              The contest will start at {this.props.activecontestdata?this.props.activecontestdata.starttime:null}{" "}
-            </div>
             <div className="contest-instructions-container">
-              <div className="contest-instructions-heading">Instructions</div>
+              <div className="contest-instructions-heading">Read The instructions carefully</div>
               <div className="contest-instructions">
                 {this.props.activecontestdata?this.props.activecontestdata.rules:null}
               </div>
@@ -96,10 +115,22 @@ class ContestHome extends Component {
             <button
               onClick={e=>this.CompareDate(e,this.props.activecontestdata.teststarttime,this.props.activecontestdata.testendtime)}
               className="contest-register-button"
+              disabled={this.state.disabled}
             >
               Start Now
             </button>
           </div>
+          {this.state.secondtimer&&(
+ <div className="contest-startsixty-timer">
+ Contest will start in  {this.state.secondtimer} seconds
+ </div>
+          )}
+          {!this.state.secondtimer&&(
+          <div className="contest-startsixty-timer">
+            You can click the start button to start your contest
+            </div>
+          )}
+         
         </div>
         <Modal
           show={this.state.open}
