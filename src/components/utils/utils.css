@@ -126,6 +126,7 @@
 .events__heading h1 {
   font-size: 4rem;
   color: #224056;
+  color:var( --about-pagetext);
   transform: skewX(-5deg);
   font-weight: bold;
   font-family: "Pacifico", cursive;
@@ -142,7 +143,7 @@
 
 .our__members h1 {
   font-size: 4rem;
-  color: #224056;
+  color: var( --about-pagetext);
   transform: skewX(-5deg);
   font-family: "Pacifico", cursive;
   font-weight: bold;
@@ -155,7 +156,7 @@
 
 .faculty__coordinators h1 {
   font-size: 4rem;
-  color: #224056;
+  color: var( --about-pagetext);
   transform: skewX(-5deg);
   font-weight: bold;
   transition: all 0.2s;
@@ -178,7 +179,7 @@
 }
 .developers h1 {
   font-size: 4rem;
-  color: #224056;
+  color: var( --about-pagetext);
   transform: skewX(-5deg);
   font-weight: bold;
   transition: all 0.2s;

@@ -38,6 +38,7 @@ const [state,setState]=useState('light')
     document.documentElement.style.setProperty('--black-to-pink', '#EE4861');
     document.documentElement.style.setProperty('--bg-primary', '#B4B5BA');
     document.documentElement.style.setProperty('--ques-page-navbar', 'rgb(25,30,44)');
+    document.documentElement.style.setProperty('--about-pagetext', 'white');
   }
   if(state==='light'){
     console.log('light mode')
@@ -52,6 +53,7 @@ const [state,setState]=useState('light')
     document.documentElement.style.setProperty('--black-to-pink', 'black');
     document.documentElement.style.setProperty('--bg-primary', '#dbf3f1');
     document.documentElement.style.setProperty('--ques-page-navbar', '#3f51b5');
+    document.documentElement.style.setProperty('--about-pagetext', '#224056');
    
   }
   const [anchorEl, setAnchorEl] = React.useState(null);

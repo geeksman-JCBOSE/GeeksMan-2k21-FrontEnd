@@ -98,11 +98,13 @@ class ContestHome extends Component {
         <Loader/>
       )
       }
+      <div style={{display:'none'}} >
       <Navbar/>
+      </div>
       <div id="contest-home">
         <ContestHeader content="Contest Details" />
         <div className="row">
-          <div className="col-md-7" style={{"paddingLeft":"6rem"}}>
+          <div className="col-md-7" >
             <div className="contest-name">{this.props.activecontestdata?this.props.activecontestdata.contestname:null}</div>
             <div className="contest-instructions-container">
               <div className="contest-instructions-heading">Read The instructions carefully</div>
