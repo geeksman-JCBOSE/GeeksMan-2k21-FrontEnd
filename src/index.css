@@ -39,6 +39,7 @@
   --contest-description:#616161;
   --black-to-pink:black;
   --ques-page-navbar:#3f51b5;
+  --about-pagetext:#224056;
 }
 
 /*----------  fonts  ----------*/
@@ -988,6 +989,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: justify;
   font-size: 2rem;
   margin-top: 2rem;
 }
@@ -1155,6 +1157,7 @@ nav {
   font-weight: 600;
   background: var(--bg-primary);
   color: var(--primary);
+  white-space: nowrap;
   border: 1px solid var(--primary);
 }
 
@@ -1176,6 +1179,7 @@ nav {
 
 /*----------  ContestHome  ----------*/
 .contest-page{
+  padding-top: 20px;
   height:100vh;
   background-color: var(--homebackground);
 }
@@ -1714,6 +1718,7 @@ nav {
 .aboutpage {
   text-align: center;
   overflow-x: hidden;
+  background-color: var(--homebackground);
 }
 .about__header h1 {
   font-size: 4.9rem;

@@ -79,11 +79,13 @@ const ContestRegister = (props) => {
   return (
     <div className="contest-page">
       {(loading || props.loading) && <Loader />}
+      <div style={{display:'none'  }} >
       <Navbar />
+      </div>
       <div id="contest-home">
         <ContestHeader content="Contest Details" />
         <div className="row contest-registerpage-header">
-          <div className="col-md-4" style={{ paddingLeft: "6rem" }}>
+          <div className="col-md-4">
              {islive&&contestdata&&Date.now()<new Date(contestdata.teststarttime).getTime()&&(
                  <div className="contest-register-page-timer">
                   Registration is over
@@ -104,7 +106,7 @@ const ContestRegister = (props) => {
           <div className="col-md-2 ">
             <b>Venue</b>:&nbsp;{contestdata ? contestdata.venue : ""}
           </div>
-          <div className="cold-md-2 ">
+          <div className="col-md-2 ">
             <b>Registration Fee</b>:&nbsp;
             {contestdata
               ? contestdata.fees === 0
@@ -114,7 +116,7 @@ const ContestRegister = (props) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-7" style={{ paddingLeft: "6rem" }}>
+          <div className="col-md-7" >
             <div className="contest-name">
               {contestdata ? contestdata.contestname : null}
             </div>

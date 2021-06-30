@@ -426,7 +426,7 @@ function ResponsiveDrawer(props) {
         </Hidden>
       </nav>
 
-      <main className={classes.content} style={{color:`${getComputedStyle(document.documentElement).getPropertyValue('--home-text')}`}} >
+      <main className={classes.content} style={{color:`${getComputedStyle(document.documentElement).getPropertyValue('--home-text')}`, overflow:'auto' }} >
         <div className={classes.toolbar} />
         <Typography paragraph>
           <div className="mainquestion">
