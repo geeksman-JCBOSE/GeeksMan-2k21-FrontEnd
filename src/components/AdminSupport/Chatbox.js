@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { io } from "socket.io-client";
 import './Chatbox.css'
+import { v4 as uuidv4 } from 'uuid';
 const Chatbox = () => {
 
-
+        const [active,setactive]=useState(localStorage.getItem('roomid')?true:false)
         const [messages,setmessages]=useState([])
+        const [Roomid,setroomid]=useState(localStorage.getItem('roomid')?JSON.parse(localStorage.getItem('roomid')).id:null)
+        const [socket,setsocket]=useState(null)
+        const [connecting,setconnecting]=useState(false)
         function send() {
           var msg = document.getElementById("message").value;
           if (msg == "") return;
@@ -34,19 +39,57 @@ const Chatbox = () => {
           }
      }
 
-
 const handlechatswitch=()=>{
     console.log('clicked')
         if (document.getElementById("chatbot").classList.contains("card__collapsed")) {
           document.getElementById("chatbot").classList.remove("card__collapsed")
+          if(active){
+          document.querySelector('.activechat').classList.contains('activechatcollapsed')
+          document.querySelector('.activechat').classList.remove('activechatcollapsed')
+          }
           document.getElementById("chatbot_toggle").children[0].style.display = "none"
           document.getElementById("chatbot_toggle").children[1].style.display = ""
+          if(!active&&!connecting)
+          document.querySelector('.chathelpbtn button').classList.remove('collapsed__button')
         }
         else {
           document.getElementById("chatbot").classList.add("card__collapsed")
+          if(active)
+          document.querySelector('.activechat').classList.add('activechatcollapsed')
+          if(!active&&!connecting)
+          document.querySelector('.chathelpbtn button').classList.add('collapsed__button')
           document.getElementById("chatbot_toggle").children[0].style.display = ""
           document.getElementById("chatbot_toggle").children[1].style.display = "none"
         }
+}
+
+useEffect(()=>{
+  if(Roomid){
+  const socket=io("http://localhost:5000/reconnecting")
+  socket.emit("join-room",Roomid)
+  setsocket(socket)
+  }
+},[])
+
+
+const connecttosupport=()=>{
+  let roomid;
+  if(!localStorage.getItem('roomid')){
+    roomid=uuidv4()
+    setconnecting(true)
+    const socket=io("http://localhost:5000/firstconnection")
+    socket.emit('join-room',roomid)
+    socket.on('joined',(res)=>{
+      if(res==='successfull'){
+        localStorage.setItem('roomid',JSON.stringify({
+          id:roomid
+          }))
+          setactive(true)
+          setroomid(roomid) 
+          setconnecting(false)  
+      }
+    })
+}
 }
     return (
         <div className="chat__container">
@@ -62,23 +105,41 @@ const handlechatswitch=()=>{
 
   </div>
   </div>
-  <div className="chat-area" id="message-box">
-      {messages.map(message=>{
-          return <div className="chat-message-div"> 
-                 <span style={{flexGrow:'1'}}></span>
-                 <div className='chat-message-sent'>{message}</div>
-              </div>
-      })}
+  {!active&&!connecting&&(
+  <div className="chathelpbtn">
+  <button className="collapsed__button" onClick={connecttosupport}>Ask for help</button>
+</div>
+  )}
+  {!active&&connecting&&(
+    <div className="chathelpbtn" style={{color:'black',fontSize:'2rem'}}>
+      connecting...........
+    </div>
+  )}
+ 
+  {active&&(
+ <div className="activechat activechatcollapsed">
+ <div className="chat-area" id="message-box">
+     {messages.map(message=>{
+         return <div className="chat-message-div"> 
+                <span style={{flexGrow:'1'}}></span>
+                <div className='chat-message-sent'>{message}</div>
+             </div>
+     })}
+ </div>
+ <div className="line"></div>
+ <div className="input-div">
+   <input className="input-message" name="message" type="text" id="message" placeholder="Type your message ..."  onKeyUp={(e)=>{handleenter(e)}} />
+   <button className="input-send" onClick={send}>
+     <svg style={{width:'24px',height:'24px'}}>
+       <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z" />
+     </svg>
+   </button>
   </div>
-  <div className="line"></div>
-  <div className="input-div">
-    <input className="input-message" name="message" type="text" id="message" placeholder="Type your message ..."  onKeyUp={(e)=>{handleenter(e)}} />
-    <button className="input-send" onClick={send}>
-      <svg style={{width:'24px',height:'24px'}}>
-        <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z" />
-      </svg>
-    </button>
-   </div>
+ </div>
+  )}
+ 
+  
+ 
 
   </div>
   

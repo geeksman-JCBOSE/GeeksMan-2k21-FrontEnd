@@ -14,7 +14,6 @@ const HomePage = () => {
             <Navbar />
             <HomepageCarousel />
              <Chatbox/>
-            {/* <Footer /> */}
         </div>
     );
 }
