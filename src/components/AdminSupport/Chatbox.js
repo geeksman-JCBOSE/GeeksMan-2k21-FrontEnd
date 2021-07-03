@@ -15,7 +15,10 @@ const Chatbox = () => {
           addMsg(msg);
         }
         const addMsg=(msg) =>{
-            setmessages([...messages,msg])
+            if(socket){
+              socket.emit('message-user',msg,Roomid,localStorage.getItem('userdata')?JSON.parse(localStorage.getItem('userdata')).userid:null)
+            }
+            setmessages([...messages,{msg,id:JSON.parse(localStorage.getItem('userdata')).userid}])
           document.getElementById("message").value = "";
           document.getElementById("message-box").scrollTop = document.getElementById(
             "message-box"
@@ -31,7 +34,6 @@ const Chatbox = () => {
           ).scrollHeight;
         
         }
-        
      const handleenter=(event)=>{
         if (event.keyCode === 13) {
             event.preventDefault();
@@ -60,25 +62,22 @@ const handlechatswitch=()=>{
           document.querySelector('.chathelpbtn button').classList.add('collapsed__button')
           document.getElementById("chatbot_toggle").children[0].style.display = ""
           document.getElementById("chatbot_toggle").children[1].style.display = "none"
-        }
-}
-
+        }}
 useEffect(()=>{
   if(Roomid){
-  const socket=io("http://localhost:5000/reconnecting")
-  socket.emit("join-room",Roomid)
+  const socket=io("http://localhost:5000/connection")
+  socket.emit("join-room-user",Roomid)
   setsocket(socket)
   }
 },[])
-
 
 const connecttosupport=()=>{
   let roomid;
   if(!localStorage.getItem('roomid')){
     roomid=uuidv4()
     setconnecting(true)
-    const socket=io("http://localhost:5000/firstconnection")
-    socket.emit('join-room',roomid)
+    const socket=io("http://localhost:5000/connection")
+    socket.emit('join-room-user-firsttime',roomid)
     socket.on('joined',(res)=>{
       if(res==='successfull'){
         localStorage.setItem('roomid',JSON.stringify({
@@ -89,8 +88,13 @@ const connecttosupport=()=>{
           setconnecting(false)  
       }
     })
-}
-}
+}}
+      if(socket){
+        socket.on('message-to-user',(msg,id)=>{
+             setmessages([...messages,{msg,id}])
+        })
+      }
+  
     return (
         <div className="chat__container">
 <div id="chatbot" className="main-card card__collapsed">
@@ -120,10 +124,16 @@ const connecttosupport=()=>{
  <div className="activechat activechatcollapsed">
  <div className="chat-area" id="message-box">
      {messages.map(message=>{
-         return <div className="chat-message-div"> 
+       if(message.id==JSON.parse(localStorage.getItem('userdata')).userid)
+         return (<div className="chat-message-div"> 
                 <span style={{flexGrow:'1'}}></span>
-                <div className='chat-message-sent'>{message}</div>
-             </div>
+                <div className='chat-message-sent'>{message.msg}</div>
+             </div>)
+       else
+        return (<div className="chat-message-div">
+         <div className='chat-message-received'>{message.msg}</div>    
+         <span style={{flexGrow:'1'}}></span>
+         </div>)
      })}
  </div>
  <div className="line"></div>
@@ -137,12 +147,7 @@ const connecttosupport=()=>{
   </div>
  </div>
   )}
- 
-  
- 
-
   </div>
-  
   </div>
     )
 }

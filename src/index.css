@@ -2300,20 +2300,20 @@ nav {
   animation-duration: 100ms;
   color:white;
   border-radius: 8px 8px 2px 8px;
-  /* background-color: lavender; */
+
 }
 
 .chat-message-received {
-  background-color: white;
+  background-color:black;
   margin: 8px 64px 8px 16px;
   padding: 8px 16px;
   animation-name: fadeIn;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
   animation-duration: 100ms;
-  color: black;
+  color: white;
   border-radius: 8px 8px 8px 2px;
-  background-color: lavender;
+
 }
 
 @keyframes fadeIn {
