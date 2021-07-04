@@ -2224,15 +2224,35 @@ nav {
   font-size: large;
   font-weight: bold;
   display: flex;
-  height: 3.9rem;
+  height: 5rem;
+}
+.chat__header{
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  align-items: flex-start!important;
+  margin-left: 1rem;
+}
+.admin-title{
+  font-size: 16px;
+  color:#1da1f2;
+}
+.status-admin{
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background-color: white;
+  display: inline-block;
+  margin-right:.5rem;
+
 }
 
-.main-title>div{
+/* .main-title>div{
   height:48px;
   width:48px;
   display:flex;
   margin-left:8px;
-}
+} */
 .main-title svg {
   height: 24px;
   margin: auto;
@@ -2254,9 +2274,23 @@ nav {
   flex-grow: 1;
   overflow: auto;
   border-radius: 8px;
-  padding: 16px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
+}
+
+.chat-message-received-timestamp{
+  color:rgb(161, 156, 156);
+  text-align: left;
+  padding-left: 10px;
+  font-size: 13px;
+}
+.chat-message-sent-timestamp{
+  color:rgb(161, 156, 156);
+  text-align: right;
+  padding-right: 10px;
+  font-size: 13px;
+
 }
 .input-message {
   padding: 8px 48px 8px 16px;
@@ -2291,9 +2325,9 @@ nav {
 }
 
 .chat-message-sent {
-  background-color:black;
+  background-color:lightcoral;
   margin: 8px 16px 8px 64px;
-  padding: 8px 16px;
+  padding: 8px 13px;
   animation-name: fadeIn;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
@@ -2304,9 +2338,9 @@ nav {
 }
 
 .chat-message-received {
-  background-color:black;
+  background-color:lightcoral;
   margin: 8px 64px 8px 16px;
-  padding: 8px 16px;
+  padding: 8px 13px;
   animation-name: fadeIn;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;

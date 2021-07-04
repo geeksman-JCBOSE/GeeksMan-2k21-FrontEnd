@@ -48,7 +48,8 @@ export const reduxLogin = (email, password) => {
          
         localStorage.setItem('userdata',JSON.stringify({
           token:res.data.token,
-          userid:res.data.userid
+          userid:res.data.userid,
+          username:res.data.username
         }));
         dispatch(
           authSuccess(res.data.token,res.data.userid)

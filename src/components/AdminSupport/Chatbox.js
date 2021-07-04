@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { io } from "socket.io-client";
+import axios from 'axios';
 import './Chatbox.css'
 import { v4 as uuidv4 } from 'uuid';
 const Chatbox = () => {
 
         const [active,setactive]=useState(localStorage.getItem('roomid')?true:false)
         const [messages,setmessages]=useState([])
+        const [adminname,setadminname]=useState(null)
         const [Roomid,setroomid]=useState(localStorage.getItem('roomid')?JSON.parse(localStorage.getItem('roomid')).id:null)
         const [socket,setsocket]=useState(null)
         const [connecting,setconnecting]=useState(false)
-        function send() {
+
+        function send(){
           var msg = document.getElementById("message").value;
           if (msg == "") return;
           addMsg(msg);
         }
-        const addMsg=(msg) =>{
+        const addMsg=(msg)=>{
             if(socket){
-              socket.emit('message-user',msg,Roomid,localStorage.getItem('userdata')?JSON.parse(localStorage.getItem('userdata')).userid:null)
+              socket.emit('message-user',msg,Roomid,localStorage.getItem('userdata')?JSON.parse(localStorage.getItem('userdata')).userid:null,Date.now())
             }
-            setmessages([...messages,{msg,id:JSON.parse(localStorage.getItem('userdata')).userid}])
+            setmessages([...messages,{msg,id:JSON.parse(localStorage.getItem('userdata')).userid,timestamp:Date.now()}])
           document.getElementById("message").value = "";
           document.getElementById("message-box").scrollTop = document.getElementById(
             "message-box"
@@ -32,7 +35,6 @@ const Chatbox = () => {
           document.getElementById("message-box").scrollTop = document.getElementById(
             "message-box"
           ).scrollHeight;
-        
         }
      const handleenter=(event)=>{
         if (event.keyCode === 13) {
@@ -45,7 +47,7 @@ const handlechatswitch=()=>{
     console.log('clicked')
         if (document.getElementById("chatbot").classList.contains("card__collapsed")) {
           document.getElementById("chatbot").classList.remove("card__collapsed")
-          if(active){
+          if(active&&messages.length!=0){
           document.querySelector('.activechat').classList.contains('activechatcollapsed')
           document.querySelector('.activechat').classList.remove('activechatcollapsed')
           }
@@ -56,28 +58,51 @@ const handlechatswitch=()=>{
         }
         else {
           document.getElementById("chatbot").classList.add("card__collapsed")
-          if(active)
+          if(active&&messages.length!==0)
           document.querySelector('.activechat').classList.add('activechatcollapsed')
           if(!active&&!connecting)
           document.querySelector('.chathelpbtn button').classList.add('collapsed__button')
           document.getElementById("chatbot_toggle").children[0].style.display = ""
           document.getElementById("chatbot_toggle").children[1].style.display = "none"
         }}
-useEffect(()=>{
+       
+   useEffect(()=>{
+     if(Roomid){
+      let axiosConfig={
+        headers:{
+          'Content-Type':'application/json;charset=UTF-8',
+        },
+      };
+      axios.get(
+        `${process.env.REACT_APP_PUBLIC}/getmessages/${Roomid}`,
+        axiosConfig
+        ).then((res)=>{
+          console.log(res)
+          let dbmessages=[]
+          setadminname(res.data.adminname)
+          res.data.messages.forEach((msg)=>{
+                dbmessages.push({msg:msg.message,id:msg.ownerid,timestamp:msg.timestamp})
+          })
+          setmessages(dbmessages)
+        }).catch(err=>{
+          console.log(err)
+        })
+      
+    }},[])
+  useEffect(()=>{
   if(Roomid){
   const socket=io("http://localhost:5000/connection")
   socket.emit("join-room-user",Roomid)
   setsocket(socket)
   }
-},[])
-
-const connecttosupport=()=>{
+  },[])
+  const connecttosupport=()=>{
   let roomid;
   if(!localStorage.getItem('roomid')){
     roomid=uuidv4()
     setconnecting(true)
     const socket=io("http://localhost:5000/connection")
-    socket.emit('join-room-user-firsttime',roomid)
+    socket.emit('join-room-user-firsttime',roomid,JSON.parse(localStorage.getItem('userdata')).username)
     socket.on('joined',(res)=>{
       if(res==='successfull'){
         localStorage.setItem('roomid',JSON.stringify({
@@ -88,13 +113,13 @@ const connecttosupport=()=>{
           setconnecting(false)  
       }
     })
-}}
+    }}
+
       if(socket){
-        socket.on('message-to-user',(msg,id)=>{
-             setmessages([...messages,{msg,id}])
+        socket.on('message-to-user',(msg,id,timestamp)=>{
+             setmessages([...messages,{msg,id,timestamp}])
         })
       }
-  
     return (
         <div className="chat__container">
 <div id="chatbot" className="main-card card__collapsed">
@@ -105,7 +130,11 @@ const connecttosupport=()=>{
   <div className="main-title">
     <div className="chat__header">
     
-    <span style={{whiteSpace:"nowrap"}}>GeeksMan Support</span>
+    <span style={{whiteSpace:"nowrap"}}>GeeksMan Support
+     </span>
+     {active&&messages.length!=0&&(     
+     <div className="admin-title"><span className="status-admin"></span><span style={{color:'blanchedalmond'}}>{adminname}</span></div>
+     )}
 
   </div>
   </div>
@@ -119,21 +148,36 @@ const connecttosupport=()=>{
       connecting...........
     </div>
   )}
- 
-  {active&&(
+  
+  {active&&messages.length===0&&(
+     <div className="chathelpbtn" style={{color:'black',fontSize:'1rem'}}>
+     Someone from our team will contact you soon
+   </div>
+  )}
+  {active&&messages.length!==0&&(
  <div className="activechat activechatcollapsed">
  <div className="chat-area" id="message-box">
      {messages.map(message=>{
        if(message.id==JSON.parse(localStorage.getItem('userdata')).userid)
-         return (<div className="chat-message-div"> 
+         return (
+         <div><div className="chat-message-div"> 
                 <span style={{flexGrow:'1'}}></span>
+               
                 <div className='chat-message-sent'>{message.msg}</div>
-             </div>)
+             </div>
+              <div className="chat-message-sent-timestamp">{new Date(parseInt(message.timestamp)).toLocaleString()}</div></div>)
        else
-        return (<div className="chat-message-div">
+        return (
+          <div>
+        <div className="chat-message-div">
          <div className='chat-message-received'>{message.msg}</div>    
          <span style={{flexGrow:'1'}}></span>
-         </div>)
+         </div>
+         <div className="chat-message-received-timestamp">
+         {new Date(parseInt(message.timestamp)).toLocaleString()}
+           </div>
+           </div>
+         )
      })}
  </div>
  <div className="line"></div>
