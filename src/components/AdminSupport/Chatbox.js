@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { io } from "socket.io-client";
 import axios from 'axios';
+import Loader from "react-loader-spinner";
 import './Chatbox.css'
 import { v4 as uuidv4 } from 'uuid';
 const Chatbox = () => {
@@ -87,7 +88,6 @@ const handlechatswitch=()=>{
         }).catch(err=>{
           console.log(err)
         })
-      
     }},[])
   useEffect(()=>{
   if(Roomid){
@@ -114,7 +114,6 @@ const handlechatswitch=()=>{
       }
     })
     }}
-
       if(socket){
         socket.on('message-to-user',(msg,id,timestamp)=>{
              setmessages([...messages,{msg,id,timestamp}])
@@ -145,7 +144,10 @@ const handlechatswitch=()=>{
   )}
   {!active&&connecting&&(
     <div className="chathelpbtn" style={{color:'black',fontSize:'2rem'}}>
-      connecting...........
+      <Loader type="Puff"
+         color="#EE4861"
+         height={100}
+         width={100}/>
     </div>
   )}
   

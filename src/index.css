@@ -2232,6 +2232,7 @@ nav {
   width: 60%;
   align-items: flex-start!important;
   margin-left: 1rem;
+  justify-content: center;
 }
 .admin-title{
   font-size: 16px;
