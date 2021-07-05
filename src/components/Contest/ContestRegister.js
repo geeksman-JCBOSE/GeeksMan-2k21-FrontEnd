@@ -86,12 +86,12 @@ const ContestRegister = (props) => {
         <ContestHeader content="Contest Details" />
         <div className="row contest-registerpage-header">
           <div className="col-md-4">
-             {islive&&contestdata&&Date.now()<new Date(contestdata.teststarttime).getTime()&&(
+             {islive&&contestdata&&Date.now()<contestdata.teststarttime&&(
                  <div className="contest-register-page-timer">
                   Registration is over
                   </div>
              )}
-             {islive&&contestdata&&Date.now()>=new Date(contestdata.teststarttime).getTime()&&Date.now()<new Date(contestdata.testendtime).getTime()&&(
+             {islive&&contestdata&&Date.now()>=contestdata.teststarttime&&Date.now()<contestdata.testendtime&&(
                   <div className="contest-register-page-timer">
                   This contest is live
                   </div>
@@ -134,7 +134,7 @@ const ContestRegister = (props) => {
             </div>
           </div>
           <div className="col-md-5">
-           {contestdata&&contestdata.isregistered&&islive&&(Date.now()<(new Date(contestdata.teststarttime).getTime()))&&(
+           {contestdata&&contestdata.isregistered&&islive&&(Date.now()<(contestdata.teststarttime))&&(
                   <div className="contest-card-register-button">
                   Registered
                  </div>
@@ -149,7 +149,7 @@ const ContestRegister = (props) => {
                 Register Now
               </button>
             )}
-            {contestdata&&contestdata.isregistered&&islive&&(!contestdata.testgiven)&&(Date.now()>=new Date(contestdata.teststarttime).getTime()&&Date.now()<new Date(contestdata.testendtime).getTime())&&(
+            {contestdata&&contestdata.isregistered&&islive&&(!contestdata.testgiven)&&(Date.now()>=contestdata.teststarttime&&Date.now()<contestdata.testendtime)&&(
                 <button
                 className="contest-register-button"
                 onClick={(e) =>

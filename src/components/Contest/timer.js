@@ -1,6 +1,4 @@
 import React from 'react'
-
-
 class Timer extends React.Component{
     state={
         days:null,
@@ -15,7 +13,7 @@ class Timer extends React.Component{
         this.setState({intervalid})
         }
     computetime(){
-        let ms=new Date(this.props.starttimems)-(Date.now())
+        let ms=this.props.starttimems-(Date.now())
         if(ms<=0){
             if(this.props.changecardbtn){
                 this.props.changecardbtn()

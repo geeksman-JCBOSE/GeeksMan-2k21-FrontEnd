@@ -21,8 +21,8 @@ class ContestsHome extends Component {
          starttime={contest.starttime}
          endtime={contest.endtime}
          registertime={contest.registration_endtime}
-         slotstarttime={new Date(contest.teststarttime).getTime()}
-         slotendtime={new Date(contest.testendtime).getTime()}
+         slotstarttime={contest.teststarttime}
+         slotendtime={contest.testendtime}
          smalldescription={contest.contestdetail}
          venue={contest.venue}
          seatsfilled={contest.seats_filled}

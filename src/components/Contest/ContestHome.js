@@ -29,11 +29,9 @@ class ContestHome extends Component {
     // Update the count down every 1 second
     let x = setInterval( ()=>{
       // Get todays date and time
-      var now = new Date().getTime();
-
+      var now = Date.now();
       // Find the distance between now an the count down date
       var distance = countDownDate - now;
-
       // Time calculations for seconds
       let seconds = Math.floor((distance % (1000 * 60)) / 1000);
       this.setState({secondtimer:seconds});
@@ -52,8 +50,8 @@ class ContestHome extends Component {
   
   CompareDate = (e, start,end) => {
     e.preventDefault();
-    let startdate = new Date(start).getTime();
-    let enddate = new Date(end).getTime();
+    let startdate =start;
+    let enddate = end;
     let nowdate = Date.now();
         if (startdate > nowdate && nowdate<enddate) {
             this.setState({ open: true, message: "The contest is not active. Either the Contest has not started or its not your slot, please wait for your time slot or the contest to start.", header:"Message!" });
@@ -82,7 +80,7 @@ class ContestHome extends Component {
 
  starttest=()=>{
    let time=parseInt(this.props.activecontestdata.contestduration)*60*60*1000
-   let slotend=new Date(this.props.activecontestdata.testendtime).getTime()
+   let slotend=this.props.activecontestdata.testendtime
    let contesttime
    if((Date.now()+time)>=slotend)
    contesttime=time-((Date.now()+time)-slotend)+Date.now()
@@ -132,7 +130,6 @@ class ContestHome extends Component {
             You can click the start button to start your contest
             </div>
           )}
-         
         </div>
         <Modal
           show={this.state.open}
