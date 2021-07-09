@@ -14,6 +14,7 @@ import Loader from './Loader/Loader'
 import ContestProblem from './questionpage/Questiondrawer'
 import Testsubmitsuccess from './utils/Testsubmitsuccess'
 import ContestRegister from "./Contest/ContestRegister";
+import Svg from './utils/Svg'
 class MainLayout extends Component {
   componentDidMount(){
     
@@ -44,6 +45,7 @@ class MainLayout extends Component {
         ) : (
           <Switch>
             <Route exact path="/" component={HomePage} />
+            <Route path="/svg" component={Svg}/>
             <Route path="/contests/register/:cid" component={ContestRegister}/>
             <Route path="/login" component={LoginPage} />
             <Route exact path="/contests" component={Contests} />

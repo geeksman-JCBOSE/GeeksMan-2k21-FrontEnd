@@ -10,7 +10,6 @@ import Loader from "../Loader/Loader";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-
 class LoginPage extends Component {
   state = {
     activeClass: "container",
@@ -74,7 +73,11 @@ class LoginPage extends Component {
   errorHandle = () => {
     this.setState({ success: true, alert: "Wrong id/Password" });
   };
-
+  setShow=()=>{
+    this.setState({
+      modal:!this.state.modal
+    })
+  }
   setSignup = (e) => {
     e.preventDefault();
     var mailformat =
@@ -100,12 +103,12 @@ class LoginPage extends Component {
         this.state.newpassword
       );
 
-      this.setState({
-        modal: true,
-        modalmessage:
-          "Please check your email inbox to confirm your email address. If you are unable to find the confirmation email please check your spam folder.",
-        modalheader: "Confirm your email address",
-      });
+      // this.setState({
+      //   modal: true,
+      //   modalmessage:
+      //     "Please check your email inbox to confirm your email address. If you are unable to find the confirmation email please check your spam folder.",
+      //   modalheader: "Confirm your email address",
+      // });
     } else {
       this.setState({ alert: "Password doesnot match", success: true });
     }
@@ -113,19 +116,18 @@ class LoginPage extends Component {
 
   render() {
     let authRedirect = null;
-    if (this.props.isAuthenticated) {
+    if (this.props.isAuthenticated){
       authRedirect = <Redirect to="/contests" />;
     }
     let authRedirect2 = null;
-    if (this.props.forgetstatus === "OK") {
-      authRedirect2 = <Redirect to="/contests" />;
-    }
-
+    // if (this.props.forgetstatus === "OK") {
+    //   authRedirect2 = <Redirect to="/contests" />;
+    // }
     return (
       <>
-        {this.props.loading ? <Loader /> : <></>}
+        {this.props.authloading || this.props.signuploading ? <Loader /> : <></>}
 
-        {this.props.posterror !== "" ? (
+        {/* {this.props.posterror !== "" ? (
           <Modal
             show={true}
             message="You are already registered or you have not verified your mail"
@@ -134,7 +136,7 @@ class LoginPage extends Component {
           />
         ) : (
           <></>
-        )}
+        )} */}
 
         <div className="section">
           <div class={this.state.activeClass}>
@@ -261,10 +263,11 @@ class LoginPage extends Component {
         >
           <Alert onClose={this.handleClose} severity="error">
             {this.state.alert}
-          </Alert>
+          </Alert> 
         </Snackbar>
         <Modal
           show={this.state.modal}
+          setShow={this.setShow}
           message={this.state.modalmessage}
           confirm="false"
           heading={this.state.modalheader}
@@ -293,7 +296,8 @@ const mapStateToProps = (state) => {
     forgetstatus: state.auth.forgetstatus,
     error: state.auth.autherror,
     errorauth: state.auth.autherror !== null,
-    loading: state.auth.loading,
+    authloading: state.auth.loading,
+    signuploading:state.user.loading,
     posterror: state.user.posterror,
   };
 };

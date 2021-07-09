@@ -1,5 +1,6 @@
 import * as actionTypes from './actionsTypes';
 import axios from 'axios';
+import makeToast from '../../components/utils/Toaster';
 
 export const authStart = () => {
   return {
@@ -37,7 +38,6 @@ export const reduxLogin = (email, password) => {
         'Content-Type': 'application/json;charset=UTF-8',
       },
     };
-
     axios
       .post(
         process.env.REACT_APP_PUBLIC+'/login',
@@ -45,19 +45,20 @@ export const reduxLogin = (email, password) => {
         axiosConfig
       )
       .then((res) => {
-         
         localStorage.setItem('userdata',JSON.stringify({
           token:res.data.token,
           userid:res.data.userid,
           username:res.data.username
         }));
+        makeToast('success','Login Successfull')
         dispatch(
           authSuccess(res.data.token,res.data.userid)
         );
       })
       .catch((err) => {
         dispatch(authFail(err));
-        alert('Wrong Id/Password')
+        if(err.response)
+        makeToast('error',`${err.response.data.message}`)
       });
   };
 };
@@ -72,7 +73,6 @@ export const authCheckStatus = () => {
     }
   };
 };
-
 /*============Redux Signup===========*/
 export const changePasswordSuccess = (status) => {
   return {
@@ -80,7 +80,6 @@ export const changePasswordSuccess = (status) => {
     forgetstatus:status
   };
 };
-
 export const changePasswordFail = (err) => {
   return {
     type: actionTypes.CHANGE_PWD_FAIL,
@@ -114,12 +113,13 @@ export const changePassword = (email) => {
         axiosConfig
       )
       .then((res) => {
-        
+        makeToast("success","Please check your email")
         dispatch(
           changePasswordSuccess(res.statusText)
         );
       })
       .catch((err) => {
+        makeToast("error","Could not change your password")
         dispatch(changePasswordFail(err));
       });
   };

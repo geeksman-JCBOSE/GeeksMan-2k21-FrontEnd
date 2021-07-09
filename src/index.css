@@ -86,7 +86,9 @@ label:focus,
 a:hover {
   text-decoration: none;
 }
-
+.main-layout{
+  overflow-x: hidden
+}
 /*=============================================
 =            HomePage            =
 =============================================*/
@@ -995,12 +997,6 @@ nav {
 }
 /*----------  ContestCard  ----------*/
 .contest-card {
-  /* padding: 17px;
-  background-color: #f1f1f1;
-  margin: 24px;
-  border: 1px solid #dadada;
-  border-radius: 8px; */
-    min-height: 540px;
     background: var(--contestcardbody);
     border-radius: 5px;
     width: 95%;
@@ -1019,7 +1015,7 @@ nav {
   border-top-right-radius: 5px;
 }
 .contestimagecontainer{
-  height: 14rem;
+  height: 12rem;
   position: relative;
 }
 .contestcard-gradient{
@@ -1039,7 +1035,7 @@ nav {
     font-size: 1rem;
     color: #121212;
     background: #fff;
-    padding: 7px 13px;
+    padding: 5px 10px;
     border-radius: 2px;
     bottom: 7px;
     right: 7px;
@@ -1087,7 +1083,7 @@ nav {
 }
 .shortdescription{
   margin-top: 12px;
-  height: 57px;
+  height: 40px;
   font-size:1.1rem;
   line-height: 19px;
   color: var(--contest-description);
@@ -1099,17 +1095,14 @@ nav {
 }
 
 .contestbottom{
-  padding: 9px 0 9px 19px;
+    padding: 9px 0 9px 19px;
     display: flex;
     justify-content: space-between;
     border-top: 1px solid hsla(0,0%,59.2%,.1);
-    min-height: 30px;
+    height:58px;
     align-items:center;
     background-color: var(--contestcardbody);
 }
-
-
-
 
 .contest-card-heading {
   color: var(--primary);
@@ -1150,7 +1143,6 @@ nav {
 .contest-card-register-button {
   display: inline-block;
   padding: 8px 25px;
-  margin-top: 16px;
   cursor: pointer;
   margin-right: 1rem;
   font-size: 12px;
@@ -2362,17 +2354,17 @@ nav {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background:  linear-gradient(0deg, rgba(255, 0, 0, 1) 0%, rgba(7, 0, 211, 1) 100%);
 }
 
-::-webkit-scrollbar-thumb {
-  background: #888;
+::-webkit-scrollbar-thumb{
+background:var(--home-text);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background:white;
 }
 

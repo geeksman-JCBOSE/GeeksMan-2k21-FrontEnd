@@ -1,6 +1,7 @@
 import * as actionTypes from './actionsTypes';
 import axios from 'axios';
 import * as actions from './index'
+import makeToast from '../../components/utils/Toaster';
 
 
 /*=============== get contests =========================*/
@@ -216,14 +217,16 @@ export const registerContest = (uid,cid) => {
     })
       .then((res) => {
         dispatch(actions.resetloading())
-        console.log('registrered')
+        makeToast('success','Registered successfully')
         dispatch(
           registerContestSuccess(res.data)
         );
+        window.location.reload()
       })
       .catch((err) => {
         dispatch(actions.resetloading())
         dispatch(registerContestFail(err));
+        makeToast('error',`${err.response.data.message}`)
       });
   };
 };

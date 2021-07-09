@@ -1,5 +1,6 @@
 import * as actionTypes from './actionsTypes';
 import axios from 'axios';
+import makeToast from '../../components/utils/Toaster';
 
 export const getUserSuccess = (userdata) => {
   return {
@@ -19,7 +20,6 @@ export const getUserError = (error) => {
 
 export const getUser = (userid) => {
   return (dispatch) => {
-
     let axiosConfig = {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
@@ -30,10 +30,8 @@ export const getUser = (userid) => {
       .get(
         process.env.REACT_APP_PUBLIC+'/users/getuser/'+userid,
         axiosConfig,
-        
       )
       .then((res) => {
-        
         dispatch(
           getUserSuccess(res.data.user)
         );
@@ -76,10 +74,8 @@ export const getUserContest = (uid) => {
       .get(
         process.env.REACT_APP_PUBLIC+'/getusercontests/'+uid,
         axiosConfig,
-        
       )
       .then((res) => {
-       
         dispatch(
           getUserContestSuccess(res.data)
         );
@@ -92,26 +88,29 @@ export const getUserContest = (uid) => {
 
 
 /*============Redux Signup===========*/
+ 
 
-export const postUserSuccess = (poststatus) => {
+ export const postUserstart=()=>{
+   return {
+     type:actionTypes.POST_USER_START,
+     loading:true
+   }
+ }
+ export const postUserSuccess = (poststatus) => {
     return {
       type: actionTypes.POST_USER_SUCCESS,
-      poststatus:poststatus
+      poststatus:poststatus,
     };
   };
-  
   export const postUserError = (error) => {
     return {
       type: actionTypes.POST_USER_FAIL,
       posterror: error,
     };
   };
-  
-  
-  
   export const postUser = (name,email,password) => {
     return (dispatch) => {
-      
+    dispatch(postUserstart())
       axios({
         method: 'post',
         responseType: 'json',
@@ -120,15 +119,15 @@ export const postUserSuccess = (poststatus) => {
           name,
           email,
           password
-          
         }
       })
        .then(response => {
-         console.log(response)
+         makeToast("success",'Check your email for verification')
          dispatch(postUserSuccess(response));
        })
-       .catch(error => {
-       console.log(error)
+       .catch(error=>{
+       if(error.response)
+       makeToast("error",`${error.response.data.message}`)
        dispatch(postUserError(error.message))
        });
     };
@@ -155,8 +154,6 @@ export const patchUserError = (error) => {
 
 export const patchUser = (userid,college,year,Branch,phoneno) => {
   return (dispatch) => {
-    
-    
     axios({
       method: 'patch',
       responseType: 'application/json;charset=UTF-8',
@@ -168,16 +165,13 @@ export const patchUser = (userid,college,year,Branch,phoneno) => {
         phoneno
       }
     })
-     .then(response => {
-       
+     .then(response =>{
        alert("details Updated Successfully")
        dispatch(postUserSuccess(response.status));
        window.location.reload()
      })
      .catch(error => {
      console.log(error)
-    
-
      });
   };
 };

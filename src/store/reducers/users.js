@@ -20,7 +20,8 @@ const initialState = {
   ],
   usercontestdata:[],
   patchStatus:null,
-  posterror:""
+  posterror:"",
+  loading:false
 };
 
 
@@ -30,6 +31,11 @@ const getUserSuccess = (state, action) => {
   });
 };
 
+const postuserstart=(state,action)=>{
+  return updateObject(state,{
+    loading:action.loading
+  })
+}
 const getUserFail = (state, action) => {
   return updateObject(state, {
     error: action.error,
@@ -53,7 +59,8 @@ const getUserContestFail = (state, action) => {
 
 const postUserSuccess = (state, action) => {
     return updateObject(state, {
-      postUserStatus:action.poststatus
+      postUserStatus:action.poststatus,
+      loading:false
     });
   };
   
@@ -61,7 +68,8 @@ const postUserSuccess = (state, action) => {
     return updateObject(state, {
       error: action.error,
       loading: false,
-      posterror:action.posterror
+      posterror:action.posterror,
+      loading:false
     });
   };
 
@@ -103,6 +111,8 @@ const reducer = (state = initialState, action) => {
       return getUserFail(state, action);
     case actionTypes.GET_USER_CONTEST_SUCCESS:
       return getUserContestSuccess(state, action);
+    case actionTypes.POST_USER_START:
+      return postuserstart(state,action)
     case actionTypes.GET_USER_CONTEST_FAIL:
       return getUserContestFail(state, action);
     case actionTypes.POST_USER_SUCCESS:

@@ -12,7 +12,6 @@ const Chatbox = () => {
         const [Roomid,setroomid]=useState(localStorage.getItem('roomid')?JSON.parse(localStorage.getItem('roomid')).id:null)
         const [socket,setsocket]=useState(null)
         const [connecting,setconnecting]=useState(false)
-
         function send(){
           var msg = document.getElementById("message").value;
           if (msg == "") return;

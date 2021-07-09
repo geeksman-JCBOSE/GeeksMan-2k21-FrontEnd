@@ -6,8 +6,7 @@ import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 class Contests extends Component {
   componentDidMount(){
-  //  this.props.getregisteredcontest(this.props.uid)
-   this.props.getContest(this.props.token)
+  this.props.getContest(this.props.token)
   }
   render(){
     return (
@@ -16,14 +15,11 @@ class Contests extends Component {
             <Loader/>
           )}
           <Navbar/>
-       
           <div className="contests">
-              
-               {!this.props.loading&&(
-               <ContestsHome/>
-               )}
+           {!this.props.loading&&(
+            <ContestsHome/>
+          )}
           </div>
-        
           </div>
     );
 }
@@ -34,9 +30,6 @@ const mapDispatchToProps = (dispatch) => {
       getContest:(token)=>{
         dispatch(actions.getContest(token));
       },
-      getregisteredcontest:(uid)=>{
-        dispatch(actions.getregisteredContest(uid))
-      }
     };
   };
   const mapStateToProps = (state) => {

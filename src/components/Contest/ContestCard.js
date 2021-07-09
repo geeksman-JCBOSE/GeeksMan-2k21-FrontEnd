@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
 import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
-import Modal from "../utils/modals/modal";
-import Loader from "../Loader/Loader";
 import { withRouter } from 'react-router-dom'
 import Timer from './timer'
 class ContestCard extends Component {
@@ -42,18 +39,18 @@ class ContestCard extends Component {
                     <p className="eventvalue">{
                   (new Date(this.props.starttime)).toLocaleString() }</p>
                 </div>
-             <div className="contestdetails">
+            
                 <div className="contestinfoitem">
                     <p className="eventlabel">Entry Fee</p>
                     <p className="eventvalue">Free</p>
                 </div>
-             </div>
-             <div className="contestdetails">
+          
+             
                 <div className="contestinfoitem">
                     <p className="eventlabel">Venue</p>
                     <p className="eventvalue">{this.props.venue}</p>
                 </div>
-             </div>
+            
              </div>
              <div className="shortdescription">
                 {this.props.smalldescription}

@@ -6,7 +6,6 @@ import Modal from "../utils/modals/modal";
 import Loader from '../Loader/Loader'
 import Navbar from "../Navbar";
 import {withRouter} from 'react-router-dom'
-
 class ContestHome extends Component {
   state = {
     open: false,
@@ -19,7 +18,6 @@ class ContestHome extends Component {
     disabled:true,
     secondtimer:null
   };
-
   componentDidMount(){
     const search = this.props.location.search;
     const _id = new URLSearchParams(search).get("id")
@@ -36,13 +34,11 @@ class ContestHome extends Component {
       let seconds = Math.floor((distance % (1000 * 60)) / 1000);
       this.setState({secondtimer:seconds});
       // Output the result in an element with id="demo"
-
       // If the count down is over, write some text
       if (seconds === 0 ) {
         clearInterval(x);
          localStorage.removeItem('oneminute')
          this.setState({disabled:false})
-        
       }
     }, 1000);
   }

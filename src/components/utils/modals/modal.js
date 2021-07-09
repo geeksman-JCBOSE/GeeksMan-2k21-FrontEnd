@@ -9,7 +9,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import * as actions from "../../../store/actions/index";
 import { connect } from "react-redux";
 import {useHistory} from 'react-router-dom'
-import Loader from  '../../Loader/Loader'
 function Modal(props) {
   const [email,setEmail] = React.useState("");
   const history=useHistory()
@@ -56,6 +55,7 @@ function Modal(props) {
           ) : (
             <>
               <Button onClick={(e)=>{
+                if(props.setShow)
                 props.setShow()
                 handleClose(e)
               }} color="primary">
@@ -67,7 +67,6 @@ function Modal(props) {
                  if(props.redirect){
                    props.redirect()
                  }
-
                 if(props.starttest){
                   props.starttest()
                 }
