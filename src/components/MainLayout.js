@@ -1,20 +1,20 @@
-import React,{Component} from "react";
+import React,{Component,Suspense} from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import HomePage from "./HomePage/HomePage";
-import Contests from "./Contest/Contests";
-import About from "./About";
-import LoginPage from "./HomePage/loginpage";
 import NotFound from "./NotFound";
 import Contact from "./contact";
-import UserPanel from "./userpanel/userpanel";
+import Svg from './utils/Svg'
 import { connect } from "react-redux";
-import ContestHome from './Contest/ContestHome'
 import * as actions from "../store/actions/index";
 import Loader from './Loader/Loader'
-import ContestProblem from './questionpage/Questiondrawer'
 import Testsubmitsuccess from './utils/Testsubmitsuccess'
-import ContestRegister from "./Contest/ContestRegister";
-import Svg from './utils/Svg'
+const UserPanel=React.lazy(()=> import("./userpanel/userpanel"));
+const ContestHome=React.lazy(()=>import('./Contest/ContestHome'))
+const ContestProblem=React.lazy(()=>('./questionpage/Questiondrawer'))
+const ContestRegister=React.lazy(()=>("./Contest/ContestRegister"));
+const Contests =React.lazy(()=>import('./Contest/Contests'))
+const About =React.lazy(()=>import('./About'))
+const LoginPage =React.lazy(()=>import("./HomePage/loginpage"));
 class MainLayout extends Component {
   componentDidMount(){
     
@@ -26,10 +26,11 @@ class MainLayout extends Component {
     this.props.authCheckStatus(); 
   return (
     <div className="main-layout">
+      <Suspense fallback={<Svg/>}>
       <BrowserRouter>
         {this.props.isAuthenticated ? (
           <Switch>
-            <Route exact path="/" component={HomePage} />
+            <Route exact path="/"><HomePage/></Route>
             <Route path="/login" component={LoginPage} />
             <Route exact path="/contests" component={Contests} />
             <Route path="/about" component={About} />
@@ -56,6 +57,7 @@ class MainLayout extends Component {
           </Switch>
         )}
       </BrowserRouter>
+      </Suspense>
     </div>
   );
         }

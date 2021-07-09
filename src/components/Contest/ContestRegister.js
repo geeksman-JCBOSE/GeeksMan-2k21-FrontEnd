@@ -78,99 +78,100 @@ const ContestRegister = (props) => {
   }
   return (
     <div className="contest-page">
-      {(loading || props.loading) && <Loader />}
-      <div style={{display:'none'  }} >
       <Navbar />
-      </div>
-      <div id="contest-home">
-        <ContestHeader content="Contest Details" />
-        <div className="row contest-registerpage-header">
-          <div className="col-md-4">
-             {islive&&contestdata&&Date.now()<contestdata.teststarttime&&(
-                 <div className="contest-register-page-timer">
-                  Registration is over
-                  </div>
-             )}
-             {islive&&contestdata&&Date.now()>=contestdata.teststarttime&&Date.now()<contestdata.testendtime&&(
+      {(loading || props.loading) && <Loader />}
+      {!(loading||props.loading)&&(
+        <div id="contest-home">
+          <ContestHeader content="Contest Details" />
+          <div className="row contest-registerpage-header">
+            <div className="col-md-4">
+               {islive&&contestdata&&Date.now()<contestdata.teststarttime&&(
+                   <div className="contest-register-page-timer">
+                    Registration is over
+                    </div>
+               )}
+               {islive&&contestdata&&Date.now()>=contestdata.teststarttime&&Date.now()<contestdata.testendtime&&(
+                    <div className="contest-register-page-timer">
+                    This contest is live
+                    </div>
+               )}
+               {!islive&&contestdata&&(
                   <div className="contest-register-page-timer">
-                  This contest is live
-                  </div>
-             )}
-             {!islive&&contestdata&&(
-                <div className="contest-register-page-timer">
-                Registration ends after:&nbsp;
-                <Timer starttimems={contestdata.starttime} />
-              </div>
-             )}
-          </div>
-          <div className="col-md-2 ">
-            <b>Venue</b>:&nbsp;{contestdata ? contestdata.venue : ""}
-          </div>
-          <div className="col-md-2 ">
-            <b>Registration Fee</b>:&nbsp;
-            {contestdata
-              ? contestdata.fees === 0
-                ? "Free"
-                : contestdata.fees+' INR'
-              : ""}
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-7" >
-            <div className="contest-name">
-              {contestdata ? contestdata.contestname : null}
+                  Registration ends after:&nbsp;
+                  <Timer starttimems={contestdata.starttime} />
+                </div>
+               )}
             </div>
-            <div className="contest-remaining-time">
-              The contest will start at{" "}
+            <div className="col-md-2 ">
+              <b>Venue</b>:&nbsp;{contestdata ? contestdata.venue : ""}
+            </div>
+            <div className="col-md-2 ">
+              <b>Registration Fee</b>:&nbsp;
               {contestdata
-                ? new Date(contestdata.starttime).toLocaleString()
-                : null}{" "}
+                ? contestdata.fees === 0
+                  ? "Free"
+                  : contestdata.fees+' INR'
+                : ""}
             </div>
-            <div className="contest-instructions-container">
-              <div className="contest-instructions-heading">About Contest</div>
-              <div className="contest-instructions">
-                {contestdata ? contestdata.contestdetail : null}
+          </div>
+          <div className="row">
+            <div className="col-md-7" >
+              <div className="contest-name">
+                {contestdata ? contestdata.contestname : null}
+              </div>
+              <div className="contest-remaining-time">
+                The contest will start at{" "}
+                {contestdata
+                  ? new Date(contestdata.starttime).toLocaleString()
+                  : null}{" "}
+              </div>
+              <div className="contest-instructions-container">
+                <div className="contest-instructions-heading">About Contest</div>
+                <div className="contest-instructions">
+                  {contestdata ? contestdata.contestdetail : null}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="col-md-5">
-           {contestdata&&contestdata.isregistered&&islive&&(Date.now()<(contestdata.teststarttime))&&(
-                  <div className="contest-card-register-button">
-                  Registered
-                 </div>
-            )}  
-            {!islive&&contestdata&&!contestdata.isregistered&& (
-              <button
-                className="contest-register-button"
-                onClick={(e) =>
-                  handleActiveContest(e, props.userdata.id, contestid)
-                }
-              >
-                Register Now
-              </button>
-            )}
-            {contestdata&&contestdata.isregistered&&islive&&(!contestdata.testgiven)&&(Date.now()>=contestdata.teststarttime&&Date.now()<contestdata.testendtime)&&(
+            <div className="col-md-5">
+             {contestdata&&contestdata.isregistered&&!islive||(contestdata&&contestdata.isregistered&&islive&&(Date.now()<(contestdata.teststarttime)))&&(
+                    <div className="contest-card-register-button">
+                    Registered
+                   </div>
+              )}  
+              {!islive&&contestdata&&!contestdata.isregistered&& (
                 <button
-                className="contest-register-button"
-                onClick={(e) =>
-                  handlestartclick()
-                }
-              >
-                Start Now
-              </button>
-            )}
+                  className="contest-register-button"
+                  onClick={(e) =>
+                    handleActiveContest(e, props.userdata.id, contestid)
+                  }
+                >
+                  Register Now
+                </button>
+              )}
+              {contestdata&&contestdata.isregistered&&islive&&(!contestdata.testgiven)&&(Date.now()>=contestdata.teststarttime&&Date.now()<contestdata.testendtime)&&(
+                  <button
+                  className="contest-register-button"
+                  onClick={(e) =>
+                    handlestartclick()
+                  }
+                >
+                  Start Now
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-        <Modal
-          show={show}
-          setShow={setshow}
-          message={message}
-          confirm="true"
-          heading="Error Correction"
-          field=""
-          redirect={redirect}
-        />
-      </div>
+          <Modal
+            show={show}
+            setShow={setshow}
+            message={message}
+            confirm="true"
+            heading="Error Correction"
+            field=""
+            redirect={redirect}
+          />
+        </div> 
+      )}
+     
     </div>
   );
 };

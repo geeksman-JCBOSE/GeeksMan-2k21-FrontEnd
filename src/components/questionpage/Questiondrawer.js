@@ -294,7 +294,6 @@ function ResponsiveDrawer(props) {
   }, [])
   if(state==='dark'){
     //enable dark mode...
-  
     console.log('dark mode')
     document.documentElement.style.setProperty('--homebackground', 'rgb(25,30,44)');
     document.documentElement.style.setProperty('--home-text', 'white');
@@ -320,7 +319,6 @@ function ResponsiveDrawer(props) {
     document.documentElement.style.setProperty('--black-to-pink', 'black');
     document.documentElement.style.setProperty('--bg-primary', '#dbf3f1');
     document.documentElement.style.setProperty('--ques-page-navbar', '#3f51b5');
-   
   }
 
   const container =
