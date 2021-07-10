@@ -5,7 +5,7 @@
 }
 #signature{
   stroke-dasharray: 2760;
-   stroke-dashoffset: 2760; 
+  stroke-dashoffset: 2760; 
   animation: sign 4s ease;
   animation-fill-mode: forwards;
 }

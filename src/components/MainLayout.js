@@ -1,6 +1,5 @@
 import React,{Component,Suspense} from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import HomePage from "./HomePage/HomePage";
 import NotFound from "./NotFound";
 import Contact from "./contact";
 import Svg from './utils/Svg'
@@ -8,6 +7,7 @@ import { connect } from "react-redux";
 import * as actions from "../store/actions/index";
 import Loader from './Loader/Loader'
 import Testsubmitsuccess from './utils/Testsubmitsuccess'
+const HomePage=React.lazy(()=>import("./HomePage/HomePage"));
 const UserPanel=React.lazy(()=> import("./userpanel/userpanel"));
 const ContestHome=React.lazy(()=>import('./Contest/ContestHome'))
 const ContestProblem=React.lazy(()=>('./questionpage/Questiondrawer'))

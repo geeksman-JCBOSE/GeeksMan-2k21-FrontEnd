@@ -113,7 +113,7 @@ export const changePassword = (email) => {
         axiosConfig
       )
       .then((res) => {
-        makeToast("success","Please check your email")
+        makeToast("success","Request initiated,Please check your email")
         dispatch(
           changePasswordSuccess(res.statusText)
         );
