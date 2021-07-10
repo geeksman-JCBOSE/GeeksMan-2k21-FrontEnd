@@ -91,7 +91,7 @@ const handlechatswitch=()=>{
     }},[])
   useEffect(()=>{
   if(Roomid){
-  const socket=io("http://localhost:5000/connection")
+  const socket=io(`${process.env.REACT_APP_PUBLIC}/connection`)
   socket.emit("join-room-user",Roomid)
   setsocket(socket)
   }
@@ -101,7 +101,7 @@ const handlechatswitch=()=>{
   if(!localStorage.getItem('roomid')){
     roomid=uuidv4()
     setconnecting(true)
-    const socket=io("http://localhost:5000/connection")
+    const socket=io(`${process.env.REACT_APP_PUBLIC}/connection`)
     socket.emit('join-room-user-firsttime',roomid,JSON.parse(localStorage.getItem('userdata')).username)
     socket.on('joined',(res)=>{
       if(res==='successfull'){
@@ -125,6 +125,7 @@ const handlechatswitch=()=>{
         socket.on('disconnectclient',()=>{
           localStorage.removeItem('roomid')
           makeToast('success','Chat disconnected,refresh the page for changes')
+          socket.emit('user-disconnected')
           socket.disconnect()
         })
       }
