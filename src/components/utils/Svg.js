@@ -3,7 +3,7 @@ import './Svg.css'
 const Svg = () => {
     return (
         <div>
-          <div class="container">
+          {/* <div class="container">
   <div class="subcontainer">
     <div class="half">
       <div class="droplet"></div>
@@ -22,7 +22,7 @@ const Svg = () => {
       </div>
     </div>
   </div>
-</div>
+</div> */}
 
 
         </div>

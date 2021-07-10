@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import axios from 'axios';
 import Loader from "react-loader-spinner";
 import './Chatbox.css'
+import makeToast from '../utils/Toaster'
 import { v4 as uuidv4 } from 'uuid';
 const Chatbox = () => {
 
@@ -48,7 +49,8 @@ const handlechatswitch=()=>{
         if (document.getElementById("chatbot").classList.contains("card__collapsed")) {
           document.getElementById("chatbot").classList.remove("card__collapsed")
           if(active&&messages.length!=0){
-          document.querySelector('.activechat').classList.contains('activechatcollapsed')
+          
+          if(document.querySelector('.activechat').classList.contains('activechatcollapsed'))
           document.querySelector('.activechat').classList.remove('activechatcollapsed')
           }
           document.getElementById("chatbot_toggle").children[0].style.display = "none"
@@ -65,7 +67,6 @@ const handlechatswitch=()=>{
           document.getElementById("chatbot_toggle").children[0].style.display = ""
           document.getElementById("chatbot_toggle").children[1].style.display = "none"
         }}
-       
    useEffect(()=>{
      if(Roomid){
       let axiosConfig={
@@ -108,6 +109,7 @@ const handlechatswitch=()=>{
           id:roomid
           }))
           setactive(true)
+          setsocket(socket)
           setroomid(roomid) 
           setconnecting(false)  
       }
@@ -116,6 +118,14 @@ const handlechatswitch=()=>{
       if(socket){
         socket.on('message-to-user',(msg,id,timestamp)=>{
              setmessages([...messages,{msg,id,timestamp}])
+
+              if(document.querySelector('.activechat').classList.contains('activechatcollapsed'))
+              document.querySelector('.activechat').classList.remove('activechatcollapsed')
+        })
+        socket.on('disconnectclient',()=>{
+          localStorage.removeItem('roomid')
+          makeToast('success','Chat disconnected,refresh the page for changes')
+          socket.disconnect()
         })
       }
     return (
@@ -149,7 +159,6 @@ const handlechatswitch=()=>{
          width={100}/>
     </div>
   )}
-  
   {active&&messages.length===0&&(
      <div className="chathelpbtn" style={{color:'black',fontSize:'1rem'}}>
      Someone from our team will contact you soon
