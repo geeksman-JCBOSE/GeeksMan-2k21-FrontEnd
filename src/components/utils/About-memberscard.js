@@ -1,13 +1,40 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import image from "../images/image.jpeg";
 import { Link } from "react-router-dom";
 import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
+import axios from 'axios';
 
 function Aboutprofilecard(props) {
+  
+ const [pageno,setpageno]=useState(1);
+ const [memberz,setmemberz]=useState([])
+ let maxpage=1;
+  useEffect(()=>{
+    const fetchMembers=async()=>{
+      let axiosConfig={
+        headers:{
+          'Content-Type':'application/json',
+        },
+      };
+      axios.get(
+        `${process.env.REACT_APP_PUBLIC}getmember?pno=${pageno-1}`,
+        axiosConfig
+        ).then(async(res)=>{
+          maxpage=Math.ceil( parseInt(res.data.totalmembers)/parseInt(res.data.imageperpage))
+          setmemberz([...res.data.members])
+        }).catch(err=>{
+          console.log(err)
+        })
+  
+    }
+    fetchMembers();
+  },[pageno])
+
+
   var members = (
     <>
-      {props.member.map((member, index) => (
+      { memberz.length>0 && memberz.map((member, index) => (
         <>
           <div class="card" style={{width:'18rem'}}>
             <div class="banner">
@@ -18,20 +45,20 @@ function Aboutprofilecard(props) {
             <div class="title">{member.post}</div>
             <div className="branch">
               <span>
-                <b>Branch</b>:-{member.batch} Year {member.branch}
+                <b>Year</b>:-{member.year} <br/>
               </span>
             </div>
             <div className="sociallinks">
               <span>
                 <b>Social</b>:-&nbsp;&nbsp;
               </span>
-              <Link href={member.github} className="github">
+              <Link to={member.facebook} className="github">
                 <i class="fab fa-github" aria-hidden="true"></i>
               </Link>
-              <Link href={member.instagram} className="insta">
+              <Link to={member.instagram} className="insta">
                 <i className="fab fa-instagram"></i>
               </Link>
-              <Link href={member.linkedln} className="linkedin">
+              <Link to={member.linkedin} className="linkedin">
                 <i class="fab fa-linkedin"></i>
               </Link>
             </div>
@@ -43,9 +70,19 @@ function Aboutprofilecard(props) {
   );
 
   return (
-    <div className="faculty__content">
+    <>
+    <div className="members__main" >
+    <div className="members__content">
       {members}
+    
     </div>
+    <div style={{marginBottom:'5px'}} >
+    <button className={`${pageno==1?'memberbtndisable':'memberbtn'}`} disabled={pageno==1} onClick={()=>setpageno(prev=>prev-1)} >Prev</button>
+      <button className={`${pageno==maxpage?'memberbtndisable':'memberbtn'}`} disabled={ pageno==maxpage} onClick={()=>setpageno(prev=>prev+1)} >Next</button>
+      </div>
+    </div>
+   
+    </>
   );
 }
 
