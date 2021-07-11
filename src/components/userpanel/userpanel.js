@@ -22,7 +22,9 @@ import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 import Modal from '../utils/modals/modal'
 import {Redirect} from 'react-router-dom'
+import ImageUploading from 'react-images-uploading'
 import Spinner from '../utils/spinner'
+
 
 const drawerWidth = 240;
 
@@ -75,9 +77,19 @@ function UserPanel(props) {
   };
   const [selectedbtn, setselectedbtn] = React.useState("homebtn");
 
+   //image upload states and functions...
+   const [img,setImg]=React.useState([])
+   const onChange = (imageList, addUpdateIndex) => {
+       // data for submit
+      //  console.log(imageList, addUpdateIndex);
+       setImg(imageList);
+     };
+     const maxNumber=1;
+  //image upload states and functions...
+
   const handlePatch=(e)=>{
     e.preventDefault();
-    props.patchUser(props.userid,college,year,branch,phoneno)
+    props.patchUser(props.userid,college,img[0].data_url,year,branch,phoneno)
 
   }
   const drawer = (
@@ -197,21 +209,32 @@ function UserPanel(props) {
               <div className="userinfo">
                 <div className="userimagebox">
                   <Avatar className="styleimage">
-                    <img src={props.userdata.image} />
+                  <img src={props.userdata.profilePhotoLocation} class="img-fluid mx-auto d-block" alt="Responsive image" />
                   </Avatar>
+                  
                 </div>
                 <div className="userinfobox">
                   <div className="nameinfo">
                     <h3>{props.userdata.name}</h3>
                   </div>
                   <div className="collegeinfo">
-                    <span>Studying at {props.userdata.college}</span>
+                  <h4>
+                      Studying at <span>{props.userdata.college}</span>
+                  </h4>
                   </div>
 
-                  <div className="educationinfo">
+                  {/* <div className="educationinfo">
                     <h4>
                       Education: <span>{props.userdata.college}</span>
                     </h4>
+                  </div> */}
+                <div className="educationinfo">
+                    <h4>
+                      Year: <span>{props.userdata.year}</span>
+                    </h4>
+                   { props.userdata.Branch &&  <h4>
+                     Branch: <span>{props.userdata.Branch}</span>
+                    </h4>}
                   </div>
                 </div>
               </div>
@@ -219,9 +242,19 @@ function UserPanel(props) {
                 <div className="participationheading">
                   <h2 className="participationheadingstyle">Participation:</h2>
                 </div>
-                <div className="contestinfocards">
+              { props.userdata.usercontestdetail.length===0 ? <div className="contestinfocards">
                     <h3>You haven't participated in any contest uptil now!!</h3>
+                </div> :(
+                   <div style={{display:'flex',flexDirection:'column' }} > 
+              {  props.userdata.usercontestdetail.map(contest=>(
+                 
+                   <Participation contestname={contest.contestname} ranks={'1'} marks={contest.marks} />   
+                ))}
                 </div>
+
+
+                )  }
+
               </div>
             </div>
           )}
@@ -245,6 +278,51 @@ function UserPanel(props) {
                   value={props.userdata.name}
                   
                 />
+
+              <div  >
+                          <ImageUploading
+                              multiple
+                              value={img}
+                              onChange={onChange}
+                              maxNumber={maxNumber}
+                              dataURLKey="data_url"
+                          >
+                              {({
+                              imageList,
+                              onImageUpload,
+                              onImageRemoveAll,
+                              onImageUpdate,
+                              onImageRemove,
+                              isDragging,
+                              dragProps,
+                              }) => (
+                              // write your building UI
+                              <div className="upload__image-wrapper">
+                                  <label> Upload Image for Question</label><br/><br/>
+                                  <button  className="login-button" type="button"
+                                  style={isDragging ? { color: 'red' } : undefined}
+                                  onClick={onImageUpload}
+                                  {...dragProps}
+                                  >
+                                  Pick
+                                  </button>
+                                  &nbsp;
+                              
+                                  {imageList.map((image, index) => (
+                                  <div key={index} style={{}} className="image-item">
+                                      <img style={{marginLeft:'20px'}} src={image['data_url']} alt="" width="100" />
+                                      <div className="image-item__btn-wrapper">
+                                      <button   className="login-button" onClick={() => onImageUpdate(index)}>Update</button>
+                                      <button   className="login-button" onClick={() => onImageRemove(index)}>Remove</button>
+                                      </div>
+                                  </div>
+                                  ))}
+                              </div>
+                              )}
+                          </ImageUploading>
+                  </div>
+
+
                 <TextField
                   id="standard-full-width"
                   label="Email"
@@ -333,8 +411,8 @@ const mapDispatchToProps = (dispatch) => {
     postQuestions: (token, data) => {
       dispatch(actions.postQuestions(token, data));
     },
-    patchUser:(uid,clg,yr,br,phone) =>{
-      dispatch(actions.patchUser(uid,clg,yr,br,phone))
+    patchUser:(uid,clg,profilePhotoLocation,yr,br,phone) =>{
+      dispatch(actions.patchUser(uid,clg,profilePhotoLocation,yr,br,phone))
     }
   };
 };

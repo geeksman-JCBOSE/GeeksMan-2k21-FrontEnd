@@ -32,6 +32,7 @@ export const getUser = (userid) => {
         axiosConfig,
       )
       .then((res) => {
+        console.log(res)
         dispatch(
           getUserSuccess(res.data.user)
         );
@@ -152,18 +153,30 @@ export const patchUserError = (error) => {
 
 
 
-export const patchUser = (userid,college,year,Branch,phoneno) => {
+export const patchUser = (userid,college,profilePhotoLocation,year,Branch,phoneno) => {
   return (dispatch) => {
+    let updates={college,profilePhotoLocation,year,Branch,phoneno}
+    console.log(updates)
+    let updatedata={}
+    
+    // Object.entries(updates).forEach((update)=>{
+    //    if(update!==""){
+    //      updatedata[update]=updates[update]
+    //    }
+    // })
+
+    for(const key in updates){
+      if(updates[key]!==""){
+        updatedata[key]=updates[key]
+      }
+    }
+    console.log(updatedata)
+
     axios({
       method: 'patch',
       responseType: 'application/json;charset=UTF-8',
       url: `${process.env.REACT_APP_PUBLIC}/users/updateuser/${userid}`,
-      data: {
-        college,
-        year,
-        Branch,
-        phoneno
-      }
+      data:updatedata
     })
      .then(response =>{
        alert("details Updated Successfully")

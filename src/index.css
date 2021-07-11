@@ -1335,6 +1335,7 @@ nav {
 }
 .userimagebox {
   flex: 0.2;
+  margin-right:30px;
 }
 .userinfobox {
   flex: 0.8 !important;
