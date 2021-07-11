@@ -106,7 +106,7 @@ const [state,setState]=useState('light')
 
                   <div className="navbar__logo">
                     <Link className="navbar-logo" to="/">
-                    <img src={Geeksman}/> GeeksMan
+                    <img src={Geeksman}/> <span>GeeksMan</span>
                     </Link>
                     
                   </div>

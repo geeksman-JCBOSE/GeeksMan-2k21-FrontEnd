@@ -20,9 +20,6 @@ class MainLayout extends Component {
     
   }
   render(){
-    if(this.props.isAuthenticated){
-      this.props.getUser(this.props.userid)
-    }
     this.props.authCheckStatus(); 
   return (
     <div className="main-layout">

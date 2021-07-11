@@ -28,15 +28,6 @@ const Chatbox = () => {
             "message-box"
           ).scrollHeight;
         }
-        const addResponseMsg=(msg) =>{
-          var div = document.createElement("div");
-          div.innerHTML = "<div className='chat-message-received'>" + msg + "</div>";
-          div.className = "chat-message-div";
-          document.getElementById("message-box").appendChild(div);
-          document.getElementById("message-box").scrollTop = document.getElementById(
-            "message-box"
-          ).scrollHeight;
-        }
      const handleenter=(event)=>{
         if (event.keyCode === 13) {
             event.preventDefault();

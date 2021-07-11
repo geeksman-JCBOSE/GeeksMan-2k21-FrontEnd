@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
@@ -23,8 +23,7 @@ import { connect } from "react-redux";
 import Modal from '../utils/modals/modal'
 import {Redirect} from 'react-router-dom'
 import ImageUploading from 'react-images-uploading'
-import Spinner from '../utils/spinner'
-
+import Loader from '../Loader/Loader'
 
 const drawerWidth = 240;
 
@@ -70,7 +69,6 @@ function UserPanel(props) {
   const [year, setYear] = React.useState("");
   const [phoneno, setPhoneno] = React.useState("");
   const [branch, setBranch] = React.useState("");
-  const [image, setImage] = React.useState("");
   const [redirect,setRedirect] =React.useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -86,7 +84,9 @@ function UserPanel(props) {
      };
      const maxNumber=1;
   //image upload states and functions...
-
+  useEffect(()=>{
+      props.getUser(props.userid)
+   },[])
   const handlePatch=(e)=>{
     e.preventDefault();
     props.patchUser(props.userid,college,img[0].data_url,year,branch,phoneno)
@@ -139,18 +139,18 @@ function UserPanel(props) {
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
-
     let authRedirect2 = null;
-
     if (redirect) {
       authRedirect2 = (
         <Redirect to="/" />
       );
     }
-
+  
   return (
     <div className={classes.root}>
-      
+       {props.loading&&(
+         <Loader/>
+       )}
       {authRedirect2}
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
@@ -203,6 +203,7 @@ function UserPanel(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        {!props.loading&&(
         <Typography>
           {selectedbtn === "homebtn" && (
             <div className="aboutuser">
@@ -242,11 +243,11 @@ function UserPanel(props) {
                 <div className="participationheading">
                   <h2 className="participationheadingstyle">Participation:</h2>
                 </div>
-              { props.userdata.usercontestdetail.length===0 ? <div className="contestinfocards">
+              {props.userdata.usercontestdetail&&props.userdata.usercontestdetail.length===0 ? <div className="contestinfocards">
                     <h3>You haven't participated in any contest uptil now!!</h3>
                 </div> :(
                    <div style={{display:'flex',flexDirection:'column' }} > 
-              {  props.userdata.usercontestdetail.map(contest=>(
+              { props.userdata.usercontestdetail&&props.userdata.usercontestdetail.map(contest=>(
                  
                    <Participation contestname={contest.contestname} ranks={'1'} marks={contest.marks} />   
                 ))}
@@ -398,6 +399,7 @@ function UserPanel(props) {
           {props.patchStatus!==null?<Modal show="true" message="Details Updated Successfully" header="Success!" confirm="false" />:<></>}
           
         </Typography>
+        )}
       </main>
     </div>
   );
@@ -413,7 +415,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     patchUser:(uid,clg,profilePhotoLocation,yr,br,phone) =>{
       dispatch(actions.patchUser(uid,clg,profilePhotoLocation,yr,br,phone))
-    }
+    },
+    getUser: (userid) => {
+      dispatch(actions.getUser(userid));
+    },
   };
 };
 
@@ -422,8 +427,9 @@ const mapStateToProps = (state) => {
     token: state.auth.token,
     isAuthenticated: state.auth.token != null,
     userdata: state.user.userdata,
+    loading:state.user.loading,
     usercontestdata: state.user.usercontestdata,
-    userid:state.auth.userid,
+    userid:JSON.parse(localStorage.getItem('userdata')).userid,
     patchStatus:state.user.patchStatus
   };
 };

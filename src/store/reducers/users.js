@@ -24,10 +24,16 @@ const initialState = {
   loading:false
 };
 
+const getuserstart=(state,action)=>{
+  return updateObject(state,{
+    loading:true
+  })
+}
 
 const getUserSuccess = (state, action) => {
   return updateObject(state, {
-    userdata:action.userdata
+    userdata:action.userdata,
+    loading:false
   });
 };
 
@@ -118,6 +124,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.POST_USER_SUCCESS:
       return postUserSuccess(state, action);
     case actionTypes.POST_USER_FAIL:
+    case actionTypes.START_GET_USER:
+      return getuserstart(state,action);
       return postUserFail(state, action);
     case actionTypes.PATCH_USER_SUCCESS:
       return patchUserSuccess(state, action);

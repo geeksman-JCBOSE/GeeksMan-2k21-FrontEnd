@@ -2,6 +2,12 @@ import * as actionTypes from './actionsTypes';
 import axios from 'axios';
 import makeToast from '../../components/utils/Toaster';
 
+export const startgetuser=()=>{
+  return {
+    type:actionTypes.START_GET_USER
+  }
+}
+
 export const getUserSuccess = (userdata) => {
   return {
     type: actionTypes.GET_USER_SUCCESS,
@@ -20,19 +26,19 @@ export const getUserError = (error) => {
 
 export const getUser = (userid) => {
   return (dispatch) => {
+    dispatch(startgetuser())
     let axiosConfig = {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
       },
     };
-
     axios
       .get(
         process.env.REACT_APP_PUBLIC+'/users/getuser/'+userid,
         axiosConfig,
       )
       .then((res) => {
-        console.log(res)
+        
         dispatch(
           getUserSuccess(res.data.user)
         );
@@ -158,13 +164,6 @@ export const patchUser = (userid,college,profilePhotoLocation,year,Branch,phonen
     let updates={college,profilePhotoLocation,year,Branch,phoneno}
     console.log(updates)
     let updatedata={}
-    
-    // Object.entries(updates).forEach((update)=>{
-    //    if(update!==""){
-    //      updatedata[update]=updates[update]
-    //    }
-    // })
-
     for(const key in updates){
       if(updates[key]!==""){
         updatedata[key]=updates[key]
@@ -179,9 +178,8 @@ export const patchUser = (userid,college,profilePhotoLocation,year,Branch,phonen
       data:updatedata
     })
      .then(response =>{
-       alert("details Updated Successfully")
+       makeToast('success','Details updated successfully')
        dispatch(postUserSuccess(response.status));
-       window.location.reload()
      })
      .catch(error => {
      console.log(error)

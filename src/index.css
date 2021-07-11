@@ -517,69 +517,8 @@ a:hover {
 =            Navbar            =
 =============================================*/
 
-/* .navbar .navbar-toggler {
-  border-color: none;
-  border: none;
-  box-shadow: none !important;
-}
-.navbar-default {
-  box-shadow: none !important;
-}
-nav {
-  box-shadow: none !important;
-}
 
-.navbar .navbar-collapse {
-  box-shadow: none !important;
-}
 
-.navbar .navbar-nav {
-  box-shadow: none !important;
-}
-
-.navbar-default {
-  box-shadow: none !important;
-}
-
-.navbar a {
-  color: #224056;
-  font-size: 18px;
-}
-
-.navbar a:hover {
-  color: var(--secondary);
-}
-
-.navbar .navbar-brand {
-  font-size: 26px;
-  font-weight: 600;
-  margin-left: 18px;
-  margin-right: 18px;
-}
-
-.navbar .nav-link {
-  font-size: 20px;
-  font-weight: 500;
-  margin-left: 18px;
-  margin-right: 18px;
-}
-
-.logout{
-  cursor: pointer;
-}
-.logout:hover{
-  color: var(--secondary);
-}
-
-.navbar .navbar-toggler-icon {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAAS0lEQVRoge3WoRGAMAADwJZJu0QlCtkluiksAIfhGsG/jUlcSgEAcupT0PZxrizyZh79tuu2usjXDACAJF8ozQAASPKF0gwAAP7sAvoWDBbvdnE+AAAAAElFTkSuQmCC");
-}
-
-@media screen and (max-width: 768px) {
-  .navbar .nav-link {
-    font-size: 16px;
-  }
-} */
 
 
 .navbar {
@@ -611,6 +550,7 @@ nav {
   color: var(--nav-link);
   font-weight: 600;
 }
+
 .navbar-logo:hover{
   color: var(--nav-link);
 }
@@ -739,6 +679,11 @@ nav {
 }
 .toggle .line3 {
   transform: rotate(45deg) translate(-5px, -8px);
+}
+@media  only screen and (max-width:600px) {
+  .navbar-logo span{
+    display:none;
+  }
 }
 /*=====  End of Navbar  ======*/
 
@@ -2160,6 +2105,19 @@ nav {
   transition: all 0.5s;
   box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2),0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+@media only screen and (max-width:1024px){
+  .main-card{
+    width: 70%;
+    height: 70%;
+  }
+}
+@media  only screen and (max-width:700px) {
+  .main-card{
+    width: 96%;
+    height: 90%;
+  }
+}
+
 .activechat{
   background: white;
   color: white;
@@ -2193,7 +2151,6 @@ nav {
   display: none;
 }
 .chathelpbtn{
-  /* position: absolute; */
   height: 100%;
     display: flex;
     align-items: center;
@@ -2241,12 +2198,6 @@ nav {
 
 }
 
-/* .main-title>div{
-  height:48px;
-  width:48px;
-  display:flex;
-  margin-left:8px;
-} */
 .main-title svg {
   height: 24px;
   margin: auto;
@@ -2353,7 +2304,9 @@ nav {
     opacity: 1;
   }
 }
-
+.swal2-container {
+  z-index:1000000000000000!important;
+}
 ::-webkit-scrollbar {
   width: 7px;
 }
