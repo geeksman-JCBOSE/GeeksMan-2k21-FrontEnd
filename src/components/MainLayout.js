@@ -2,7 +2,7 @@ import React,{Component,Suspense} from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import NotFound from "./NotFound";
 import Contact from "./contact";
-import Svg from './utils/Svg'
+import Preloader from './utils/Preloader'
 import { connect } from "react-redux";
 import * as actions from "../store/actions/index";
 import Loader from './Loader/Loader'
@@ -26,7 +26,7 @@ class MainLayout extends Component {
     this.props.authCheckStatus(); 
   return (
     <div className="main-layout">
-      <Suspense fallback={<Svg/>}>
+      <Suspense fallback={<Preloader/>}>
       <BrowserRouter>
         {this.props.isAuthenticated ? (
           <Switch>
@@ -46,7 +46,6 @@ class MainLayout extends Component {
         ) : (
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route path="/svg" component={Svg}/>
             <Route path="/contests/register/:cid" component={ContestRegister}/>
             <Route path="/login" component={LoginPage} />
             <Route exact path="/contests" component={Contests} />

@@ -1,0 +1,46 @@
+.preloader-bg{
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: black;
+	z-index: 10000000000;
+}
+#mdiv{
+	background-color: black;
+	width:99vw;
+	height:100vh;
+	display: grid;
+	place-items: center;
+	position: relative;
+}
+.cdiv{
+	width:15rem;
+	height:15rem;
+}
+.rot{
+	position: absolute;
+	width:15rem;
+	height:15rem;
+	border-right:0.3rem solid #fff;
+	border-radius: 50%;
+	animation:pre 2s linear infinite;
+}
+@keyframes pre {
+	0%{
+		transform: rotate(0deg);
+	}
+	100%{
+		transform: rotate(360deg);
+	}
+}
+.lh{
+	color:#fff;
+	font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	text-transform: uppercase;
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+}
