@@ -29,7 +29,7 @@ class MainLayout extends Component {
           <Switch>
             <Route exact path="/"><HomePage/></Route>
             <Route path="/login" component={LoginPage} />
-            <Route exact path="/contests" component={Contests} />
+            <Route exact path="/:contestquery" component={Contests} />
             <Route path="/about" component={About} />
             <Route path="/userpanel" component={UserPanel} />
             <Route path="/contact" component={Contact} />
@@ -45,7 +45,7 @@ class MainLayout extends Component {
             <Route exact path="/" component={HomePage} />
             <Route path="/contests/register/:cid" component={ContestRegister}/>
             <Route path="/login" component={LoginPage} />
-            <Route exact path="/contests" component={Contests} />
+            <Route exact path="/:contestquery" component={Contests} />
             <Route path="/about" component={About} />
             <Route path="/contact" component={Contact} />
           <Route path="/loader" component={Loader}/>

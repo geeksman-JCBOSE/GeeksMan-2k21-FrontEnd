@@ -6,7 +6,6 @@ import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 class Contests extends Component {
   componentDidMount(){
-  this.props.getContest(this.props.token)
   }
   render(){
     return (
@@ -16,9 +15,7 @@ class Contests extends Component {
           )}
           <Navbar/>
           <div className="contests">
-           {!this.props.loading&&(
             <ContestsHome/>
-          )}
           </div>
           </div>
     );

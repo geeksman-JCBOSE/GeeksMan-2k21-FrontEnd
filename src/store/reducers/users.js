@@ -124,9 +124,9 @@ const reducer = (state = initialState, action) => {
     case actionTypes.POST_USER_SUCCESS:
       return postUserSuccess(state, action);
     case actionTypes.POST_USER_FAIL:
+      return postUserFail(state, action);
     case actionTypes.START_GET_USER:
       return getuserstart(state,action);
-      return postUserFail(state, action);
     case actionTypes.PATCH_USER_SUCCESS:
       return patchUserSuccess(state, action);
     case actionTypes.PATCH_USER_FAIL:

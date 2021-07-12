@@ -18,7 +18,6 @@ const ContestRegister = (props) => {
   const [loading, setloading] = useState(true);
   const [islive,setislive]=useState(false)
   useEffect(() => {
-    console.log(contestid, props.userdata.token);
     let axiosConfig = {
       headers: {
         "Content-Type": "application/json;charset=UTF-8",

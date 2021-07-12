@@ -31,7 +31,7 @@ export const getContestFail = (error) => {
   };
 };
 
-export const getContest = (token) => {
+export const getContest = (token,url) => {
   
   return (dispatch) => {   
     dispatch(actions.setloading())
@@ -44,12 +44,13 @@ export const getContest = (token) => {
     };
     axios
       .get(
-        process.env.REACT_APP_PUBLIC+'/contests',
+        process.env.REACT_APP_PUBLIC+`/${url}`,
         axiosConfig
       )
       .then((res) => {
         dispatch(actions.resetloading())
         dispatch(getContestSuccess(res.data.contests));
+        return 'val'
       })
       .catch((err) => {
         dispatch(RequestEnd())

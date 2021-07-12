@@ -212,35 +212,6 @@ const About = (props) => {
         <h1>Our Members</h1>
         <MemberCard />
       </div>
-      {/*<div className="our__members">
-        <h1>Our Members</h1>
-      </div>
-      <div className="our__members-content">
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-        <MemberCard image={image} name="Aayush Tyagi" post="Junior Secretary" />
-      </div>
-        */}
       <div className="developers">
         <h1>Developers</h1>
       </div>
