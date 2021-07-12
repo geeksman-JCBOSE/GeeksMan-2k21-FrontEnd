@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
       token:localStorage.getItem('userdata')?JSON.parse(localStorage.getItem('userdata')).token:null,
       data: state.contest.contestdata,
-      loading:state.loading.loading,
+      loading:state.contest.loading,
       uid:localStorage.getItem('userdata')?JSON.parse(localStorage.getItem('userdata')).userid:null
     };
   };

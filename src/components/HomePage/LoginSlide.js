@@ -22,7 +22,7 @@ class LoginSlide extends Component {
           </div>
           <div className="login-buttons">
             {this.props.authenticated&&(<Link className="login-button" to="/contests">
-              Contests
+              <span>Contests</span>
             </Link>
     )}
             {!this.props.authenticated&&(<> <Link className="login-button" to="/login">

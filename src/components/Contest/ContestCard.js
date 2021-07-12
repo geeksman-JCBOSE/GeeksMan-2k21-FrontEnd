@@ -15,7 +15,7 @@ class ContestCard extends Component {
   }
   render() {
     return (
-      <>
+    
         <div className="contest-card">
           <div className="contestcardcontainer">
             <div className="contestimagecontainer">
@@ -76,7 +76,7 @@ class ContestCard extends Component {
             </div>
           </div>
         </div>
-      </>
+      
     );
   }
 }

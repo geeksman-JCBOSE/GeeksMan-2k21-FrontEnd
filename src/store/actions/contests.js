@@ -11,7 +11,11 @@ export const getContestSuccess = (data) => {
     contestdata:data
   };
 };
-
+export const startgetcontest=()=>{
+  return {
+    type:actionTypes.START_GET_CONTEST
+  }
+}
 export const RequestStart=()=>{
   return {
     type:actionTypes.BEGIN_REQUEST_LOADING,
@@ -34,7 +38,7 @@ export const getContestFail = (error) => {
 export const getContest = (token,url) => {
   
   return (dispatch) => {   
-    dispatch(actions.setloading())
+    dispatch(startgetcontest())
     let axiosConfig = {
       headers: {
         'Authorization':`Bearer ${token}`,
@@ -48,12 +52,9 @@ export const getContest = (token,url) => {
         axiosConfig
       )
       .then((res) => {
-        dispatch(actions.resetloading())
         dispatch(getContestSuccess(res.data.contests));
-        return 'val'
       })
       .catch((err) => {
-        dispatch(RequestEnd())
         dispatch(getContestFail(err));
       });
   };

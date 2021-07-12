@@ -18,17 +18,17 @@ class HomepageCarousel extends Component {
           items={1}
           nav={false}
           autoplay
-          autoplayTimeout={400000}
+          autoplayTimeout={40000000}
         >
           <div className="item">
             <LoginSlide authenticated={this.props.isAuthenticated} />
           </div>
           <div className="item">
-            <ContestSlide
+            {/* <ContestSlide
               name={this.props.data[0].Contestname}
               starttime={this.props.data[0].starttime}
               endtime={this.props.data[0].endtime}
-            />
+            /> */}
           </div>
           <div className="item">
             <TopPerformersSlide />

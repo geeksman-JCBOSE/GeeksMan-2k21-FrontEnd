@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 class ContestsHome extends Component {
   state={
     activesubcategory:null,
+    nullcontest:'There are no contests'
   }
   cards=[]
   url=this.props.match.params
@@ -18,9 +19,8 @@ class ContestsHome extends Component {
   makecard(){
     if(this.props.data.length!=0){
       this.cards=[...this.props.data.map((contest, index) => {
-    return <div className={this.classes.cards}>
-     <ContestCard
-       key={contest.id}
+    return( <ContestCard
+        key={contest.id}
        contestname={contest.contestname}
        starttime={contest.starttime}
        endtime={contest.endtime}
@@ -37,23 +37,21 @@ class ContestsHome extends Component {
        cid={contest.id}
        contesttype={contest.contesttype}
        testgiven={contest.testgiven}
-     />
-     </div>})]
+     />)
+     })]
+  }else{
+    this.cards=[]
   }
 }
-  classes = {
-      cards:
-        "col-md-6"
-  }
-  handlecontestsubcategoryclick=(subtype)=>{
+  handlecontestsubcategoryclick=(subtype,nullline)=>{
     this.setState({
-      activesubcategory:subtype
+      activesubcategory:subtype,
+      nullcontest:nullline
     })
     this.props.history.push({
       pathname:`/contests`,
       search:`?event_sub_category=${subtype}`
     })
-    console.log(this.url)
     this.props.getContest(this.props.token,`contests?event_sub_category=${subtype}`)
   }
   render(){
@@ -62,23 +60,26 @@ class ContestsHome extends Component {
       <div className="Contests">
         <ContestHeader content="Contests" />
         <div className="contests__type">
-          <div className={this.state.activesubcategory==='ongoing'?'activecontesttype':null+' contests_live'} onClick={this.handlecontestsubcategoryclick.bind(this,'ongoing')}>
+          <div className={this.state.activesubcategory==='ongoing'?'activecontesttype':null+' contests_live'} onClick={this.handlecontestsubcategoryclick.bind(this,'ongoing','There are no ongoing contests')}>
              <p>Live Contests</p>
           </div>
-          <div className={ this.state.activesubcategory==='upcoming'?'activecontesttype':null +' contests_upcoming'} onClick={this.handlecontestsubcategoryclick.bind(this,'upcoming')}>
+          <div className={ this.state.activesubcategory==='upcoming'?'activecontesttype':null +' contests_upcoming'} onClick={this.handlecontestsubcategoryclick.bind(this,'upcoming','There are no upcoming contests')}>
               <p>Upcoming Contests</p>
           </div>
-          <div className={this.state.activesubcategory==='previous'?'activecontesttype':null+ ' contests_previous'} onClick={this.handlecontestsubcategoryclick.bind(this,'previous')}>
+          <div className={this.state.activesubcategory==='previous'?'activecontesttype':null+ ' contests_previous'} onClick={this.handlecontestsubcategoryclick.bind(this,'previous','There are no past contests')}>
               <p>Previous Contests</p>
           </div>
         </div>
-        <div className="row">
-          <div className="col-lg-8 contest_sections">
-            <div className="row no-gutters">
-            {/* {this.livecards.length===0&&(
-              <h3 style={{"marginTop":"2rem"}}>There are no live Contests.</h3>
-              )} */}
-              {this.cards.length!==0&&(
+        <div>
+          <div className="contest_sections">
+            <div className="cards__container">
+            {this.cards.length===0&&(
+              <h3 style={{marginTop:"2rem",textAlign:'center',width:'100%',color:'var(--home-text)'}}>{this.state.nullcontest}</h3>
+              )}
+              {this.props.length!==0&&(
+                this.cards
+              )}
+               {this.props.length!==0&&(
                 this.cards
               )}
             </div>
@@ -97,10 +98,11 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state) =>{
   return {
     token:localStorage.getItem('userdata')?JSON.parse(localStorage.getItem('userdata')).token:null,
     data: state.contest.contestdata,
+    contestslength:state.contest.totalcontest
   };
 };
 

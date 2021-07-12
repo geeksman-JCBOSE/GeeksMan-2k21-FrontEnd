@@ -2,38 +2,22 @@ import * as actionTypes from "../actions/actionsTypes";
 import { updateObject } from "../utility";
 
 const initialState = {
-  contestdata: [
-    {
-      id: "1",
-      contestname: `<Hello World/>`,
-      starttime: "09:00:00",
-      endtime: "21:00:00",
-      startdate: "2021-01-22",
-      image:null,
-      enddate: "2021-01-23",
-      prize: "Selection in club",
-      registeredusers: {
-        id: "1",
-        name: "aayush",
-        slot: "1",
-      },
-      contestdetails: "This contest is for auditions of GeeksmanClub 2021",
-      rules: "1. Dont cheat 2.Dont Copy 3.Dont Hesitate 4.Dont Complete",
-      contesttype:null
-    },
-  ],
+  contestdata: [],
   loading: false,
   error:null,
   registeredContest:[],
   registeruserdata:null,
   contesttoken:null,
-  activecontest:null
+  activecontest:null,
+  totalcontests:0
 };
 
 const getContestSuccess = (state, action) => {
   return updateObject(state, {
     contestdata: action.contestdata,
+    totalcontests:action.contestdata.length,
     error: null,
+    loading:false
   });
 };
 
@@ -44,17 +28,12 @@ const getContestFail = (state, action) => {
   });
 };
 
-const beginloading=(state,actions)=>{
+const startgetcontest=(state,actions)=>{
   return updateObject(state,{
     loading:true
   })
 }
 
-const endloading=(state,actions)=>{
-  return updateObject(state,{
-    loading:false
-  })
-}
 
 const postContestSuccess = (state, action) => {
   return updateObject(state, {
@@ -135,10 +114,8 @@ const reducer = (state = initialState, action) => {
       return registerContestSuccess(state, action);
     case actionTypes.REGISTER_CONTEST_FAIL:
       return registerContestFail(state, action);
-    case actionTypes.BEGIN_REQUEST_LOADING:
-      return beginloading(state,action);
-    case actionTypes.END_REQUEST_LOADING:
-      return endloading(state,action)
+    case actionTypes.START_GET_CONTEST:
+      return startgetcontest(state,action);
     case actionTypes.GET_CONTEST_BY_ID_SUCCESS:
       return getcontestbyidsuccess(state,action)
     case actionTypes.GET_REGISTERED_CONTEST_SUCCESS:

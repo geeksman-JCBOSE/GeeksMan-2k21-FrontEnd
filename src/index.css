@@ -138,15 +138,76 @@ a:hover {
   background-color: #224056;
   padding: 8px 72px;
   margin: 18px;
-  box-shadow: 0 6px 10px 2px #ccc;
+  border: 1px solid white;
   text-decoration: none;
+  display: inline-block;
+  position: relative;
 }
 
-.login-button:hover {
-  box-shadow: 0 6px 10px 2px #49c2b9;
+/* .login-button:hover {
+  border: 1px solid #49c2b9;
   cursor: pointer;
   color: #eee;
+} */
+
+.login-button::before, .login-button::after{
+  content:"";
+  width: 0;
+  height: 2px;
+  position: absolute;
+  transition: all 0.2s linear;
+  background: #49c2b9;
 }
+
+.login-button span::before,.login-button span::after{
+  content:"";
+  width:2px;
+  height:0;
+  position: absolute;
+  transition: all 0.2s linear;
+  background:#49c2b9;
+}
+.login-button:hover::before, .login-button:hover::after{
+  width: 100%;
+}
+.login-button:hover{
+  color: white;
+  border:none;
+}
+.login-button:hover span::before, .login-button:hover span::after{
+  height: 100%;
+}
+
+.login-button::before, .login-button::after{
+  transition-delay: 0s;
+}
+.login-button span::before, .login-button span::after{
+  transition-delay: 0.2s;
+}
+.login-button::before{
+  right: 0;
+  top: 0;
+}
+.login-button::after{
+  left: 0;
+  bottom: 0;
+}
+.login-button ::before{
+  left: 0;
+  top: 0;
+}
+.login-button span::after{
+  right: 0;
+  bottom: 0;
+}
+.login-button:hover::before, .login-button:hover::after{
+  transition-delay: 0.2s;
+}
+.login-button:hover span::before, .login-button:hover span::after{
+  transition-delay: 0s;
+}
+
+
 .MuiTypography-paragraph {
   padding-left: 3rem!important;
   padding-top: 3rem!important;
@@ -941,10 +1002,17 @@ a:hover {
   margin-top: 2rem;
 }
 /*----------  ContestCard  ----------*/
+.cards__container{
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+  flex-flow: wrap;
+}
 .contest-card {
     background: var(--contestcardbody);
     border-radius: 5px;
     width: 95%;
+    max-width: 400px;
     margin-right: 25px;
     margin-bottom: 25px;
     box-shadow: 0 1px 19px 0 rgb(0 0 0 / 7%);
@@ -952,6 +1020,7 @@ a:hover {
     font-weight: 400;
     transition: all .3s
 }
+
 .contestcard-img{
   object-fit: cover;
   width: 100%;
@@ -1149,9 +1218,16 @@ font-size:1.6rem;
   
   ::-webkit-scrollbar-thumb:hover {
     background:white;
+  }  
+  .contest-card{
+    width:100%;
+    margin-right:0px;
   }
-  
+  .contestinfoitem{
+    margin-right: 14px;
+  }
 }
+
 /*----------  ContestHome  ----------*/
 .contest-page{
   padding-top: 20px;
