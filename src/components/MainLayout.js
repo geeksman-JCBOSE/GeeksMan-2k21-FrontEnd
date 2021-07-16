@@ -1,7 +1,6 @@
 import React,{Component,Suspense} from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import NotFound from "./NotFound";
-import Contact from "./contact";
 import Preloader from './utils/Preloader'
 import { connect } from "react-redux";
 import * as actions from "../store/actions/index";
@@ -31,7 +30,6 @@ class MainLayout extends Component {
             <Route path="/login" component={LoginPage} />
             <Route path="/about" component={About} />
             <Route path="/userpanel" component={UserPanel} />
-            <Route path="/contact" component={Contact} />
             <Route path="/loader" component={Loader} />
             <Route exact path="/:contestquery" component={Contests} />
             <Route path="/contests/register/:cid" component={ContestRegister}/>
@@ -46,7 +44,6 @@ class MainLayout extends Component {
             <Route path="/contests/register/:cid" component={ContestRegister}/>
             <Route path="/login" component={LoginPage} />
             <Route path="/about" component={About} />
-            <Route path="/contact" component={Contact} />
             <Route exact path="/:contestquery" component={Contests} />
             <Route path="*" component={NotFound} />
           </Switch>

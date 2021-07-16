@@ -1005,7 +1005,6 @@ a:hover {
 .cards__container{
   display: flex;
   align-items: center;
-  justify-content:space-between;
   flex-flow: wrap;
 }
 .contest-card {
@@ -1013,7 +1012,7 @@ a:hover {
     border-radius: 5px;
     width: 95%;
     max-width: 400px;
-    margin-right: 25px;
+    margin-right:40px;
     margin-bottom: 25px;
     box-shadow: 0 1px 19px 0 rgb(0 0 0 / 7%);
     cursor: pointer;
@@ -1190,11 +1189,18 @@ a:hover {
 margin:.86rem;
 font-size:1.6rem;
 }
-@media only screen and (min-width:1330px){
+@media only screen and (min-width:1337px){
 .contests__type>div:hover p{
   color: var(--secondary);
   cursor: pointer;
 }
+
+}
+@media only screen and (max-width:1338px){
+  .contest-card{
+    margin-right:30px;
+    max-width:362px;
+  }
 }
 .activecontesttype>p{
   color: var(--secondary)!important;
