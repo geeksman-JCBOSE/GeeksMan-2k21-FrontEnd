@@ -61,13 +61,13 @@ class ContestsHome extends Component {
         <ContestHeader content="Contests" />
         <div className="contests__type">
           <div className={this.state.activesubcategory==='ongoing'?'activecontesttype':null+' contests_live'} onClick={this.handlecontestsubcategoryclick.bind(this,'ongoing','There are no ongoing contests')}>
-             <p>Live </p>
+             <p>Live contests</p>
           </div>
           <div className={ this.state.activesubcategory==='upcoming'?'activecontesttype':null +' contests_upcoming'} onClick={this.handlecontestsubcategoryclick.bind(this,'upcoming','There are no upcoming contests')}>
-              <p>Upcoming </p>
+              <p>Upcoming contests</p>
           </div>
           <div className={this.state.activesubcategory==='previous'?'activecontesttype':null+ ' contests_previous'} onClick={this.handlecontestsubcategoryclick.bind(this,'previous','There are no past contests')}>
-              <p>Previous </p>
+              <p>Previous contests</p>
           </div>
         </div>
         <div>
