@@ -78,10 +78,15 @@ const postUserSuccess = (state, action) => {
       loading:false
     });
   };
-
+  const patchuserstart=(state,action)=>{
+   return updateObject(state,{
+     loading:true
+   })
+  }
   const patchUserSuccess = (state, action) => {
     return updateObject(state, {
-      patchStatus:action.patchStatus
+      patchStatus:action.patchStatus,
+      loading:false,
     });
   };
   
@@ -127,6 +132,8 @@ const reducer = (state = initialState, action) => {
       return postUserFail(state, action);
     case actionTypes.START_GET_USER:
       return getuserstart(state,action);
+    case actionTypes.PATCH_USER_START:
+      return patchuserstart()
     case actionTypes.PATCH_USER_SUCCESS:
       return patchUserSuccess(state, action);
     case actionTypes.PATCH_USER_FAIL:

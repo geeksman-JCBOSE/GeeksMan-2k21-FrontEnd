@@ -4,6 +4,7 @@ import Navbar from '../Navbar';
 import Loader from '../Loader/Loader'
 import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
+import Chatbox from '../AdminSupport/Chatbox'
 class Contests extends Component {
   componentDidMount(){
   }
@@ -17,6 +18,7 @@ class Contests extends Component {
           <div className="contests">
             <ContestsHome/>
           </div>
+          <Chatbox/>
           </div>
     );
 }

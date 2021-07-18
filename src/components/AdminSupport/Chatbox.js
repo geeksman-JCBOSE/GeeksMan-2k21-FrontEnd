@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { io } from "socket.io-client";
 import axios from 'axios';
 import Loader from "react-loader-spinner";
-import './Chatbox.css'
 import makeToast from '../utils/Toaster'
 import { v4 as uuidv4 } from 'uuid';
 const Chatbox = () => {
@@ -35,13 +34,16 @@ const Chatbox = () => {
           }
      }
 const handlechatswitch=()=>{
-    console.log('clicked')
         if (document.getElementById("chatbot").classList.contains("card__collapsed")) {
           document.getElementById("chatbot").classList.remove("card__collapsed")
-          if(active&&messages.length!=0){
-          
+          if(active&&messages.length!==0){
           if(document.querySelector('.activechat').classList.contains('activechatcollapsed'))
           document.querySelector('.activechat').classList.remove('activechatcollapsed')
+          }
+          if(active&&messages.length===0){
+            if(document.querySelector('.chathelpbtn').classList.contains('chathelpcollapsed')){
+              document.querySelector('.chathelpbtn').classList.remove('chathelpcollapsed')
+            }
           }
           document.getElementById("chatbot_toggle").children[0].style.display = "none"
           document.getElementById("chatbot_toggle").children[1].style.display = ""
@@ -49,6 +51,10 @@ const handlechatswitch=()=>{
           document.querySelector('.chathelpbtn button').classList.remove('collapsed__button')
         }
         else {
+
+          if(active&&messages.length===0){
+              document.querySelector('.chathelpbtn').classList.add('chathelpcollapsed')
+          }
           document.getElementById("chatbot").classList.add("card__collapsed")
           if(active&&messages.length!==0)
           document.querySelector('.activechat').classList.add('activechatcollapsed')
@@ -75,15 +81,16 @@ const handlechatswitch=()=>{
           })
           setmessages(dbmessages)
         }).catch(err=>{
-          console.log(err)
+          makeToast('error','Could not fetch messages right now')
         })
        axios.get(
         `${process.env.REACT_APP_PUBLIC}/getroomid/${Roomid}`,
         axiosConfig
         ).then((res)=>{
-          console.log('res')
           if(res.status===404){
             localStorage.removeItem('roomid')
+          }else{
+            setroomavail(true)
           }
         }).catch(err=>{
           console.log(err)
@@ -91,16 +98,12 @@ const handlechatswitch=()=>{
       }
   },[])
   useEffect(()=>{
-   
-   
-  },[])
-  useEffect(()=>{
   if(Roomid&&roomavail){
   const socket=io(`${process.env.REACT_APP_PUBLIC}/connection`)
   socket.emit("join-room-user",Roomid)
   setsocket(socket)
   }
-  },[])
+  },[roomavail])
   const connecttosupport=()=>{
   let roomid;
   if(!localStorage.getItem('roomid')){
@@ -166,7 +169,7 @@ const handlechatswitch=()=>{
     </div>
   )}
   {active&&messages.length===0&&(
-     <div className="chathelpbtn" style={{color:'black',fontSize:'1rem'}}>
+     <div className="chathelpbtn chathelpcollapsed" style={{color:'black',fontSize:'1rem'}}>
      Someone from our team will contact you soon
    </div>
   )}
@@ -211,5 +214,4 @@ const handlechatswitch=()=>{
   </div>
     )
 }
-
 export default Chatbox

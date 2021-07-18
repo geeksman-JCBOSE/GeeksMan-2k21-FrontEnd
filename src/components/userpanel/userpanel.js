@@ -20,10 +20,10 @@ import Participation from "./Participation";
 import * as actions from "../../store/actions/index";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
-import Modal from '../utils/modals/modal'
-import {Redirect} from 'react-router-dom'
-import ImageUploading from 'react-images-uploading'
-import Loader from '../Loader/Loader'
+import Modal from "../utils/modals/modal";
+import { Redirect } from "react-router-dom";
+import ImageUploading from "react-images-uploading";
+import Loader from "../Loader/Loader";
 
 const drawerWidth = 240;
 
@@ -69,29 +69,35 @@ function UserPanel(props) {
   const [year, setYear] = React.useState("");
   const [phoneno, setPhoneno] = React.useState("");
   const [branch, setBranch] = React.useState("");
-  const [redirect,setRedirect] =React.useState(false);
+  const [redirect, setRedirect] = React.useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
   const [selectedbtn, setselectedbtn] = React.useState("homebtn");
 
-   //image upload states and functions...
-   const [img,setImg]=React.useState([])
-   const onChange = (imageList, addUpdateIndex) => {
-       // data for submit
-      //  console.log(imageList, addUpdateIndex);
-       setImg(imageList);
-     };
-     const maxNumber=1;
   //image upload states and functions...
-  useEffect(()=>{
-      props.getUser(props.userid)
-   },[])
-  const handlePatch=(e)=>{
+  const [img, setImg] = React.useState([]);
+  const onChange = (imageList, addUpdateIndex) => {
+    // data for submit
+    //  console.log(imageList, addUpdateIndex);
+    setImg(imageList);
+  };
+  const maxNumber = 1;
+  //image upload states and functions...
+  useEffect(() => {
+    props.getUser(props.userid);
+  }, []);
+  const handlePatch = (e) => {
     e.preventDefault();
-    props.patchUser(props.userid,college,img[0].data_url,year,branch,phoneno)
-
-  }
+    props.patchUser(
+      props.userid,
+      college,
+      img[0].data_url,
+      year,
+      branch,
+      phoneno
+    );
+  };
   const drawer = (
     <div>
       <div className={classes.toolbar} />
@@ -139,18 +145,14 @@ function UserPanel(props) {
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
-    let authRedirect2 = null;
-    if (redirect) {
-      authRedirect2 = (
-        <Redirect to="/" />
-      );
-    }
-  
+  let authRedirect2 = null;
+  if (redirect) {
+    authRedirect2 = <Redirect to="/" />;
+  }
+
   return (
     <div className={classes.root}>
-       {props.loading&&(
-         <Loader/>
-       )}
+      {props.loading && <Loader />}
       {authRedirect2}
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
@@ -203,202 +205,242 @@ function UserPanel(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {!props.loading&&(
-        <Typography>
-          {selectedbtn === "homebtn" && (
-            <div className="aboutuser">
-              <div className="userinfo">
-                <div className="userimagebox">
-                  <Avatar className="styleimage">
-                  <img src={props.userdata.profilePhotoLocation} class="img-fluid mx-auto d-block" alt="Responsive image" />
-                  </Avatar>
-                  
-                </div>
-                <div className="userinfobox">
-                  <div className="nameinfo">
-                    <h3>{props.userdata.name}</h3>
+        {!props.loading && (
+          <Typography>
+            {selectedbtn === "homebtn" && (
+              <div className="aboutuser">
+                <div className="userinfo">
+                  <div className="userimagebox">
+                    <Avatar className="styleimage">
+                      <img
+                        src={props.userdata.profilePhotoLocation}
+                        class="img-fluid mx-auto d-block"
+                        alt="Responsive image"
+                      />
+                    </Avatar>
                   </div>
-                  <div className="collegeinfo">
-                  <h4>
-                      Studying at <span>{props.userdata.college}</span>
-                  </h4>
-                  </div>
+                  <div className="userinfobox">
+                    <div className="nameinfo">
+                      <h3>{props.userdata.name}</h3>
+                    </div>
+                    <div className="collegeinfo">
+                      <h4>
+                        Studying at <span>{props.userdata.college}</span>
+                      </h4>
+                    </div>
 
-                  {/* <div className="educationinfo">
+                    {/* <div className="educationinfo">
                     <h4>
                       Education: <span>{props.userdata.college}</span>
                     </h4>
                   </div> */}
-                <div className="educationinfo">
-                    <h4>
-                      Year: <span>{props.userdata.year}</span>
-                    </h4>
-                   { props.userdata.Branch &&  <h4>
-                     Branch: <span>{props.userdata.Branch}</span>
-                    </h4>}
+                    <div className="educationinfo">
+                      <h4>
+                        Year: <span>{props.userdata.year}</span>
+                      </h4>
+                      {props.userdata.Branch && (
+                        <h4>
+                          Branch: <span>{props.userdata.Branch}</span>
+                        </h4>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="participationinfo">
-                <div className="participationheading">
-                  <h2 className="participationheadingstyle">Participation:</h2>
+                <div className="participationinfo">
+                  <div className="participationheading">
+                    <h2 className="participationheadingstyle">
+                      Participation:
+                    </h2>
+                  </div>
+                  {props.userdata.usercontestdetail &&
+                  props.userdata.usercontestdetail.length === 0 ? (
+                    <div className="contestinfocards">
+                      <h3>
+                        You haven't participated in any contest uptil now!!
+                      </h3>
+                    </div>
+                  ) : (
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      {props.userdata.usercontestdetail &&
+                        props.userdata.usercontestdetail.map((contest) => (
+                          <Participation
+                            contestname={contest.contestname}
+                            ranks={"1"}
+                            marks={contest.marks}
+                          />
+                        ))}
+                    </div>
+                  )}
                 </div>
-              {props.userdata.usercontestdetail&&props.userdata.usercontestdetail.length===0 ? <div className="contestinfocards">
-                    <h3>You haven't participated in any contest uptil now!!</h3>
-                </div> :(
-                   <div style={{display:'flex',flexDirection:'column' }} > 
-              { props.userdata.usercontestdetail&&props.userdata.usercontestdetail.map(contest=>(
-                 
-                   <Participation contestname={contest.contestname} ranks={'1'} marks={contest.marks} />   
-                ))}
+              </div>
+            )}
+            {selectedbtn === "updateprofile" && (
+              <div>
+                <div className="mainupdate">
+                  <h1>Update Profile</h1>
                 </div>
+                <div className="updateform">
+                  <TextField
+                    id="standard-full-width"
+                    label="Name"
+                    style={{ margin: 8 }}
+                    placeholder="Name"
+                    fullWidth
+                    disabled
+                    margin="normal"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={props.userdata.name}
+                  />
 
-
-                )  }
-
-              </div>
-            </div>
-          )}
-          {selectedbtn === "updateprofile" && (
-            <div>
-              <div className="mainupdate">
-                <h1>Update Profile</h1>
-              </div>
-              <div className="updateform">
-              <TextField
-                  id="standard-full-width"
-                  label="Name"
-                  style={{ margin: 8 }}
-                  placeholder="Name"
-                  fullWidth
-                  disabled
-                  margin="normal"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={props.userdata.name}
-                  
-                />
-
-              <div  >
-                          <ImageUploading
-                              multiple
-                              value={img}
-                              onChange={onChange}
-                              maxNumber={maxNumber}
-                              dataURLKey="data_url"
+                  <div>
+                    <ImageUploading
+                      multiple
+                      value={img}
+                      onChange={onChange}
+                      maxNumber={maxNumber}
+                      dataURLKey="data_url"
+                    >
+                      {({
+                        imageList,
+                        onImageUpload,
+                        onImageRemoveAll,
+                        onImageUpdate,
+                        onImageRemove,
+                        isDragging,
+                        dragProps,
+                      }) => (
+                        // write your building UI
+                        <div className="upload__image-wrapper">
+                          <label> Upload Image for Question</label>
+                          <br />
+                          <br />
+                          <button
+                            className="login-button"
+                            type="button"
+                            style={isDragging ? { color: "red" } : undefined}
+                            onClick={onImageUpload}
+                            {...dragProps}
                           >
-                              {({
-                              imageList,
-                              onImageUpload,
-                              onImageRemoveAll,
-                              onImageUpdate,
-                              onImageRemove,
-                              isDragging,
-                              dragProps,
-                              }) => (
-                              // write your building UI
-                              <div className="upload__image-wrapper">
-                                  <label> Upload Image for Question</label><br/><br/>
-                                  <button  className="login-button" type="button"
-                                  style={isDragging ? { color: 'red' } : undefined}
-                                  onClick={onImageUpload}
-                                  {...dragProps}
-                                  >
-                                  Pick
-                                  </button>
-                                  &nbsp;
-                              
-                                  {imageList.map((image, index) => (
-                                  <div key={index} style={{}} className="image-item">
-                                      <img style={{marginLeft:'20px'}} src={image['data_url']} alt="" width="100" />
-                                      <div className="image-item__btn-wrapper">
-                                      <button   className="login-button" onClick={() => onImageUpdate(index)}>Update</button>
-                                      <button   className="login-button" onClick={() => onImageRemove(index)}>Remove</button>
-                                      </div>
-                                  </div>
-                                  ))}
+                            Pick
+                          </button>
+                          &nbsp;
+                          {imageList.map((image, index) => (
+                            <div key={index} style={{}} className="image-item">
+                              <img
+                                style={{ marginLeft: "20px" }}
+                                src={image["data_url"]}
+                                alt=""
+                                width="100"
+                              />
+                              <div className="image-item__btn-wrapper">
+                                <button
+                                  className="login-button"
+                                  onClick={() => onImageUpdate(index)}
+                                >
+                                  Update
+                                </button>
+                                <button
+                                  className="login-button"
+                                  onClick={() => onImageRemove(index)}
+                                >
+                                  Remove
+                                </button>
                               </div>
-                              )}
-                          </ImageUploading>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </ImageUploading>
                   </div>
+                  <TextField
+                    id="standard-full-width"
+                    label="Email"
+                    style={{ margin: 8 }}
+                    placeholder="Email"
+                    fullWidth
+                    disabled
+                    margin="normal"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={props.userdata.email}
+                  />
 
-
-                <TextField
-                  id="standard-full-width"
-                  label="Email"
-                  style={{ margin: 8 }}
-                  placeholder="Email"
-                  fullWidth
-                  disabled
-                  margin="normal"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={props.userdata.email}
-                />
-                
-                <TextField
-                  id="standard-full-width"
-                  label="College"
-                  style={{ margin: 8 }}
-                  placeholder="College"
-                  fullWidth
-                  margin="normal"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={college}
-                  onChange={(e) => setCollege(e.target.value)}
-                />
-                <TextField
-                  id="standard-full-width"
-                  label="Year"
-                  style={{ margin: 8 }}
-                  placeholder="Year"
-                  fullWidth
-                  margin="normal"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={year}
-                  onChange={(e) => setYear(e.target.value)}
-                />
-                <TextField
-                  id="standard-full-width"
-                  label="Branch"
-                  style={{ margin: 8 }}
-                  placeholder="Branch"
-                  fullWidth
-                  margin="normal"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={branch}
-                  onChange={(e) => setBranch(e.target.value)}
-                />
-                <TextField
-                  id="standard-full-width"
-                  label="Phone No (Whatsapp)"
-                  style={{ margin: 8 }}
-                  placeholder="Phone No (Whatsapp)"
-                  fullWidth
-                  margin="normal"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={phoneno}
-                  onChange={(e) => setPhoneno(e.target.value)}
-                />
-                <button className="login-button" onClick={e=>handlePatch(e)}>Submit</button>
+                  <TextField
+                    id="standard-full-width"
+                    label="College"
+                    style={{ margin: 8 }}
+                    placeholder="College"
+                    fullWidth
+                    margin="normal"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={college}
+                    onChange={(e) => setCollege(e.target.value)}
+                  />
+                  <TextField
+                    id="standard-full-width"
+                    label="Year"
+                    style={{ margin: 8 }}
+                    placeholder="Year"
+                    fullWidth
+                    margin="normal"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                  />
+                  <TextField
+                    id="standard-full-width"
+                    label="Branch"
+                    style={{ margin: 8 }}
+                    placeholder="Branch"
+                    fullWidth
+                    margin="normal"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={branch}
+                    onChange={(e) => setBranch(e.target.value)}
+                  />
+                  <TextField
+                    id="standard-full-width"
+                    label="Phone No (Whatsapp)"
+                    style={{ margin: 8 }}
+                    placeholder="Phone No (Whatsapp)"
+                    fullWidth
+                    margin="normal"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={phoneno}
+                    onChange={(e) => setPhoneno(e.target.value)}
+                  />
+                  <button
+                    className="login-button"
+                    onClick={(e) => handlePatch(e)}
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
-              
-            </div>
-          )}
+            )}
 
-          {props.patchStatus!==null?<Modal show="true" message="Details Updated Successfully" header="Success!" confirm="false" />:<></>}
-          
-        </Typography>
+            {props.patchStatus !== null ? (
+              <Modal
+                show="true"
+                message="Details Updated Successfully"
+                header="Success!"
+                confirm="false"
+              />
+            ) : (
+              <></>
+            )}
+          </Typography>
         )}
       </main>
     </div>
@@ -413,8 +455,10 @@ const mapDispatchToProps = (dispatch) => {
     postQuestions: (token, data) => {
       dispatch(actions.postQuestions(token, data));
     },
-    patchUser:(uid,clg,profilePhotoLocation,yr,br,phone) =>{
-      dispatch(actions.patchUser(uid,clg,profilePhotoLocation,yr,br,phone))
+    patchUser: (uid, clg, profilePhotoLocation, yr, br, phone) => {
+      dispatch(
+        actions.patchUser(uid, clg, profilePhotoLocation, yr, br, phone)
+      );
     },
     getUser: (userid) => {
       dispatch(actions.getUser(userid));
@@ -427,10 +471,10 @@ const mapStateToProps = (state) => {
     token: state.auth.token,
     isAuthenticated: state.auth.token != null,
     userdata: state.user.userdata,
-    loading:state.user.loading,
+    loading: state.user.loading,
     usercontestdata: state.user.usercontestdata,
-    userid:JSON.parse(localStorage.getItem('userdata')).userid,
-    patchStatus:state.user.patchStatus
+    userid: JSON.parse(localStorage.getItem("userdata")).userid,
+    patchStatus: state.user.patchStatus,
   };
 };
 

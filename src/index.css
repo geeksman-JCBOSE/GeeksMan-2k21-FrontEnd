@@ -2236,7 +2236,7 @@ font-size:1.6rem;
   overflow: hidden;
   right: 2%;
   bottom: 2%;
-  position: absolute;
+  position:fixed;
   transition: all 0.5s;
   box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2),0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -2256,7 +2256,9 @@ font-size:1.6rem;
     right:.8%;
   }
 }
-
+.chathelpcollapsed{
+  display:none!important;
+}
 .activechat{
   background: white;
   color: white;

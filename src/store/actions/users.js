@@ -139,38 +139,34 @@ export const getUserContest = (uid) => {
        });
     };
   };
-
-
 /*============Patch Users===========*/
-
+export const patchuserstart=()=>{
+  return {
+    type:actionTypes.PATCH_USER_START
+  }
+}
 export const patchUserSuccess = (poststatus) => {
   return {
     type: actionTypes.PATCH_USER_SUCCESS,
     patchStatus:poststatus
   };
 };
-
 export const patchUserError = (error) => {
   return {
     type: actionTypes.PATCH_USER_FAIL,
     error: error,
   };
 };
-
-
-
 export const patchUser = (userid,college,profilePhotoLocation,year,Branch,phoneno) => {
   return (dispatch) => {
+    dispatch(patchuserstart())
     let updates={college,profilePhotoLocation,year,Branch,phoneno}
-    console.log(updates)
     let updatedata={}
     for(const key in updates){
       if(updates[key]!==""){
         updatedata[key]=updates[key]
       }
     }
-    console.log(updatedata)
-
     axios({
       method: 'patch',
       responseType: 'application/json;charset=UTF-8',
@@ -182,7 +178,7 @@ export const patchUser = (userid,college,profilePhotoLocation,year,Branch,phonen
        dispatch(postUserSuccess(response.status));
      })
      .catch(error => {
-     console.log(error)
+       dispatch(postUserError(error))
      });
   };
 };

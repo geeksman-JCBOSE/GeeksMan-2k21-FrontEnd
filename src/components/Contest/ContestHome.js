@@ -43,7 +43,6 @@ class ContestHome extends Component {
     }, 1000);
   }
   }
-  
   CompareDate = (e, start,end) => {
     e.preventDefault();
     let startdate =start;
