@@ -6,13 +6,13 @@ import './Chatbox.css'
 import makeToast from '../utils/Toaster'
 import { v4 as uuidv4 } from 'uuid';
 const Chatbox = () => {
-
         const [active,setactive]=useState(localStorage.getItem('roomid')?true:false)
         const [messages,setmessages]=useState([])
         const [adminname,setadminname]=useState(null)
         const [Roomid,setroomid]=useState(localStorage.getItem('roomid')?JSON.parse(localStorage.getItem('roomid')).id:null)
         const [socket,setsocket]=useState(null)
         const [connecting,setconnecting]=useState(false)
+        const [roomavail,setroomavail]=useState(false)
         function send(){
           var msg = document.getElementById("message").value;
           if (msg == "") return;
@@ -34,7 +34,6 @@ const Chatbox = () => {
             send();
           }
      }
-
 const handlechatswitch=()=>{
     console.log('clicked')
         if (document.getElementById("chatbot").classList.contains("card__collapsed")) {
@@ -59,17 +58,16 @@ const handlechatswitch=()=>{
           document.getElementById("chatbot_toggle").children[1].style.display = "none"
         }}
    useEffect(()=>{
+    let axiosConfig={
+      headers:{
+        'Content-Type':'application/json;charset=UTF-8',
+      },
+    };
      if(Roomid){
-      let axiosConfig={
-        headers:{
-          'Content-Type':'application/json;charset=UTF-8',
-        },
-      };
       axios.get(
         `${process.env.REACT_APP_PUBLIC}/getmessages/${Roomid}`,
         axiosConfig
         ).then((res)=>{
-          console.log(res)
           let dbmessages=[]
           setadminname(res.data.adminname)
           res.data.messages.forEach((msg)=>{
@@ -79,9 +77,25 @@ const handlechatswitch=()=>{
         }).catch(err=>{
           console.log(err)
         })
-    }},[])
+       axios.get(
+        `${process.env.REACT_APP_PUBLIC}/getroomid/${Roomid}`,
+        axiosConfig
+        ).then((res)=>{
+          console.log('res')
+          if(res.status===404){
+            localStorage.removeItem('roomid')
+          }
+        }).catch(err=>{
+          console.log(err)
+        })
+      }
+  },[])
   useEffect(()=>{
-  if(Roomid){
+   
+   
+  },[])
+  useEffect(()=>{
+  if(Roomid&&roomavail){
   const socket=io(`${process.env.REACT_APP_PUBLIC}/connection`)
   socket.emit("join-room-user",Roomid)
   setsocket(socket)
