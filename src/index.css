@@ -92,12 +92,18 @@ a:hover {
 /*=============================================
 =            HomePage            =
 =============================================*/
-
+#tsparticles{
+  position:fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
 .homepage {
-  height: 100vh;
+  min-height: 100vh;
   box-sizing: border-box;
   background-color: var(--homebackground);
-  background-image: url("components/images/svg/bg-binary.svg");
+  /* background-image: url("components/images/svg/bg-binary.svg"); */
   background-size: cover;
   color: var(--home-text);
 }
