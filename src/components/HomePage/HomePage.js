@@ -16,10 +16,10 @@ const HomePage = (props) => {
         params={{
           particles: {
             number: {
-              value:50,
+              value:45,
               density: {
                 enable: true,
-                value_area: 1000,
+                value_area:1000,
               }
             },
             move: {
@@ -27,8 +27,15 @@ const HomePage = (props) => {
               enable: true,
               outMode: "bounce",
               random: false,
-              speed: 6,
+              speed:1,
               straight: false,
+            },
+            links:{
+              "enable": true,
+              "distance": 130,
+              "color": "#49c2b9",
+              "opacity": 0.6,
+              "width": 1
             },
             collisions: {
               enable: true,
@@ -43,7 +50,6 @@ const HomePage = (props) => {
                 "color": "#b6b2b2"
               }
             },
-            
              "size": {
               "value": 8.017060304327615,
               "random": true,
@@ -54,13 +60,6 @@ const HomePage = (props) => {
                 "sync": true
               }
             },
-            lineLinked: {
-              "enable": true,
-              "distance": 150,
-              "color": "#49c2b9",
-              "opacity": 0.6,
-              "width": 1
-            }
            },
            detectRetina: true,
   
