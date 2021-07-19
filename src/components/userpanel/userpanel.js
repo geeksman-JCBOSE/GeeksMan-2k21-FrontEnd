@@ -24,6 +24,7 @@ import Modal from "../utils/modals/modal";
 import { Redirect } from "react-router-dom";
 import ImageUploading from "react-images-uploading";
 import Loader from "../Loader/Loader";
+import FormLabel from "@material-ui/core/FormLabel/FormLabel";
 
 const drawerWidth = 240;
 
@@ -221,19 +222,13 @@ function UserPanel(props) {
                   </div>
                   <div className="userinfobox">
                     <div className="nameinfo">
-                      <h3>{props.userdata.name}</h3>
+                      <h3>Username:<span>{props.userdata.name}</span></h3>
                     </div>
                     <div className="collegeinfo">
                       <h4>
-                        Studying at <span>{props.userdata.college}</span>
+                        College: <span>{props.userdata.college}</span>
                       </h4>
                     </div>
-
-                    {/* <div className="educationinfo">
-                    <h4>
-                      Education: <span>{props.userdata.college}</span>
-                    </h4>
-                  </div> */}
                     <div className="educationinfo">
                       <h4>
                         Year: <span>{props.userdata.year}</span>
@@ -260,12 +255,12 @@ function UserPanel(props) {
                       </h3>
                     </div>
                   ) : (
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div className="participationcard-container">
                       {props.userdata.usercontestdetail &&
                         props.userdata.usercontestdetail.map((contest) => (
                           <Participation
                             contestname={contest.contestname}
-                            ranks={"1"}
+                            rank={"1"}
                             marks={contest.marks}
                           />
                         ))}
@@ -294,7 +289,7 @@ function UserPanel(props) {
                     value={props.userdata.name}
                   />
 
-                  <div>
+                  <div style={{margin:'8px'}}>
                     <ImageUploading
                       multiple
                       value={img}
@@ -313,11 +308,11 @@ function UserPanel(props) {
                       }) => (
                         // write your building UI
                         <div className="upload__image-wrapper">
-                          <label> Upload Image for Question</label>
+                            <FormLabel>Upload your image</FormLabel>
                           <br />
                           <br />
                           <button
-                            className="login-button"
+                            className="standard-btn"
                             type="button"
                             style={isDragging ? { color: "red" } : undefined}
                             onClick={onImageUpload}
@@ -336,13 +331,13 @@ function UserPanel(props) {
                               />
                               <div className="image-item__btn-wrapper">
                                 <button
-                                  className="login-button"
+                                  className="standard-btn"
                                   onClick={() => onImageUpdate(index)}
                                 >
                                   Update
                                 </button>
                                 <button
-                                  className="login-button"
+                                  className="standard-btn"
                                   onClick={() => onImageRemove(index)}
                                 >
                                   Remove
@@ -355,6 +350,7 @@ function UserPanel(props) {
                     </ImageUploading>
                   </div>
                   <TextField
+                    Key="1"
                     id="standard-full-width"
                     label="Email"
                     style={{ margin: 8 }}
@@ -369,6 +365,7 @@ function UserPanel(props) {
                   />
 
                   <TextField
+                    Key="2"
                     id="standard-full-width"
                     label="College"
                     style={{ margin: 8 }}
@@ -382,6 +379,7 @@ function UserPanel(props) {
                     onChange={(e) => setCollege(e.target.value)}
                   />
                   <TextField
+                   Key="3"
                     id="standard-full-width"
                     label="Year"
                     style={{ margin: 8 }}
@@ -395,6 +393,7 @@ function UserPanel(props) {
                     onChange={(e) => setYear(e.target.value)}
                   />
                   <TextField
+                   Key="4"
                     id="standard-full-width"
                     label="Branch"
                     style={{ margin: 8 }}
@@ -408,6 +407,7 @@ function UserPanel(props) {
                     onChange={(e) => setBranch(e.target.value)}
                   />
                   <TextField
+                   Key="5"
                     id="standard-full-width"
                     label="Phone No (Whatsapp)"
                     style={{ margin: 8 }}
@@ -421,7 +421,7 @@ function UserPanel(props) {
                     onChange={(e) => setPhoneno(e.target.value)}
                   />
                   <button
-                    className="login-button"
+                    className="standard-btn"
                     onClick={(e) => handlePatch(e)}
                   >
                     Submit

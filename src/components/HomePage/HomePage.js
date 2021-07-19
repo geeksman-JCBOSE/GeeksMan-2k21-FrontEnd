@@ -34,8 +34,8 @@ const HomePage = (props) => {
               "enable": true,
               "distance": 130,
               "color": "#49c2b9",
-              "opacity": 0.6,
-              "width": 1
+              "opacity":.4,
+              "width": 2
             },
             collisions: {
               enable: true,

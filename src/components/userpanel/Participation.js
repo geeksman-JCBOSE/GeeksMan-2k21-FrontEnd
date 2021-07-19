@@ -9,10 +9,10 @@ function Participation({contestname,rank,marks}) {
             
             <div className="lowerhalf">
               <div className="rankinfo">
-                Rank:<span>{rank}</span>
+                Rank:<span>&nbsp;{rank}</span>
               </div>
               <div className="marksinfo">
-                Marks:<span>{marks}</span>
+                Marks:<span>&nbsp;{marks}</span>
               </div>
             </div>
         </div>

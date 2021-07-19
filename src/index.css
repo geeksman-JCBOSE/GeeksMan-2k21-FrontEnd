@@ -155,6 +155,20 @@ a:hover {
   cursor: pointer;
   color: #eee;
 } */
+.standard-btn{
+  font-size: 16px;
+  border: none;
+  color: #eee;
+  background-color: #224056;
+  padding: 8px 72px;
+  margin:7px;
+  text-decoration: none;
+  display: inline-block;
+  outline: 1px solid white;
+}
+.standard-btn:hover{
+  cursor: pointer;
+}
 
 .login-button::before, .login-button::after{
   content:"";
@@ -1193,7 +1207,7 @@ a:hover {
 }
 .contests__type>div>p{
 margin:.86rem;
-font-size:1.6rem;
+font-size:1.2rem;
 }
 @media only screen and (min-width:1337px){
 .contests__type>div:hover p{
@@ -1410,6 +1424,7 @@ font-size:1.6rem;
   margin-right:30px;
 }
 .userinfobox {
+  width: 100%;
   flex: 0.8;
 }
 @media only screen and (max-width:750px){
@@ -1434,6 +1449,10 @@ font-size:1.6rem;
 }
 .nameinfo h3 {
   font-weight: 500;
+}
+.nameinfo h3 span{
+  color: grey;
+  font-weight: 400;
 }
 .collegeinfo span {
   color: grey;
@@ -1475,6 +1494,12 @@ font-size:1.6rem;
 .participationheading h2 {
   font-weight: 500;
 }
+.participationcard-container{
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
 .contestinfocards {
   display: flex;
   align-items: center;
@@ -1484,10 +1509,10 @@ font-size:1.6rem;
 .participationcard {
   background-color: white;
   padding: 0.5rem;
-  min-height: 8rem !important;
-  min-width: 14rem !important;
-  max-width: 15rem !important;
-  max-height: 7rem !important;
+  min-height: 8rem ;
+  min-width: 14rem ;
+  max-width: 15rem ;
+  max-height: 7rem;
   border-radius: 8px;
   flex-flow: wrap;
   display: flex;
@@ -1499,10 +1524,14 @@ font-size:1.6rem;
   margin: 1rem;
 }
 @media only screen and (max-width: 700px) {
-  .participationcard {
-    min-width: 10rem !important;
-    max-width: 11rem !important;
-    margin: 0.4rem !important;
+
+  .participationcard-container{
+    flex-direction: column;
+    align-items: center;
+  }
+  .participationcard{
+    max-width: 80%!important;
+    min-width: 79%!important;
   }
 }
 .contestinfocards h3 {
