@@ -47,8 +47,8 @@ const HomePage = (props) => {
             "line_linked": {
               "enable": true,
               "distance": 150,
-              "color": "#fff",
-              "opacity": 0.4,
+              "color": "#49c2b9",
+              "opacity": 0.6,
               "width": 1
             }
            },
