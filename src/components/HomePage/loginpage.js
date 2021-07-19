@@ -103,12 +103,6 @@ class LoginPage extends Component {
         this.state.newpassword
       );
 
-      // this.setState({
-      //   modal: true,
-      //   modalmessage:
-      //     "Please check your email inbox to confirm your email address. If you are unable to find the confirmation email please check your spam folder.",
-      //   modalheader: "Confirm your email address",
-      // });
     } else {
       this.setState({ alert: "Password doesnot match", success: true });
     }
