@@ -15,6 +15,9 @@ class ContestsHome extends Component {
   componentDidMount(){
    this.props.getContest(this.props.token,this.url.contestquery)
    this.makecard()
+   this.props.history.push({
+     pathname:'/contests'
+   })
   }
   makecard(){
     if(this.props.data.length!=0){
@@ -43,6 +46,7 @@ class ContestsHome extends Component {
     this.cards=[]
   }
 }
+
   handlecontestsubcategoryclick=(subtype,nullline)=>{
     this.setState({
       activesubcategory:subtype,
@@ -77,9 +81,6 @@ class ContestsHome extends Component {
               <h3 style={{marginTop:"2rem",textAlign:'center',width:'100%',color:'var(--home-text)'}}>{this.state.nullcontest}</h3>
               )}
               {this.props.length!==0&&(
-                this.cards
-              )}
-               {this.props.length!==0&&(
                 this.cards
               )}
             </div>

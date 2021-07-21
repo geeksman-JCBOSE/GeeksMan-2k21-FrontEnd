@@ -178,6 +178,7 @@ export const patchUser = (userid,college,profilePhotoLocation,year,Branch,phonen
        dispatch(postUserSuccess(response.status));
      })
      .catch(error => {
+       makeToast('error','Updation failed')
        dispatch(postUserError(error))
      });
   };

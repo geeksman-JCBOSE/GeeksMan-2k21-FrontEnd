@@ -51,7 +51,6 @@ const handlechatswitch=()=>{
           document.querySelector('.chathelpbtn button').classList.remove('collapsed__button')
         }
         else {
-
           if(active&&messages.length===0){
               document.querySelector('.chathelpbtn').classList.add('chathelpcollapsed')
           }
@@ -87,8 +86,13 @@ const handlechatswitch=()=>{
         `${process.env.REACT_APP_PUBLIC}/getroomid/${Roomid}`,
         axiosConfig
         ).then((res)=>{
-          if(res.status===404){
+          console.log(res)
+          if(res.data.message==='ended'){
+            makeToast('success','Admin ended the chat')
             localStorage.removeItem('roomid')
+            setactive(false)
+            setsocket(null)
+            setroomid(null)  
           }else{
             setroomavail(true)
           }
@@ -126,9 +130,10 @@ const handlechatswitch=()=>{
       if(socket){
         socket.on('message-to-user',(msg,id,timestamp)=>{
              setmessages([...messages,{msg,id,timestamp}])
-
+              if(document.querySelector('.activechat')){
               if(document.querySelector('.activechat').classList.contains('activechatcollapsed'))
               document.querySelector('.activechat').classList.remove('activechatcollapsed')
+              }
         })
         socket.on('disconnectclient',()=>{
           localStorage.removeItem('roomid')
@@ -169,7 +174,7 @@ const handlechatswitch=()=>{
     </div>
   )}
   {active&&messages.length===0&&(
-     <div className="chathelpbtn chathelpcollapsed" style={{color:'black',fontSize:'1rem'}}>
+     <div className="chathelpbtn" style={{color:'black',fontSize:'1rem'}}>
      Someone from our team will contact you soon
    </div>
   )}

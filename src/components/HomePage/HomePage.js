@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 import Particles from 'react-tsparticles';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import HomepageCarousel from './HomepageCarousel';
 import LoginModal from '../utils/modals/modal';
 import Chatbox from '../AdminSupport/Chatbox'
-// import Footer from './Footer';
 
 const HomePage = (props) => {
     return (
@@ -62,7 +61,7 @@ const HomePage = (props) => {
             },
            },
            detectRetina: true,
-  
+           
         }}
       />
             <Navbar />
@@ -70,7 +69,6 @@ const HomePage = (props) => {
             {props.isAuthenticated&&(
              <Chatbox/>
             )}
-            
         </div>
     );
 }

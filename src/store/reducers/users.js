@@ -21,7 +21,6 @@ const initialState = {
   usercontestdata:[],
   patchStatus:null,
   posterror:"",
-  loading:false
 };
 
 const getuserstart=(state,action)=>{
@@ -133,7 +132,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.START_GET_USER:
       return getuserstart(state,action);
     case actionTypes.PATCH_USER_START:
-      return patchuserstart()
+      return patchuserstart(state,action)
     case actionTypes.PATCH_USER_SUCCESS:
       return patchUserSuccess(state, action);
     case actionTypes.PATCH_USER_FAIL:

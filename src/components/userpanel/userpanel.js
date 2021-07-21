@@ -20,8 +20,7 @@ import Participation from "./Participation";
 import * as actions from "../../store/actions/index";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
-import Modal from "../utils/modals/modal";
-import { Redirect } from "react-router-dom";
+import {useHistory } from "react-router-dom";
 import ImageUploading from "react-images-uploading";
 import Loader from "../Loader/Loader";
 import FormLabel from "@material-ui/core/FormLabel/FormLabel";
@@ -70,12 +69,11 @@ function UserPanel(props) {
   const [year, setYear] = React.useState("");
   const [phoneno, setPhoneno] = React.useState("");
   const [branch, setBranch] = React.useState("");
-  const [redirect, setRedirect] = React.useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
   const [selectedbtn, setselectedbtn] = React.useState("homebtn");
-
+  const history=useHistory()
   //image upload states and functions...
   const [img, setImg] = React.useState([]);
   const onChange = (imageList, addUpdateIndex) => {
@@ -93,7 +91,7 @@ function UserPanel(props) {
     props.patchUser(
       props.userid,
       college,
-      img[0].data_url,
+      img[0]?img[0].data_url:'',
       year,
       branch,
       phoneno
@@ -131,14 +129,15 @@ function UserPanel(props) {
         </ListItem>
         <ListItem
           button
-          onClick={() => {
-            setRedirect(true);
-          }}
+          // onClick={() => {
+          //   setRedirect(true);
+          // }}
+          onClick={()=>{history.push('/')}}
         >
           <ListItemIcon>
             <ProfileIcon />
           </ListItemIcon>
-          <ListItemText primary="Return To Home" />
+          <ListItemText  primary="Return To Home" />
         </ListItem>
       </List>
     </div>
@@ -146,15 +145,9 @@ function UserPanel(props) {
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
-  let authRedirect2 = null;
-  if (redirect) {
-    authRedirect2 = <Redirect to="/" />;
-  }
-
   return (
     <div className={classes.root}>
       {props.loading && <Loader />}
-      {authRedirect2}
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
@@ -169,7 +162,9 @@ function UserPanel(props) {
           </IconButton>
           <Typography variant="h6" noWrap className="headinginfo">
             <h5>Welcome,</h5>
-            {props.userdata.name}
+            {props.userdata&&(
+              props.userdata.name
+            )}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -206,7 +201,7 @@ function UserPanel(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {!props.loading && (
+        {!props.loading &&props.userdata&& (
           <Typography>
             {selectedbtn === "homebtn" && (
               <div className="aboutuser">
@@ -428,17 +423,6 @@ function UserPanel(props) {
                   </button>
                 </div>
               </div>
-            )}
-
-            {props.patchStatus !== null ? (
-              <Modal
-                show="true"
-                message="Details Updated Successfully"
-                header="Success!"
-                confirm="false"
-              />
-            ) : (
-              <></>
             )}
           </Typography>
         )}
