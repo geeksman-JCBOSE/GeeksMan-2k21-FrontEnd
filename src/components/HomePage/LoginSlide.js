@@ -7,7 +7,6 @@ class LoginSlide extends Component {
   state = {
     show: false,
   };
-
   render() {
     return (
       <>
@@ -25,10 +24,10 @@ class LoginSlide extends Component {
               <span>Contests</span>
             </Link>
             )}
-            {!this.props.authenticated&&(<> <Link className="login-button" to="/login">
+            {!this.props.authenticated&&(<> <Link className="standard-btn" to="/login">
               Login
             </Link>
-            <Link className="login-button" to="/login">
+            <Link className="standard-btn" to="/login">
               SignUp
             </Link></>
             )}

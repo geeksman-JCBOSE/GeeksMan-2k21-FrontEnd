@@ -5,7 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { connect } from "react-redux";
 import * as actions from "../store/actions/index";
-import { NavLink, Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Switch from '@material-ui/core/Switch';
 import Geeksman from "./images/png/geeksman.png";
 import "bootstrap/js/src/collapse.js";

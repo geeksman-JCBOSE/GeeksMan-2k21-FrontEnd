@@ -113,25 +113,9 @@ class LoginPage extends Component {
     if (this.props.isAuthenticated){
       authRedirect = <Redirect to="/contests" />;
     }
-    let authRedirect2 = null;
-    // if (this.props.forgetstatus === "OK") {
-    //   authRedirect2 = <Redirect to="/contests" />;
-    // }
     return (
       <>
         {this.props.authloading || this.props.signuploading ? <Loader /> : <></>}
-
-        {/* {this.props.posterror !== "" ? (
-          <Modal
-            show={true}
-            message="You are already registered or you have not verified your mail"
-            confirm="false"
-            heading="Error"
-          />
-        ) : (
-          <></>
-        )} */}
-
         <div className="section">
           <div class={this.state.activeClass}>
             <div class="user signinBx">
@@ -248,7 +232,6 @@ class LoginPage extends Component {
           </div>
         </div>
         {authRedirect}
-        {authRedirect2}
 
         <Snackbar
           open={this.state.success}

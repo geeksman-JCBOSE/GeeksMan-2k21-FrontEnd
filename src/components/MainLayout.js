@@ -15,28 +15,25 @@ const Contests =React.lazy(()=>import('./Contest/Contests'))
 const About =React.lazy(()=>import('./About'))
 const LoginPage =React.lazy(()=>import("./HomePage/loginpage"));
 class MainLayout extends Component {
-  componentDidMount(){
-    
-  }
   render(){
     this.props.authCheckStatus(); 
-  return (
+    return (
     <div className="main-layout">
       <Suspense fallback={<Preloader/>}>
       <BrowserRouter>
         {this.props.isAuthenticated ? (
           <Switch>
-            <Route exact path="/"><HomePage/></Route>
-            <Route path="/login" component={LoginPage} />
-            <Route path="/about" component={About} />
-            <Route path="/userpanel" component={UserPanel} />
-            <Route path="/loader" component={Loader} />
+            <Route exact path="/" component={HomePage}/>
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/userpanel" component={UserPanel} />
+            <Route exact path="/loader" component={Loader} />
             <Route exact path="/:contestquery" component={Contests} />
-            <Route path="/contests/register/:cid" component={ContestRegister}/>
-            <Route path="/contest/:cname/questions" component={ContestProblem}/>
-            <Route path="/contests/:cname" component={ContestHome}/>
-            <Route path="/submit" component={Testsubmitsuccess}/>
-            <Route path="*" component={NotFound} />
+            <Route exact path="/contests/register/:cid" component={ContestRegister}/>
+            <Route exact path="/contest/:cname/questions" component={ContestProblem}/>
+            <Route exact path="/contests/:cname" component={ContestHome}/>
+            <Route exact path="/submit" component={Testsubmitsuccess}/>
+            <Route exact path="*" component={NotFound} />
           </Switch>
         ) : (
           <Switch>
@@ -51,31 +48,22 @@ class MainLayout extends Component {
       </BrowserRouter>
       </Suspense>
     </div>
+
   );
-        }
+  }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getContest: () => {
-      dispatch(actions.getContest());
-    },
     authCheckStatus: () => {
       dispatch(actions.authCheckStatus());
-    },
-    getUserContest: (userid) => {
-      dispatch(actions.getUserContest(userid));
-    },
-    getUser: (userid) => {
-      dispatch(actions.getUser(userid));
     },
   };
 };
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.token!==null,
-    userid:state.auth.userid
+    isAuthenticated:state.auth.token!==null,
   };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(MainLayout);

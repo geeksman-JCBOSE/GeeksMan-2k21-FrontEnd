@@ -150,11 +150,6 @@ a:hover {
   position: relative;
 }
 
-/* .login-button:hover {
-  border: 1px solid #49c2b9;
-  cursor: pointer;
-  color: #eee;
-} */
 .standard-btn{
   font-size: 16px;
   border: none;
@@ -162,12 +157,13 @@ a:hover {
   background-color: #224056;
   padding: 8px 72px;
   margin:7px;
-  text-decoration: none;
+  text-decoration: none!important;
   display: inline-block;
   outline: 1px solid white;
 }
 .standard-btn:hover{
   cursor: pointer;
+  color: #eee;
 }
 
 .login-button::before, .login-button::after{
